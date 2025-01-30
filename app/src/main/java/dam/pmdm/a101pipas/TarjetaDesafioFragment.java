@@ -1,0 +1,62 @@
+package dam.pmdm.a101pipas;
+
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
+public class TarjetaDesafioFragment extends Fragment {
+
+    // FALTA AÑADIR LA IMAGEN
+    public static TarjetaDesafioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion) {
+        TarjetaDesafioFragment fragment = new TarjetaDesafioFragment();
+        Bundle args = new Bundle();
+        args.putString("titulo", titulo);
+        args.putStringArray("etiquetas", etiquetas);
+        args.putString("descripcion", descripcion);
+        args.putString("ubicacion", ubicacion);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_tarjeta_desafio, container, false);
+
+        // Recuperar datos pasados al fragmento
+        String titulo = getArguments().getString("titulo");
+        String[] etiquetas = getArguments().getStringArray("etiquetas");
+        String descripcion = getArguments().getString("descripcion");
+        String ubicacion = getArguments().getString("ubicacion");
+
+        // Mostrar datos en la interfaz del fragment
+        TextView tvTitulo = view.findViewById(R.id.tvTitulo);
+        TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetas);
+        TextView tvDescripción = view.findViewById(R.id.tvDescripcion);
+        TextView tvUbicacion = view.findViewById(R.id.tvUbicacion);
+
+        tvTitulo.setText(titulo);
+        tvDescripción.setText(descripcion);
+        tvUbicacion.setText(ubicacion);
+
+        if (etiquetas != null) {
+            for (int i=0; i<etiquetas.length; i++) {
+                if (i==0) {
+                    tvEtiquietas.setText(etiquetas[i]);
+                } else {
+                    tvEtiquietas.setText(tvEtiquietas.getText().toString() + ", " + etiquetas[i]);
+                }
+            }
+        }
+
+        return view;
+
+    }
+
+}
