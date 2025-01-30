@@ -10,7 +10,6 @@
     app:contentPaddingBottom="16dp"
     app:contentPaddingLeft="16dp"
     app:contentPaddingRight="16dp">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
