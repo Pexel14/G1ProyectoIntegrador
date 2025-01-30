@@ -21,6 +21,7 @@ public class Inicio extends AppCompatActivity {
     }
 
     // De momento éste método son pruebas manuales
+    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
     private void cargarFragmentos() {
         String[] etiquetas = {"+18", "epico"};
         String[] etiquetas2 = {};

@@ -5,53 +5,56 @@
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     app:cardCornerRadius="15dp"
-    app:cardElevation="4dp"
-    app:contentPaddingTop="16dp"
-    app:contentPaddingBottom="16dp"
-    app:contentPaddingLeft="16dp"
-    app:contentPaddingRight="16dp">
+    app:cardElevation="8dp">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <View
+            android:id="@+id/vColor"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="#2196F3"/>
 
         <TextView
             android:id="@+id/tvEtiquetas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lista de etiquetas"
+            android:layout_alignBottom="@id/tvTitulo"
+            android:layout_toEndOf="@+id/tvTitulo"
             android:gravity="end"
             android:maxLines="1"
-            android:ellipsize="end" /> <!-- Añade puntos suspensivos si el texto es demasiado largo -->
-
-
-        <!-- Borde superior azul -->
-        <View
-            android:id="@+id/vColor"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:layout_marginTop="5dp"
-            android:background="#2196F3"
-            android:layout_below="@id/tvEtiquetas"/>
+            android:textColor="@color/black"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="16dp"
+            android:ellipsize="end"/> <!-- Añade puntos suspensivos si el texto es demasiado largo -->
 
         <TextView
             android:id="@+id/tvTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vColor"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="6dp"
             android:text="Título del desafío"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <TextView
             android:id="@+id/tvDescripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvTitulo"
+            android:layout_below="@id/vColor"
             android:layout_marginTop="8dp"
             android:text="Descripción del desafío Descripción del desafío Descripción del desafío Descripción del desafío "
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
         <TextView
             android:id="@+id/tvUbicacion"
@@ -61,9 +64,9 @@
             android:layout_marginTop="8dp"
             android:text="Ubicación"
             android:textSize="14sp"
-            android:textStyle="italic" />
-
-        <!-- TextView de etiquetas -->
+            android:textStyle="italic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
