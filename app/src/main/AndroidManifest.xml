@@ -13,6 +13,12 @@
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
         <activity
+            android:name=".TarjetaDesafioDescubrirFragment"
+            android:exported="false" />
+        <activity
+            android:name=".Descubrir"
+            android:exported="false" />
+        <activity
             android:name=".Inicio"
             android:exported="false" />
         <activity

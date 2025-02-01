@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="15dp"
+    android:layout_marginHorizontal="25dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="8dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
+
+        <View
+            android:id="@+id/vColorTarjetaDescubrir"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:background="#2196F3"/>
+
+        <TextView
+            android:id="@+id/tvTituloTarjetaDescubrir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Título del desafío"
+            android:layout_below="@id/vColorTarjetaDescubrir"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/tvUbicacionTarjetaDescubrir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTituloTarjetaDescubrir"
+            android:layout_marginTop="8dp"
+            android:text="Ubicación"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

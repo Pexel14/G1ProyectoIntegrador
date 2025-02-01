@@ -10,11 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class TarjetaDesafioFragment extends Fragment {
+public class TarjetaDesafioInicioFragment extends Fragment {
 
     // FALTA AÑADIR LA IMAGEN
-    public static TarjetaDesafioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion) {
-        TarjetaDesafioFragment fragment = new TarjetaDesafioFragment();
+    public static TarjetaDesafioInicioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion) {
+        TarjetaDesafioInicioFragment fragment = new TarjetaDesafioInicioFragment();
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putStringArray("etiquetas", etiquetas);
@@ -27,7 +27,7 @@ public class TarjetaDesafioFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tarjeta_desafio, container, false);
+        View view = inflater.inflate(R.layout.fragment_tarjeta_desafio_inicio, container, false);
 
         // Recuperar datos pasados al fragmento
         String titulo = getArguments().getString("titulo");
@@ -36,10 +36,10 @@ public class TarjetaDesafioFragment extends Fragment {
         String ubicacion = getArguments().getString("ubicacion");
 
         // Mostrar datos en la interfaz del fragment
-        TextView tvTitulo = view.findViewById(R.id.tvTitulo);
-        TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetas);
-        TextView tvDescripción = view.findViewById(R.id.tvDescripcion);
-        TextView tvUbicacion = view.findViewById(R.id.tvUbicacion);
+        TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaDescubrir);
+        TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetasTarjetaDescubrir);
+        TextView tvDescripción = view.findViewById(R.id.tvDescripcionTarjetaDescubrir);
+        TextView tvUbicacion = view.findViewById(R.id.tvUbicacionTarjetaDescubrir);
 
         tvTitulo.setText(titulo);
         tvDescripción.setText(descripcion);

@@ -13,18 +13,18 @@
         android:layout_marginBottom="16dp">
 
         <View
-            android:id="@+id/vColor"
+            android:id="@+id/vColorTarjetaInicio"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:background="#2196F3"/>
 
         <TextView
-            android:id="@+id/tvEtiquetas"
+            android:id="@+id/tvEtiquetasTarjetaDescubrir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lista de etiquetas"
-            android:layout_alignBottom="@id/tvTitulo"
-            android:layout_toEndOf="@+id/tvTitulo"
+            android:layout_alignBottom="@id/tvTituloTarjetaDescubrir"
+            android:layout_toEndOf="@+id/tvTituloTarjetaDescubrir"
             android:gravity="end"
             android:maxLines="1"
             android:textColor="@color/black"
@@ -33,7 +33,7 @@
             android:ellipsize="end"/> <!-- Añade puntos suspensivos si el texto es demasiado largo -->
 
         <TextView
-            android:id="@+id/tvTitulo"
+            android:id="@+id/tvTituloTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -45,10 +45,10 @@
             android:layout_marginRight="16dp"/>
 
         <TextView
-            android:id="@+id/tvDescripcion"
+            android:id="@+id/tvDescripcionTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vColor"
+            android:layout_below="@id/vColorTarjetaInicio"
             android:layout_marginTop="8dp"
             android:text="Descripción del desafío Descripción del desafío Descripción del desafío Descripción del desafío "
             android:textSize="14sp"
@@ -57,10 +57,10 @@
             android:layout_marginRight="16dp"/>
 
         <TextView
-            android:id="@+id/tvUbicacion"
+            android:id="@+id/tvUbicacionTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDescripcion"
+            android:layout_below="@id/tvDescripcionTarjetaDescubrir"
             android:layout_marginTop="8dp"
             android:text="Ubicación"
             android:textSize="14sp"

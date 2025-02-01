@@ -1,13 +1,12 @@
 package dam.pmdm.a101pipas;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
 public class Inicio extends AppCompatActivity {
@@ -23,23 +22,35 @@ public class Inicio extends AppCompatActivity {
     // De momento éste método son pruebas manuales
     // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
     private void cargarFragmentos() {
-        String[] etiquetas = {"+18", "epico"};
-        String[] etiquetas2 = {};
-        String[] etiquetas3 = {"Bueno", "Bonito", "Balatro", "Mbappe"};
 
-        TarjetaDesafioFragment fragment = TarjetaDesafioFragment.newInstance("101 croquetas", etiquetas, "El desafío más chulo de la historia", "Madrid");
+        // Crear los fragments (de momento crea fragments falsos)
+        String[] etiquetas = {"Gastronomía"};
+        String[] etiquetas2 = {"+18", "Ocio", "Humor"};
+        String[] etiquetas3 = {"Cultura", "Arte"};
+
+        TarjetaDesafioInicioFragment fragment = TarjetaDesafioInicioFragment.newInstance("101 croquetas", etiquetas, "Ricas y caseras, como las de tu abuela", "Asturias");
         getSupportFragmentManager().beginTransaction().add(R.id.contenedorFragmentsInicio, fragment).commit();
 
-        TarjetaDesafioFragment fragment2 = TarjetaDesafioFragment.newInstance("101 partidos", etiquetas2, "El desafío más chachipistachi de Alcobendas", "Alcobendas");
+        TarjetaDesafioInicioFragment fragment2 = TarjetaDesafioInicioFragment.newInstance("101 monólogos", etiquetas2, "El desafío más tronchante.", "Madrid");
         getSupportFragmentManager().beginTransaction().add(R.id.contenedorFragmentsInicio, fragment2).commit();
 
-        TarjetaDesafioFragment fragment3 = TarjetaDesafioFragment.newInstance("101 cositas", etiquetas3, "No se ni q poner ya xd", "Napoleón Bonaparte");
+        TarjetaDesafioInicioFragment fragment3 = TarjetaDesafioInicioFragment.newInstance("101 cuadros", etiquetas3, "Los cuadros más importantes e impactantes de La Rioja", "La Rioja");
         getSupportFragmentManager().beginTransaction().add(R.id.contenedorFragmentsInicio, fragment3).commit();
+
+        // Si no hay fragments, muestra un mensaje
+        TextView tvMensajeCeroFragments;
+        tvMensajeCeroFragments = findViewById(R.id.tvMensajeCeroFragmentsInicio);
+        if (getSupportFragmentManager().getFragments().size() == 0) {
+            tvMensajeCeroFragments.setVisibility(View.VISIBLE);
+        } else {
+            tvMensajeCeroFragments.setVisibility(View.GONE);
+        }
+
     }
 
     private void limpiarFragmentos() {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            if (fragment instanceof TarjetaDesafioFragment) {
+            if (fragment instanceof TarjetaDesafioInicioFragment) {
                 getSupportFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
