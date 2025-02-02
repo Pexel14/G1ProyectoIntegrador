@@ -19,12 +19,12 @@
             android:background="#2196F3"/>
 
         <TextView
-            android:id="@+id/tvEtiquetasTarjetaDescubrir"
+            android:id="@+id/tvEtiquetasTarjetaInicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Lista de etiquetas"
-            android:layout_alignBottom="@id/tvTituloTarjetaDescubrir"
-            android:layout_toEndOf="@+id/tvTituloTarjetaDescubrir"
+            android:layout_alignBottom="@id/tvTituloTarjetaInicio"
+            android:layout_toEndOf="@+id/tvTituloTarjetaInicio"
             android:gravity="end"
             android:maxLines="1"
             android:textColor="@color/black"
@@ -33,7 +33,7 @@
             android:ellipsize="end"/> <!-- Añade puntos suspensivos si el texto es demasiado largo -->
 
         <TextView
-            android:id="@+id/tvTituloTarjetaDescubrir"
+            android:id="@+id/tvTituloTarjetaInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
@@ -45,7 +45,7 @@
             android:layout_marginRight="16dp"/>
 
         <TextView
-            android:id="@+id/tvDescripcionTarjetaDescubrir"
+            android:id="@+id/tvDescripcionTarjetaInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/vColorTarjetaInicio"
@@ -57,10 +57,10 @@
             android:layout_marginRight="16dp"/>
 
         <TextView
-            android:id="@+id/tvUbicacionTarjetaDescubrir"
+            android:id="@+id/tvUbicacionTarjetaInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvDescripcionTarjetaDescubrir"
+            android:layout_below="@id/tvDescripcionTarjetaInicio"
             android:layout_marginTop="8dp"
             android:text="Ubicación"
             android:textSize="14sp"

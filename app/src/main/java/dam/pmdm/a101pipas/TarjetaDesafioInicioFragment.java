@@ -36,10 +36,10 @@ public class TarjetaDesafioInicioFragment extends Fragment {
         String ubicacion = getArguments().getString("ubicacion");
 
         // Mostrar datos en la interfaz del fragment
-        TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaDescubrir);
-        TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetasTarjetaDescubrir);
-        TextView tvDescripción = view.findViewById(R.id.tvDescripcionTarjetaDescubrir);
-        TextView tvUbicacion = view.findViewById(R.id.tvUbicacionTarjetaDescubrir);
+        TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaInicio);
+        TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetasTarjetaInicio);
+        TextView tvDescripción = view.findViewById(R.id.tvDescripcionTarjetaInicio);
+        TextView tvUbicacion = view.findViewById(R.id.tvUbicacionTarjetaInicio);
 
         tvTitulo.setText(titulo);
         tvDescripción.setText(descripcion);
