@@ -25,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,7 +46,9 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1000;
-    LatLng coordenadasAct;
+    private LatLng coordenadasAct;
+    private Marker markerUsuario;
+    private LatLngBounds.Builder areaMarcadores;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,8 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        areaMarcadores = new LatLngBounds.Builder();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -74,15 +79,28 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
         }
 
         FloatingActionButton btnMiUbicacion = findViewById(R.id.btnMiUbicacion);
+        FloatingActionButton btnTodasUbicaciones = findViewById(R.id.btnTodasUbicaciones);
+
+        btnTodasUbicaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mMap != null) {
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+                }
+            }
+        });
 
         btnMiUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (comprobarPermisoUbicacion()) {
-                    // Si ya tienes permiso, obtener la ubicación actual
-                    getUbicacionActual();
+                    if (coordenadasAct != null) {
+                        // Mover la cámara solo a la ubicación del usuario
+                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenadasAct, 17));
+                    } else {
+                        Toast.makeText(GeolocalizacionActivity.this, "Ubicación no disponible", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    // Si no tienes permiso, solicita el permiso
                     pedirPermisoUbicacion();
                 }
             }
@@ -105,11 +123,17 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                 if (location != null) {
                     coordenadasAct = new LatLng(location.getLatitude(), location.getLongitude());
 
-                    System.out.println("Ha movido camara");
+                    // Eliminar el marcador anterior del usuario si existe
+                    if (markerUsuario != null) {
+                        markerUsuario.remove();
+                    }
 
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadasAct, 13f));
+                    markerUsuario =  mMap.addMarker(new MarkerOptions().position(coordenadasAct).title("Aventurero").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_localizacion_usuario)));
 
-                    mMap.addMarker(new MarkerOptions().position(coordenadasAct).title("Aventurero").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_localizacion_usuario)));
+                    areaMarcadores.include(coordenadasAct);
+
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadasAct, 13f));
                 } else {
                     Toast.makeText(GeolocalizacionActivity.this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show();
                 }
@@ -134,7 +158,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                 // Permiso concedido
                 getUbicacionActual();
             } else {
-                Toast.makeText(this, "Si quiere mejorar su experiencia conceda permisos de ubicación", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Se recomienda conceder permisos de ubicación", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -175,6 +199,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                     if (coordenadas != null) {
                         aCoordenadas = coordenadas.split(",");
                         LatLng posicion = new LatLng(Double.parseDouble(aCoordenadas[0]), Double.parseDouble(aCoordenadas[1]));
+                        areaMarcadores.include(posicion);
 
                         mMap.addMarker(new MarkerOptions()
                                         .position(posicion)
@@ -183,6 +208,11 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                                 .showInfoWindow();
 
                     }
+
+                    if (coordenadasAct != null) {
+                        areaMarcadores.include(coordenadasAct);
+                    }
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
                 }
             }
 
