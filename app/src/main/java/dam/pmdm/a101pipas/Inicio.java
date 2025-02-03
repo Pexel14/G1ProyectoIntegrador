@@ -23,29 +23,37 @@ import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioInicioBinding;
 
 public class Inicio extends AppCompatActivity {
 
-    FragmentTarjetaDesafioInicioBinding binding;
+//    FragmentTarjetaDesafioInicioBinding binding;
     DatabaseReference ref;
     FirebaseDatabase firebase;
     ValueEventListener listener;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
+
+        firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
+        ref = firebase.getReference("desafios"); // Apunta a "desafios"
+
         limpiarFragmentos();
         cargarFragmentos();
     }
 
-    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
+//    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
+
     private void cargarFragmentos() {
 
-        ref = firebase.getInstance().getReference("desafios");
-
         listener = new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
+
+                limpiarFragmentos();
+
+                Log.d("Firebase", "Listener registrado");
+
+                if (snapshot.exists()) { // 'snapshot!=null' siempre es 'true'
 
                     for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {
                         String nodeName = nodeSnapshot.getKey();  // Obtén el nombre del nodo (nodo1, nodo2)
@@ -62,21 +70,6 @@ public class Inicio extends AppCompatActivity {
                                 .add(R.id.contenedorFragmentsInicio, fragment)
                                 .commit();
 
-//                        binding.tvTituloTarjetaInicio.setText(titulo);
-//                        binding.tvDescripcionTarjetaInicio.setText(descripcion);
-//                        for (int j=0; j<etiquetas.length; j++) {
-//                            if (j!=(etiquetas.length-1)) {
-//                                binding.tvEtiquetasTarjetaInicio.setText(
-//                                        binding.tvEtiquetasTarjetaInicio.getText() + etiquetas[j]
-//                                );
-//                            } else {
-//                                binding.tvEtiquetasTarjetaInicio.setText(
-//                                        binding.tvEtiquetasTarjetaInicio.getText() + etiquetas[j] + ", "
-//                                );
-//                            }
-//                        }
-//                        binding.tvUbicacionTarjetaInicio.setText(ciudad);
-
                     }
 
                     Toast.makeText(Inicio.this, "Lectura correcta", Toast.LENGTH_SHORT).show();
@@ -84,19 +77,30 @@ public class Inicio extends AppCompatActivity {
                 } else {
                     Toast.makeText(Inicio.this, "El desafio no existe", Toast.LENGTH_SHORT).show();
                 }
+
+                // Aseguramos que las transacciones de fragments se procesen antes de actualizar el mensaje
+                getSupportFragmentManager().executePendingTransactions();
+
+                mostrarMensajeCeroDesafios();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
             }
 
         };
 
+        ref.addValueEventListener(listener); // Antes estábamos intentando meter el listener mientras lo creábamos
+
+    }
+
+    private void mostrarMensajeCeroDesafios() {
         // Si no hay fragments, muestra un mensaje
         TextView tvMensajeCeroFragments;
         tvMensajeCeroFragments = findViewById(R.id.tvMensajeCeroFragmentsInicio);
-        if (getSupportFragmentManager().getFragments().size() == 0) {
+        if (getSupportFragmentManager().getFragments().isEmpty()) {
             tvMensajeCeroFragments.setVisibility(View.VISIBLE);
         } else {
             tvMensajeCeroFragments.setVisibility(View.GONE);
