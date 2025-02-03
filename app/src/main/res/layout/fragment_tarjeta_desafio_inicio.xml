@@ -45,6 +45,15 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
+        <ImageView
+            android:id="@+id/imgTarjetaInicio"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/img_tarjeta_inicio"
+            android:layout_below="@id/vColorTarjetaInicio"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"/>
+
         <TextView
             android:id="@+id/tvDescripcionTarjetaInicio"
             android:layout_width="wrap_content"
@@ -54,7 +63,7 @@
             android:text="Descripción del desafío Descripción del desafío Descripción del desafío Descripción del desafío "
             android:textSize="14sp"
             android:textStyle="bold"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="82dp"
             android:layout_marginRight="16dp"
             android:textColor="@color/black"/>
 
@@ -67,7 +76,7 @@
             android:text="Ubicación"
             android:textSize="14sp"
             android:textStyle="italic"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="82dp"
             android:layout_marginRight="16dp"
             android:textColor="#CACACA"/>
 

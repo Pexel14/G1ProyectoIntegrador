@@ -1,10 +1,10 @@
 package dam.pmdm.a101pipas;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,15 +18,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import dam.pmdm.a101pipas.databinding.ActivityInicioBinding;
-import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioInicioBinding;
-
 public class Inicio extends AppCompatActivity {
 
-//    FragmentTarjetaDesafioInicioBinding binding;
-    DatabaseReference ref;
+    DatabaseReference refDesafiosUsuario;
+    DatabaseReference refDesafios;
     FirebaseDatabase firebase;
     ValueEventListener listener;
+
+    String usuario = "usuario";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,55 +33,59 @@ public class Inicio extends AppCompatActivity {
         setContentView(R.layout.activity_inicio);
 
         firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
-        ref = firebase.getReference("desafios"); // Apunta a "desafios"
+        refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
+        refDesafios = firebase.getReference("desafios");
 
         limpiarFragmentos();
         cargarFragmentos();
     }
 
-//    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
-
+    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
     private void cargarFragmentos() {
-
         listener = new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 limpiarFragmentos();
 
-                Log.d("Firebase", "Listener registrado");
-
-                if (snapshot.exists()) { // 'snapshot!=null' siempre es 'true'
-
-                    for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {
-                        String nodeName = nodeSnapshot.getKey();  // Obtén el nombre del nodo (nodo1, nodo2)
-                        Log.d("Firebase", "Nodo: " + nodeName);
-
-                        String titulo = nodeSnapshot.child("titulo").getValue(String.class);
-                        String[] etiquetas = nodeSnapshot.child("etiquetas").getValue(String.class).split(",");
-                        String descripcion = nodeSnapshot.child("descripcion").getValue(String.class);
-                        String ciudad = nodeSnapshot.child("ciudad").getValue(String.class);
-
-                        TarjetaDesafioInicioFragment fragment = TarjetaDesafioInicioFragment.newInstance(titulo, etiquetas, descripcion, ciudad);
-                        getSupportFragmentManager()
-                                .beginTransaction()
-                                .add(R.id.contenedorFragmentsInicio, fragment)
-                                .commit();
-
-                    }
-
-                    Toast.makeText(Inicio.this, "Lectura correcta", Toast.LENGTH_SHORT).show();
-
+                if (snapshot.exists()) {
+                    String[] desafiosID = snapshot.getValue().toString().split(",");
+                    cargarDesafiosPorId(desafiosID);
                 } else {
-                    Toast.makeText(Inicio.this, "El desafio no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Inicio.this, "No tienes desafíos iniciados", Toast.LENGTH_SHORT).show();
                 }
+            }
 
-                // Aseguramos que las transacciones de fragments se procesen antes de actualizar el mensaje
-                getSupportFragmentManager().executePendingTransactions();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+            }
+        };
 
-                mostrarMensajeCeroDesafios();
+        refDesafiosUsuario.addValueEventListener(listener);
+    }
 
+    private void cargarDesafiosPorId(String[] desafiosId) {
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot desafio : snapshot.getChildren()) {
+                    for (int i=0; i<desafiosId.length; i++) {
+                        String desafioId = desafio.child("id").getValue().toString();
+                        if (desafioId.equals(desafiosId[i])) { // Si el campo 'id' del desafío está en la lista de desafíos del usuario
+                            Log.d("Firebase", usuario + " tiene está en el desafío con ID " + desafiosId[i] + ", cuyo nombre es '" + desafio.child("titulo").getValue() + "'");
+                            String titulo = desafio.child("titulo").getValue(String.class);
+                            String[] etiquetas = desafio.child("etiquetas").getValue(String.class).split(",");
+                            String descripcion = desafio.child("descripcion").getValue(String.class);
+                            String ciudad = desafio.child("ciudad").getValue(String.class);
+
+                            TarjetaDesafioInicioFragment fragment = TarjetaDesafioInicioFragment.newInstance(titulo, etiquetas, descripcion, ciudad, desafio.getKey());
+                            getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .add(R.id.contenedorFragmentsInicio, fragment)
+                                    .commit();
+                        }
+                    }
+                }
             }
 
             @Override
@@ -91,9 +94,7 @@ public class Inicio extends AppCompatActivity {
             }
 
         };
-
-        ref.addValueEventListener(listener); // Antes estábamos intentando meter el listener mientras lo creábamos
-
+        refDesafios.addValueEventListener(listener);
     }
 
     private void mostrarMensajeCeroDesafios() {

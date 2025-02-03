@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
 
         btnIrAInicioMain = findViewById(R.id.btnIrAInicioMain);
         btnIrADescubrirMain = findViewById(R.id.btnIrADescubrirMain);
+
+        // PRUEBAS
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("desafioId")) {
+            String key = intent.getStringExtra("desafioId");
+            Toast.makeText(this, "VIENES DE " + key, Toast.LENGTH_SHORT).show();
+        }
 
         btnIrAInicioMain.setOnClickListener(new View.OnClickListener() {
             @Override

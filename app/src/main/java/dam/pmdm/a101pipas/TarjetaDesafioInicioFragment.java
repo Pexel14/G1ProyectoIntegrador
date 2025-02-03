@@ -1,9 +1,11 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,13 +15,14 @@ import androidx.fragment.app.Fragment;
 public class TarjetaDesafioInicioFragment extends Fragment {
 
     // FALTA AÑADIR LA IMAGEN
-    public static TarjetaDesafioInicioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion) {
+    public static TarjetaDesafioInicioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion, String key) {
         TarjetaDesafioInicioFragment fragment = new TarjetaDesafioInicioFragment();
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putStringArray("etiquetas", etiquetas);
         args.putString("descripcion", descripcion);
         args.putString("ubicacion", ubicacion);
+        args.putString("key", key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,6 +37,7 @@ public class TarjetaDesafioInicioFragment extends Fragment {
         String[] etiquetas = getArguments().getStringArray("etiquetas");
         String descripcion = getArguments().getString("descripcion");
         String ubicacion = getArguments().getString("ubicacion");
+        String key = getArguments().getString("key");
 
         // Mostrar datos en la interfaz del fragment
         TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaInicio);
@@ -54,6 +58,13 @@ public class TarjetaDesafioInicioFragment extends Fragment {
                 }
             }
         }
+
+        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
+        imgTarjeta.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), MainActivity.class); // TODO Cambiar MainActivity por Geolocalización
+            intent.putExtra("desafioId", key); // Pasar la key del desafío
+            startActivity(intent);
+        });
 
         return view;
 

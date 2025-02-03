@@ -103,8 +103,6 @@ public class Descubrir extends AppCompatActivity {
 
                     }
 
-                    Toast.makeText(Descubrir.this, "Lectura correcta", Toast.LENGTH_SHORT).show();
-
                 } else {
                     Toast.makeText(Descubrir.this, "El desafio no existe", Toast.LENGTH_SHORT).show();
                 }
