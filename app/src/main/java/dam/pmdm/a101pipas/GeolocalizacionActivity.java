@@ -3,6 +3,7 @@ package dam.pmdm.a101pipas;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,10 +25,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Dot;
+import com.google.android.gms.maps.model.Gap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PatternItem;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,11 +42,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.android.PolyUtil;
+
+import java.util.Arrays;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class GeolocalizacionActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private DatabaseReference dbRef;
     // TODO: desafioAct sacar el nombre del desafío con el intent
     //String desafioAct = getIntent().getStringExtra("nombreDesafio");
 
@@ -49,6 +64,10 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
     private LatLng coordenadasAct;
     private Marker markerUsuario;
     private LatLngBounds.Builder areaMarcadores;
+    private LatLngBounds.Builder areaUsuarioExpCerca;
+
+    private Polyline rutaMasCercana;
+    private LatLng experienciaMasCercana;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +81,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
         });
 
         areaMarcadores = new LatLngBounds.Builder();
+        areaUsuarioExpCerca = new LatLngBounds.Builder();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -72,12 +92,6 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             mapFragment.getMapAsync(this);
         }
 
-        if (!comprobarPermisoUbicacion()) {
-            pedirPermisoUbicacion();
-        } else {
-            getUbicacionActual();  // Si ya tiene permiso, obtiene la ubicación directamente
-        }
-
         FloatingActionButton btnMiUbicacion = findViewById(R.id.btnMiUbicacion);
         FloatingActionButton btnTodasUbicaciones = findViewById(R.id.btnTodasUbicaciones);
 
@@ -85,7 +99,8 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             @Override
             public void onClick(View view) {
                 if (mMap != null) {
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+                    zoomCamaraGeneral();
+
                 }
             }
         });
@@ -95,8 +110,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             public void onClick(View view) {
                 if (comprobarPermisoUbicacion()) {
                     if (coordenadasAct != null) {
-                        // Mover la cámara solo a la ubicación del usuario
-                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(coordenadasAct, 17));
+                        zoomCamaraUsuarioExpMasCercana();
                     } else {
                         Toast.makeText(GeolocalizacionActivity.this, "Ubicación no disponible", Toast.LENGTH_SHORT).show();
                     }
@@ -105,6 +119,32 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                 }
             }
         });
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        if (!comprobarPermisoUbicacion()) {
+            pedirPermisoUbicacion();
+        } else {
+            getUbicacionActual();  // Si ya tiene permiso, obtiene la ubicación directamente
+        }
+
+        cargarExperiencias();
+
+        // Como llegar en Google Maps andando
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(@NonNull Marker marker) {
+                LatLng position = marker.getPosition();
+                String uri = "google.navigation:q=" + position.latitude + "," + position.longitude + "&mode=w";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intent.setPackage("com.google.android.apps.maps");
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -128,12 +168,15 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                         markerUsuario.remove();
                     }
 
-                    markerUsuario =  mMap.addMarker(new MarkerOptions().position(coordenadasAct).title("Aventurero").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_localizacion_usuario)));
+                    markerUsuario = mMap.addMarker(new MarkerOptions().position(coordenadasAct).title("Aventurero").icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_localizacion_usuario)));
 
                     areaMarcadores.include(coordenadasAct);
+                    areaUsuarioExpCerca.include(coordenadasAct);
 
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
-//                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadasAct, 13f));
+                    zoomCamaraUsuarioExpMasCercana();
+
+                    cargarExperiencias();
+
                 } else {
                     Toast.makeText(GeolocalizacionActivity.this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show();
                 }
@@ -163,28 +206,10 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
         }
     }
 
-    @Override
-    public void onMapReady(@NonNull GoogleMap googleMap) {
-        mMap = googleMap;
-
-        cargarExperiencias();
-
-        // Como llegar en Google Maps andando
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(@NonNull Marker marker) {
-                LatLng position = marker.getPosition();
-                String uri = "google.navigation:q=" + position.latitude + "," + position.longitude + "&mode=w";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intent.setPackage("com.google.android.apps.maps");
-                startActivity(intent);
-            }
-        });
-    }
-
     private void cargarExperiencias() {
         // TODO: cambiar por desafioAct
-        dbRef = FirebaseDatabase.getInstance().getReference("desafios").child("101Monologos").child("experiencias");
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("desafios").child("101Monologos").child("experiencias");
+
         // Método para cargar los datos una vez y no volver a hacerlo ni seguir escuchando cambios
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -192,7 +217,8 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                 String titulo;
                 String coordenadas;
                 String[] aCoordenadas;
-                for (DataSnapshot experiencia: snapshot.getChildren()) {
+                double distanciaMinima = Double.MAX_VALUE;
+                for (DataSnapshot experiencia : snapshot.getChildren()) {
                     titulo = experiencia.child("titulo").getValue(String.class);
                     coordenadas = experiencia.child("coordenadas").getValue(String.class);
 
@@ -207,12 +233,37 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)))
                                 .showInfoWindow();
 
+                        if (coordenadasAct != null) {
+                            double distancia = calcularDistancia(coordenadasAct, posicion);
+                            if (distancia < distanciaMinima) {
+                                distanciaMinima = distancia;
+                                experienciaMasCercana = posicion;
+                            }
+                        }
+
                     }
 
-                    if (coordenadasAct != null) {
-                        areaMarcadores.include(coordenadasAct);
-                    }
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+
+                }
+
+                if (experienciaMasCercana != null) {
+                    areaUsuarioExpCerca.include(experienciaMasCercana);
+                }
+
+                if (coordenadasAct != null) {
+                    areaMarcadores.include(coordenadasAct);
+                    areaUsuarioExpCerca.include(coordenadasAct);
+                }
+
+                if (!comprobarPermisoUbicacion()) {
+                    zoomCamaraGeneral();
+                } else {
+                    zoomCamaraUsuarioExpMasCercana();
+                }
+
+
+                if (coordenadasAct != null && experienciaMasCercana != null) {
+                    trazarRuta(coordenadasAct, experienciaMasCercana);
                 }
             }
 
@@ -222,4 +273,72 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             }
         });
     }
+
+    private void zoomCamaraUsuarioExpMasCercana() {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaUsuarioExpCerca.build(), 100));
+    }
+
+    private void zoomCamaraGeneral() {
+        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+    }
+
+    private double calcularDistancia(LatLng posUsuario, LatLng posExp) {
+        float[] results = new float[1];
+        Location.distanceBetween(posUsuario.latitude, posUsuario.longitude, posExp.latitude, posExp.longitude, results);
+        return results[0]; // Retorno la distancia que está almacenada en el espacio 0
+    }
+
+    private void trazarRuta(LatLng origen, LatLng destino) {
+//        if (rutaMasCercana != null) {
+//            rutaMasCercana.remove();
+//        }
+//        rutaMasCercana = mMap.addPolyline(new PolylineOptions()
+//                .add(origen, destino)
+//                .width(10)
+//                .color(Color.BLUE));
+
+
+        String origenStr = origen.latitude + "," + origen.longitude;
+        String destinoStr = destino.latitude + "," + destino.longitude;
+        String apiKeyGoogle = "AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0";
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://maps.googleapis.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GoogleMapsAPIRuta servicioGoogle = retrofit.create(GoogleMapsAPIRuta.class);
+        Call<RutaRespuestaGoogleMaps> llamada = servicioGoogle.obtenerRuta(origenStr, destinoStr, "walking", apiKeyGoogle);
+
+        llamada.enqueue(new Callback<RutaRespuestaGoogleMaps>() {
+            @Override
+            public void onResponse(Call<RutaRespuestaGoogleMaps> call, Response<RutaRespuestaGoogleMaps> response) {
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<RutaRespuestaGoogleMaps.Ruta> rutas = response.body().getRutas();
+                    if (!rutas.isEmpty()) {
+                        String puntosCodificados = rutas.get(0).getPolyline().getPoints();
+                        List<LatLng> puntosRuta = PolyUtil.decode(puntosCodificados);
+
+                        if (rutaMasCercana != null) {
+                            rutaMasCercana.remove();
+                        }
+
+                        List<PatternItem> pattern = Arrays.asList(new Dot(), new Gap(10));
+
+                        rutaMasCercana = mMap.addPolyline(new PolylineOptions()
+                                .addAll(puntosRuta).width(20).color(Color.BLUE).pattern(pattern));
+                    }
+                } else {
+                    Toast.makeText(GeolocalizacionActivity.this, "No se pudo obtener la ruta", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RutaRespuestaGoogleMaps> call, Throwable t) {
+                System.out.println("Error conseguir ruta más cercana con GoogleMaps" + t.getMessage());
+            }
+        });
+    }
+
 }
