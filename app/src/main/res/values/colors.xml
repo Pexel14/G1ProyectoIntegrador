@@ -9,4 +9,5 @@
     <color name="green">#4CAF50</color>
     <color name="blue">#1976D2</color>
     <color name="light_gray">#E0E0E0</color>
+    <color name="texto_secundario">#808080</color>
 </resources>

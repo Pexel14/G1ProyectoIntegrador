@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0"/>
         <activity
             android:name=".TarjetaDesafioDescubrirFragment"
             android:exported="false" />
@@ -50,6 +53,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".GeolocalizacionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PerfilActivity"
+            android:exported="false" />
+
     </application>
+
+    <!-- Always include this permission -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Include only if your app benefits from precise location access. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

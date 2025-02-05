@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <ImageButton
+        android:id="@+id/ibtnAjustes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_ajustes"
+        android:background="@color/white"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Avatar del usuario -->
+    <ImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_perfil"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@id/ibtnAjustes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nombre de usuario -->
+    <TextView
+        android:id="@+id/txt_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nick"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/img_avatar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Handle del usuario -->
+    <TextView
+        android:id="@+id/txt_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="nombre"
+        android:textSize="16sp"
+        android:textColor="@color/texto_secundario"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nick"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Separador -->
+    <View
+        android:id="@+id/view_separator1"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:elevation="5dp"
+        android:background="@color/texto_secundario"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nombre"
+        app:layout_constraintBottom_toTopOf="@+id/ibtnDesafiosEmpezados"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp" />
+
+    <ImageButton
+        android:id="@+id/ibtnDesafiosEmpezados"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_perfil_desafios_empezados"
+        android:layout_marginVertical="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ibtnDesafiosCompletados"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"/>
+
+    <ImageButton
+        android:id="@+id/ibtnDesafiosCompletados"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_perfil_desafios_completados"
+        android:layout_marginVertical="5dp"
+        app:layout_constraintStart_toEndOf="@+id/ibtnDesafiosEmpezados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"/>
+
+    <View
+        android:id="@+id/view_separator2"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:elevation="5dp"
+        android:background="@color/texto_secundario"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnDesafiosEmpezados"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="5dp" />
+
+    <!-- RecyclerView para la lista dinámica -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_desafios"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
