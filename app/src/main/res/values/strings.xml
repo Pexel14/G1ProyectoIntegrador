@@ -15,4 +15,7 @@
     <string name="default_web_client_id">993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com</string>
     <string name="login_btn_google">INICIAR SESIÓN CON GOOGLE</string>
     <string name="login_btn_registro">Regístrate</string>
+    <string name="ranking_barra_usuario">Usuario</string>
+    <string name="ranking_barra_completadas">Completadas</string>
+    <string name="ranking_titulo">Ranking Mundial</string>
 </resources>

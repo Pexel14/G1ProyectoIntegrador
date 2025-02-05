@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -16,19 +15,15 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.auth.api.identity.Identity;
-import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.GoogleSignatureVerifier;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,16 +34,17 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-
-import dam.pmdm.a101pipas.databinding.ActivityLoginBinding;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
     static final String TAG = "Login";
-
+    public static final String [] PROHIBIDO_FIREBASE = {"$","/",".","]","#"};
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
     Button btnInicioSesion;
-    TextView tvLoginCorreoError, tvLoginContraseniaError;
+    DatabaseReference ref;
+    TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada;
 
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -64,8 +60,9 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                mAuth = FirebaseAuth.getInstance();
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
+                                guardarCorreo();
+                                mAuth = FirebaseAuth.getInstance();
                             } else {
                                 Log.d(TAG, "Inicio de sesion FALLIDO: " + task.getException());
                             }
@@ -79,19 +76,36 @@ public class Login extends AppCompatActivity {
             }
         }
     });
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        FirebaseUser usuario = mAuth.getCurrentUser();
-//
-//        if (usuario != null){
+
+    private void guardarCorreo() {
+        if (mAuth.getCurrentUser() != null){
+            String email = mAuth.getCurrentUser().getEmail();
+            email.split("@");
+            boolean encontrado = false;
+            if(email != null){
+                for (int i = 0; i < PROHIBIDO_FIREBASE.length; i++) {
+                    if (email.contains(PROHIBIDO_FIREBASE[i])){
+                        email.replaceAll(PROHIBIDO_FIREBASE[i], "");
+                    }
+                }
+                ref = FirebaseDatabase.getInstance().getReference("usuarios");
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseUser usuario = mAuth.getCurrentUser();
+
+        if (usuario != null){
 //            Intent intent = new Intent(getApplicationContext(), Inicio.class);
 //            intent.putExtra("usuario", usuario);
 //            startActivity(intent);
-//        }
-//
-//    }
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +131,7 @@ public class Login extends AppCompatActivity {
         btnInicioSesion = findViewById(R.id.btnInicioSesion);
         tvLoginContraseniaError = findViewById(R.id.tvLoginContraseniaError);
         tvLoginCorreoError = findViewById(R.id.tvLoginCorreoError);
+        tvContraseniaOlvidada = findViewById(R.id.tvContraseniaOlvidada);
         etCorreo = findViewById(R.id.etCorreo);
         etPassword = findViewById(R.id.etContrasenia);
 
@@ -128,9 +143,9 @@ public class Login extends AppCompatActivity {
             }
         });
 
-//        binding.tvContraseniaOlvidada.setOnClickListener(v->{
-//            Intent intent = new Intent(getApplicationContext(), ContraseniaOlvidada.class);
-//        });
+        tvContraseniaOlvidada.setOnClickListener(v->{
+            Intent intent = new Intent(getApplicationContext(), ContraseniaOlvidada.class);
+        });
 
         btnInicioSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,30 +159,32 @@ public class Login extends AppCompatActivity {
                 if (email.isEmpty()){
                     tvLoginCorreoError.setVisibility(View.VISIBLE);
                     tvLoginCorreoError.setText(R.string.login_correo_vacio);
+
+                    if (password.isEmpty()){
+                        tvLoginContraseniaError.setVisibility(View.VISIBLE);
+                        tvLoginContraseniaError.setText(R.string.login_contrasenia_vacia);
+                    } else {
+                        mAuth.signInWithEmailAndPassword(email, password)
+                                .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Log.d(TAG, "signInWithEmail:success");
+                                            Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                                            startActivity(intent);
+                                        } else {
+                                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                                            tvLoginCorreoError.setVisibility(View.VISIBLE);
+                                            tvLoginCorreoError.setText(R.string.login_correo_incorrecto);
+
+                                            tvLoginContraseniaError.setVisibility(View.VISIBLE);
+                                            tvLoginContraseniaError.setText(R.string.login_contrasenia_incorrecta);
+                                        }
+                                    }
+                                });
+                    }
+
                 }
-
-                if (password.isEmpty()){
-                    tvLoginContraseniaError.setVisibility(View.VISIBLE);
-                    tvLoginContraseniaError.setText(R.string.login_contrasenia_vacia);
-                }
-
-                // Parte central, signInWithEmailAndPassword obtenido de la documentación de Firebase
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "signInWithEmail:success");
-                                } else {
-                                    Log.w(TAG, "signInWithEmail:failure", task.getException());
-                                    tvLoginCorreoError.setVisibility(View.VISIBLE);
-                                    tvLoginCorreoError.setText(R.string.login_correo_incorrecto);
-
-                                    tvLoginContraseniaError.setVisibility(View.VISIBLE);
-                                    tvLoginContraseniaError.setText(R.string.login_contrasenia_incorrecta);
-                                }
-                            }
-                        });
             }
         });
 
