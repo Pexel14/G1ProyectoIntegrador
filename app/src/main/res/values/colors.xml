@@ -2,6 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="color_principal">#1FCE7D</color>
+    <color name="color_secundario_ranking">#1CB46E</color>
+    <color name="color_fondo">#F7F7F7</color>
     <color name="transparent">#00000000</color>
     <color name="green">#4CAF50</color>
     <color name="blue">#1976D2</color>

@@ -34,10 +34,19 @@
 
         <activity
             android:name=".Registro"
-            android:exported="true" >
+            android:exported="true" />
+
+        <activity
+            android:name=".ContraseniaOlvidada"
+            android:exported="false" />
+        <activity
+            android:name=".RankingGlobal"
+            android:exported="false"/>
+        <activity
+            android:name=".Login"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

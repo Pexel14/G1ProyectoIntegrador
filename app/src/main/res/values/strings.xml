@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">101Pipas</string>
+    <string name="login_correo">Correo</string>
+    <string name="login_contrasenia_incorrecta">La contraseña introducido es incorrecta</string>
+    <string name="login_correo_incorrecto">El correo introducido es incorrecto</string>
+    <string name="login_contrasenia_vacia">La contraseña no puede estar vacía</string>
+    <string name="login_correo_vacio">El correo no puede estar vacío</string>
+    <string name="login_contrasenia">Contraseña</string>
+    <string name="login_hint_contrasenia">Introduce la contraseña</string>
+    <string name="login_inicia_sesion">Iniciar Sesión</string>
+    <string name="login_contrasenia_olvidada">¿Has olvidado tu contraseña?</string>
+    <string name="login_textview_registro">¿No tienes cuenta?\nRegistrate</string>
+    <string name="login_hint_correo">Introduce el correo</string>
+    <string name="login_mas_opciones">----------- MÁS OPCIONES ----------</string>
+    <string name="default_web_client_id">993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com</string>
+    <string name="login_btn_google">INICIAR SESIÓN CON GOOGLE</string>
+    <string name="login_btn_registro">Regístrate</string>
+    <string name="ranking_barra_usuario">Usuario</string>
+    <string name="ranking_barra_completadas">Completadas</string>
+    <string name="ranking_titulo">Ranking Mundial</string>
 </resources>
