@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "993751655241",
+    "firebase_url": "https://pipas-c2489-default-rtdb.firebaseio.com",
+    "project_id": "pipas-c2489",
+    "storage_bucket": "pipas-c2489.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993751655241:android:e2c35681bf4434f3edf098",
+        "android_client_info": {
+          "package_name": "dam.pmdm.a101pipas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "993751655241-t1hrjv80eagqsjur6l4la4p8g125jhgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "dam.pmdm.a101pipas",
+            "certificate_hash": "dfbcf408869d34d7d1e377cbfa81cbf8076988ef"
+          }
+        },
+        {
+          "client_id": "993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_tjpEe43HUaR_dlsXXTXvMOd3HLmewU0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
