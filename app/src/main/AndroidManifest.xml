@@ -13,13 +13,24 @@
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
         <activity
+            android:name=".TarjetaDesafioDescubrirFragment"
+            android:exported="false" />
+        <activity
+            android:name=".Descubrir"
+            android:exported="false" />
+        <activity
+            android:name=".Inicio"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"/>
+        <activity
             android:name=".listado_experiencias"
             android:exported="false" />
 
         <activity
             android:name=".RecuperarContrasenia"
             android:exported="false"/>
-
 
         <activity
             android:name=".Registro"
@@ -30,16 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
-        <activity
-            android:name=".User"
-            android:exported="false"/>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
     </application>
 
 </manifest>

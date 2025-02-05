@@ -1,0 +1,9 @@
+<!-- res/drawable/rounded_corner_box.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Color de fondo -->
+    <solid android:color="@color/white" />
+
+    <!-- Bordes redondeados -->
+    <corners android:radius="100dp" /> <!-- Ajusta el radio según tus preferencias -->
+
+</shape>

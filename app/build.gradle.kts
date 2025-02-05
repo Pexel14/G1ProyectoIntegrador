@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "dam.pmdm.a101pipas"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "dam.pmdm.a101pipas"
@@ -52,5 +52,3 @@ dependencies {
 
 
 }
-
-
