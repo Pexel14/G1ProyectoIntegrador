@@ -1,8 +1,20 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.models;
 
-public class Experiencias {
-    String titulo, descripcion, link, mapa, imgExperiencia;
-    boolean completada;
+public class Experiencia {
+    private String titulo, descripcion, link, mapa, imgExperiencia;
+    private boolean completada;
+
+    public Experiencia() {
+    }
+
+    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.link = link;
+        this.mapa = mapa;
+        this.imgExperiencia = imgExperiencia;
+        this.completada = completada;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -49,18 +61,6 @@ public class Experiencias {
     }
 
     public void setCompletada(boolean completada) {
-        this.completada = completada;
-    }
-
-    public Experiencias() {
-    }
-
-    public Experiencias(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
-        this.titulo = titulo;
-        this.descripcion = descripcion;
-        this.link = link;
-        this.mapa = mapa;
-        this.imgExperiencia = imgExperiencia;
         this.completada = completada;
     }
 }

@@ -1,6 +1,5 @@
 package dam.pmdm.a101pipas;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +38,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
     static final String TAG = "Login";
-    public static final String [] PROHIBIDO_FIREBASE = {"$","/",".","]","#"};
+    public static final String[] PROHIBIDO_FIREBASE = {"$", "/", ".", "]", "#"};
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
     Button btnInicioSesion;
@@ -51,15 +50,15 @@ public class Login extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == RESULT_OK){
+            if (result.getResultCode() == RESULT_OK) {
                 Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
-                try{
+                try {
                     GoogleSignInAccount googleSignInAccount = accountTask.getResult(ApiException.class);
                     AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
                     mAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
                                 guardarCorreo();
                                 mAuth = FirebaseAuth.getInstance();
@@ -78,13 +77,13 @@ public class Login extends AppCompatActivity {
     });
 
     private void guardarCorreo() {
-        if (mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             String email = mAuth.getCurrentUser().getEmail();
             email.split("@");
             boolean encontrado = false;
-            if(email != null){
+            if (email != null) {
                 for (int i = 0; i < PROHIBIDO_FIREBASE.length; i++) {
-                    if (email.contains(PROHIBIDO_FIREBASE[i])){
+                    if (email.contains(PROHIBIDO_FIREBASE[i])) {
                         email.replaceAll(PROHIBIDO_FIREBASE[i], "");
                     }
                 }
@@ -99,10 +98,10 @@ public class Login extends AppCompatActivity {
 
         FirebaseUser usuario = mAuth.getCurrentUser();
 
-        if (usuario != null){
-//            Intent intent = new Intent(getApplicationContext(), Inicio.class);
-//            intent.putExtra("usuario", usuario);
-//            startActivity(intent);
+        if (usuario != null) {
+            Intent intent = new Intent(getApplicationContext(), Inicio.class);
+            intent.putExtra("usuario", usuario);
+            startActivity(intent);
         }
 
     }
@@ -143,8 +142,9 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        tvContraseniaOlvidada.setOnClickListener(v->{
-            Intent intent = new Intent(getApplicationContext(), ContraseniaOlvidada.class);
+        tvContraseniaOlvidada.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), RecuperarContrasenia.class);
+            startActivity(intent);
         });
 
         btnInicioSesion.setOnClickListener(new View.OnClickListener() {
@@ -156,11 +156,11 @@ public class Login extends AppCompatActivity {
                 String password = String.valueOf(etPassword.getText());
 
                 // Comprobar si los campos están vacíos
-                if (email.isEmpty()){
+                if (email.isEmpty()) {
                     tvLoginCorreoError.setVisibility(View.VISIBLE);
                     tvLoginCorreoError.setText(R.string.login_correo_vacio);
 
-                    if (password.isEmpty()){
+                    if (password.isEmpty()) {
                         tvLoginContraseniaError.setVisibility(View.VISIBLE);
                         tvLoginContraseniaError.setText(R.string.login_contrasenia_vacia);
                     } else {
@@ -171,6 +171,7 @@ public class Login extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG, "signInWithEmail:success");
                                             Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                                            intent.putExtra("correo_usuario", email);
                                             startActivity(intent);
                                         } else {
                                             Log.w(TAG, "signInWithEmail:failure", task.getException());

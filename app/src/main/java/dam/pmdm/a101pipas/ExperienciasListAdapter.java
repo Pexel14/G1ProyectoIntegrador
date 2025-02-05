@@ -15,12 +15,14 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import dam.pmdm.a101pipas.models.Experiencia;
+
 public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasListAdapter.ExperienciaViewHolder> {
 
-    private List<Experiencias> experienciaList;
+    private List<Experiencia> experienciaList;
 
     // Constructor
-    public ExperienciasListAdapter(List<Experiencias> experienciaList) {
+    public ExperienciasListAdapter(List<Experiencia> experienciaList) {
         this.experienciaList = experienciaList;
     }
 
@@ -35,7 +37,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
     @Override
     public void onBindViewHolder(@NonNull ExperienciaViewHolder holder, int position) {
         // Obtener la experiencia actual
-        Experiencias experiencia = experienciaList.get(position);
+        Experiencia experiencia = experienciaList.get(position);
 
         // Cargar imagen usando Picasso
         Picasso.get()

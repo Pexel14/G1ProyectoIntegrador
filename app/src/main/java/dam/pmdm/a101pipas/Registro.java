@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import dam.pmdm.a101pipas.databinding.ActivityRegistroBinding;
+import dam.pmdm.a101pipas.models.User;
 
 
 import com.google.firebase.auth.FirebaseAuth;

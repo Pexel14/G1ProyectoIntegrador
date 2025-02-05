@@ -1,7 +1,6 @@
 package dam.pmdm.a101pipas;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -19,11 +18,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class listado_experiencias extends AppCompatActivity {
+import dam.pmdm.a101pipas.models.Experiencia;
+
+public class ListadoExperiencias extends AppCompatActivity {
 
     RecyclerView recyclerView;
     ExperienciasListAdapter adapter;
-    List<Experiencias> experienciaList;
+    List<Experiencia> experienciaList;
     DatabaseReference ref;
 
     @Override
@@ -32,7 +33,7 @@ public class listado_experiencias extends AppCompatActivity {
         setContentView(R.layout.activity_listado_experiencias);
 
         // Nombre del desafío
-        String nombreDesafio = "101Croquetas";
+        String nombreDesafio = getIntent().getStringExtra("id_desafio");
 
         recyclerView = findViewById(R.id.rvExperiencias);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +67,7 @@ public class listado_experiencias extends AppCompatActivity {
                     boolean completada = completadaValue != null && completadaValue;
 
                     if (titulo != null && descripcion != null) {
-                        Experiencias experiencia = new Experiencias(
+                        Experiencia experiencia = new Experiencia(
                                 titulo, descripcion,
                                 link != null ? link : "",
                                 mapa != null ? mapa : "",
@@ -96,12 +97,3 @@ public class listado_experiencias extends AppCompatActivity {
         });
     }
 }
-
-
-
-/*
-Pasar desafio
-Intent intent = new Intent(this, listado_experiencias.class);
-intent.putExtra("desafioId", "Desafio1"); // Cambia "Desafio1" por el ID dinámico del desafío
-startActivity(intent);
-*/

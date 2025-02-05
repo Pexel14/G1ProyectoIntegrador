@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import dam.pmdm.a101pipas.models.Desafio;
 
-public class DesafioRecyclerAdapter extends RecyclerView.Adapter<DesafioRecyclerAdapter.DesafioViewHolder> {
+
+public class DesafioPerfilRecyclerAdapter extends RecyclerView.Adapter<DesafioPerfilRecyclerAdapter.DesafioViewHolder> {
 
     // Lista de usuarios para mostrar en el Recycler
-    private List<DesafioPerfil> desafioList;
+    private List<Desafio> desafioList;
 
-    public DesafioRecyclerAdapter(List<DesafioPerfil> desafioList) {
+    public DesafioPerfilRecyclerAdapter(List<Desafio> desafioList) {
         this.desafioList = desafioList;
     }
 
@@ -36,7 +38,7 @@ public class DesafioRecyclerAdapter extends RecyclerView.Adapter<DesafioRecycler
     public void onBindViewHolder(@NonNull DesafioViewHolder holder, int position) {
 
         // Obtener el usuario dentro de la lista
-        DesafioPerfil desafio = desafioList.get(position);
+        Desafio desafio = desafioList.get(position);
 
         //Cargamos la imagen con la librería Picasso
 

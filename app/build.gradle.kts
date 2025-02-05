@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.android.maps.utils)
-    implementation("com.squareup.picasso:picasso:2.8")
+    implementation(libs.picasso)
 
 
 

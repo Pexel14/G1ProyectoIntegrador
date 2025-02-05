@@ -25,22 +25,13 @@
             android:name=".Inicio"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
-            android:exported="true"/>
-        <activity
-            android:name=".listado_experiencias"
+            android:name=".ListadoExperiencias"
             android:exported="false" />
-
         <activity
             android:name=".RecuperarContrasenia"
             android:exported="false"/>
-
         <activity
             android:name=".Registro"
-            android:exported="true" />
-
-        <activity
-            android:name=".ContraseniaOlvidada"
             android:exported="false" />
         <activity
             android:name=".RankingGlobal"

@@ -1,10 +1,8 @@
 package dam.pmdm.a101pipas;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +23,7 @@ public class Inicio extends AppCompatActivity {
     FirebaseDatabase firebase;
     ValueEventListener listener;
 
-    String usuario = "usuario";
+    String usuario = getIntent().getStringExtra("usuario");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

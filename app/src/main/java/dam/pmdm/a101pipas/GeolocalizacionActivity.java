@@ -56,8 +56,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GeolocalizacionActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    // TODO: desafioAct sacar el nombre del desafío con el intent
-    //String desafioAct = getIntent().getStringExtra("nombreDesafio");
+
+    private String desafioAct = getIntent().getStringExtra("id_desafio");
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1000;
@@ -207,8 +207,8 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
     }
 
     private void cargarExperiencias() {
-        // TODO: cambiar por desafioAct
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("desafios").child("101Monologos").child("experiencias");
+
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("desafios").child(desafioAct).child("experiencias");
 
         // Método para cargar los datos una vez y no volver a hacerlo ni seguir escuchando cambios
         dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -289,14 +289,6 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
     }
 
     private void trazarRuta(LatLng origen, LatLng destino) {
-//        if (rutaMasCercana != null) {
-//            rutaMasCercana.remove();
-//        }
-//        rutaMasCercana = mMap.addPolyline(new PolylineOptions()
-//                .add(origen, destino)
-//                .width(10)
-//                .color(Color.BLUE));
-
 
         String origenStr = origen.latitude + "," + origen.longitude;
         String destinoStr = destino.latitude + "," + destino.longitude;

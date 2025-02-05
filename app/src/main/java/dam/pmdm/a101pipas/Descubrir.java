@@ -2,8 +2,6 @@ package dam.pmdm.a101pipas;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,10 +24,6 @@ public class Descubrir extends AppCompatActivity {
     TextView filtro1;
     TextView filtro2;
     TextView filtro3;
-
-    ScrollView sv1;
-    ScrollView sv2;
-    ScrollView sv3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

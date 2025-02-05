@@ -23,6 +23,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam.pmdm.a101pipas.models.Desafio;
+
 public class PerfilActivity extends AppCompatActivity {
 
     // TODO: Colocar texto info usuario del singleton
@@ -31,10 +33,10 @@ public class PerfilActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     // Creamos un adaptador
-    DesafioRecyclerAdapter adapter;
+    DesafioPerfilRecyclerAdapter adapter;
 
     // Creamos la lista de usuarios
-    List<DesafioPerfil> desafioList;
+    List<Desafio> desafioList;
 
     // Inicializamos una instancia de DatabaseReference
     DatabaseReference ref;
@@ -59,7 +61,7 @@ public class PerfilActivity extends AppCompatActivity {
         usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
         usuarioId = usuarioActual != null ? usuarioActual.getUid() : null;
 
-        tvNick = findViewById(R.id.tvNombreDesafio);
+        tvNick = findViewById(R.id.txt_nombre);
 
         tvNick.setText(usuarioActual.getDisplayName());
 
@@ -70,7 +72,7 @@ public class PerfilActivity extends AppCompatActivity {
         desafioList = new ArrayList<>();
 
         // Configuramos el adaptador y asignamos al RV
-        adapter = new DesafioRecyclerAdapter(desafioList);
+        adapter = new DesafioPerfilRecyclerAdapter(desafioList);
         recyclerView.setAdapter(adapter);
 
         // Obtenemos los datos de Firebase RealtimeDatabase
@@ -81,11 +83,11 @@ public class PerfilActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 desafioList.clear();
                 String title, id;
-                DesafioPerfil desafio;
+                Desafio desafio;
                 for(DataSnapshot data : snapshot.getChildren()){
                     title = data.child("titulo").getValue(String.class);
 
-                    desafio = new DesafioPerfil(title, 10);
+                    desafio = new Desafio(title, 10);
                     desafioList.add(desafio);
 
                 }

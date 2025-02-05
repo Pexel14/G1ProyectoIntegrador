@@ -61,10 +61,13 @@ public class TarjetaDesafioInicioFragment extends Fragment {
 
         ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
         imgTarjeta.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), MainActivity.class); // TODO Cambiar MainActivity por Geolocalización
-            intent.putExtra("desafioId", key); // Pasar la key del desafío
+            Intent intent = new Intent(getActivity(), GeolocalizacionActivity.class);
+            intent.putExtra("id_desafio", key);
             startActivity(intent);
         });
+
+        // TODO: click tarjeta intent con key desafio a clara (nombre intent = id_desafio)
+        // TODO: Replicar en descubrir con la imagen y la tarjeta
 
         return view;
 

@@ -20,12 +20,14 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import dam.pmdm.a101pipas.models.User;
+
 public class RankingGlobal extends AppCompatActivity {
     private static final String TAG = "Ranking";
     RecyclerView recyclerView;
     RankingRecyclerAdapter adapter;
     FirebaseDatabase firebase;
-    ArrayList<Usuario> listaUsuarios;
+    ArrayList<User> listaUsuarios;
     DatabaseReference ref;
 
     @Override
@@ -59,7 +61,7 @@ public class RankingGlobal extends AppCompatActivity {
                     nombre = subNodo.child("username").getValue(String.class);
                     completadas = subNodo.child("experiencias_completadas").getValue(Integer.class);
                     if(completadas != null){
-                        listaUsuarios.add(new Usuario(completadas, nombre));
+                        listaUsuarios.add(new User(completadas, nombre));
                     }
                 }
                 

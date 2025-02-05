@@ -1,10 +1,8 @@
 package dam.pmdm.a101pipas;
 
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecyclerAdapter.RankingViewHolder>{
-    private ArrayList<Usuario> listaUsuarios;
+import dam.pmdm.a101pipas.models.User;
 
-    public RankingRecyclerAdapter(ArrayList<Usuario> listaUsuarios) {
+public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecyclerAdapter.RankingViewHolder>{
+    private ArrayList<User> listaUsuarios;
+
+    public RankingRecyclerAdapter(ArrayList<User> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
 
@@ -29,7 +29,7 @@ public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecycler
 
     @Override
     public void onBindViewHolder(@NonNull RankingRecyclerAdapter.RankingViewHolder holder, int position) {
-        Usuario usuario = listaUsuarios.get(position);
+        User usuario = listaUsuarios.get(position);
         int backgroundColor;
         if (position == 0 || position == 2) {
             backgroundColor = R.color.color_principal;
@@ -48,7 +48,7 @@ public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecycler
         }
 
         holder.tvRankingTop.setText(String.valueOf((position+1)));
-        holder.tvRankingUsuario.setText(usuario.getNombre());
+        holder.tvRankingUsuario.setText(usuario.getUsername());
         holder.tvRankingCompletados.setText(String.valueOf(usuario.getExpCompletadas() * -1));
     }
 
