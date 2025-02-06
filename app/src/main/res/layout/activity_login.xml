@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginVertical="20dp"
-    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="60dp"
+    android:paddingVertical="40dp"
     android:background="@color/color_fondo"
     tools:context=".Login">
 

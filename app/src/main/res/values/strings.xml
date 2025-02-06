@@ -48,4 +48,10 @@
     <string name="list_experiencias_descripcion_ejemplo">Descripción de una experiencia muy experienciosa con jamones acuáticos de textura parecida a la goma rebozados.</string>
     <string name="list_experiencias_pagina_web">Página web</string>
     <string name="list_experiencias_ver_en_mapa">Ver en el mapa</string>
+    <string name="listado_experiencias_titulo_ejemplo">101 croquetas</string>
+    <string name="listado_experiencias_progreso">Progreso: 0 / 10 experiencias completadas</string>
+    <string name="inicio_desafios">Desafíos</string>
+    <string name="inicio_buscar">Buscar</string>
+    <string name="inicio_simbolo_mas">+</string>
+    <string name="inicio_mensaje_no_desafios">¡Ve a \'Descubrir\' \npara empezar un desafío!</string>
 </resources>

@@ -1,7 +1,9 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -133,5 +135,12 @@ public class ListadoExperiencias extends AppCompatActivity {
         refDesafios.addValueEventListener(listener);
 
         return nombreDesafio[0];
+    }
+
+    // Clic en la flecha atrás
+    public void volverAtras(View view) {
+        Intent intent = new Intent(ListadoExperiencias.this, Inicio.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -33,7 +33,7 @@
             android:layout_height="84dp"
             android:layout_marginBottom="15dp"
             android:gravity="center"
-            android:text="Desafíos"
+            android:text="@string/inicio_desafios"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
         app:layout_constraintStart_toStartOf="@id/vCajaBusquedaDescubrir"
         app:layout_constraintEnd_toStartOf="@id/btnBuscarDescubrir"
-        android:hint="Buscar"
+        android:hint="@string/inicio_buscar"
         android:background="@null"
         android:inputType="text|textNoSuggestions"
         android:textSize="20sp"/>
@@ -82,7 +82,7 @@
         app:layout_constraintBottom_toBottomOf="@id/btnAniadirDesafioInicio"
         app:layout_constraintStart_toStartOf="@id/btnAniadirDesafioInicio"
         app:layout_constraintEnd_toEndOf="@id/btnAniadirDesafioInicio"
-        android:text="+"
+        android:text="@string/inicio_simbolo_mas"
         android:textSize="40sp"
         android:textColor="@color/white"
         android:elevation="1dp"/>
@@ -108,7 +108,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="¡Ve a 'Descubrir' \npara empezar un desafío!"
+        android:text="@string/inicio_mensaje_no_desafios"
         android:textSize="30sp"
         android:textColor="@color/black"
         android:gravity="center"
