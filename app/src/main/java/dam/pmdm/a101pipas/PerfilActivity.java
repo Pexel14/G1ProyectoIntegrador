@@ -1,6 +1,9 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -47,6 +50,8 @@ public class PerfilActivity extends AppCompatActivity {
 
     TextView tvNick, tvNombre;
 
+    ImageButton ibtnAjustes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +67,17 @@ public class PerfilActivity extends AppCompatActivity {
         usuarioId = usuarioActual != null ? usuarioActual.getUid() : null;
 
         tvNick = findViewById(R.id.txt_nombre);
+        ibtnAjustes = findViewById(R.id.ibtnAjustes);
 
         tvNick.setText(usuarioActual.getDisplayName());
+
+        ibtnAjustes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AjustesActivity.class);
+                startActivity(i);
+            }
+        });
 
         recyclerView = findViewById(R.id.rv_desafios);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
