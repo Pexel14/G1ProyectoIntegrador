@@ -44,4 +44,10 @@ public class AjustesActivity extends AppCompatActivity {
             }
         });
     }
+    // Clic en la flecha atrás
+    public void volverAtras(View view) {
+        Intent intent = new Intent(AjustesActivity.this, PerfilActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -1,5 +1,6 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -92,5 +93,11 @@ public class Registro extends AppCompatActivity {
                 Toast.makeText(Registro.this, "Error al guardar el usuario en la base de datos", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    // Clic en iniciar sesion
+    public void volverAtras(View view) {
+        Intent intent = new Intent(Registro.this, Login.class);
+        startActivity(intent);
+        finish();
     }
 }

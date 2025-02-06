@@ -8,6 +8,22 @@
     android:padding="16dp"
     tools:context=".AjustesActivity">
 
+
+    <ImageView
+        android:id="@+id/imgBackAjustes"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:contentDescription="Volver"
+        android:focusable="true"
+        android:onClick="volverAtras"
+        android:src="@drawable/flecha_izquierda"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"

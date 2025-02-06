@@ -1,5 +1,6 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -94,7 +95,15 @@ public class RecuperarContrasenia extends AppCompatActivity {
             }
         });
     }
+
+    // Clic en la flecha atrás
+    public void volverAtras(View view) {
+        Intent intent = new Intent(RecuperarContrasenia.this, Login.class);
+        startActivity(intent);
+        finish();
+    }
 }
 
 
-//falta botón de volver
+
+

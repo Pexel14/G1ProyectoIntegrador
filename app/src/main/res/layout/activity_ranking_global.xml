@@ -8,12 +8,13 @@
     tools:context=".RankingGlobal">
 
     <ImageView
-        android:id="@+id/ivRankingFlecha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/imgBackRanking"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/flecha"
+        android:src="@drawable/flecha_izquierda"
+        android:onClick="volverAtras"
         android:layout_marginTop="14dp"
         android:layout_marginStart="12dp"/>
 
@@ -32,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:drawablePadding="-2dp"
-        android:layout_marginTop="50dp"/>
+        android:layout_marginTop="70dp"/>
 
     <LinearLayout
         android:id="@+id/llRankingBarraLista"

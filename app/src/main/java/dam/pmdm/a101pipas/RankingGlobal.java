@@ -1,7 +1,9 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -75,4 +77,11 @@ public class RankingGlobal extends AppCompatActivity {
         });
 
     }
+    // Clic en la flecha atrás
+    public void volverAtras(View view) {
+        Intent intent = new Intent(RankingGlobal.this, Inicio.class);
+        startActivity(intent);
+        finish();
+    }
 }
+
