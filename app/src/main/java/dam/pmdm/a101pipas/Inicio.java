@@ -33,7 +33,7 @@ public class Inicio extends AppCompatActivity {
         firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");
-
+        Log.d("Firebase", "Usuario : " + usuario);
         limpiarFragmentos();
         cargarFragmentos();
     }
@@ -44,12 +44,12 @@ public class Inicio extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 limpiarFragmentos();
-
+                Log.d("Firebase", "Desafíos : " + snapshot.getValue());
                 if (snapshot.exists()) {
                     String[] desafiosID = snapshot.getValue().toString().split(",");
                     cargarDesafiosPorId(desafiosID);
                 } else {
-                    Toast.makeText(Inicio.this, "No tienes desafíos iniciados", Toast.LENGTH_SHORT).show();
+                    mostrarMensajeCeroDesafios();
                 }
             }
 

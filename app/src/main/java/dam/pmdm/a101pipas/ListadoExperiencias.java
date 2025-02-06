@@ -1,8 +1,10 @@
 package dam.pmdm.a101pipas;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,17 +25,19 @@ import dam.pmdm.a101pipas.models.Experiencia;
 public class ListadoExperiencias extends AppCompatActivity {
 
     RecyclerView recyclerView;
+    TextView tvTitle;
     ExperienciasListAdapter adapter;
     List<Experiencia> experienciaList;
     DatabaseReference ref;
+    DatabaseReference refDesafios;
+    FirebaseDatabase firebase;
+    ValueEventListener listener;
+    String keyDesafio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_experiencias);
-
-        // Nombre del desafío
-        String nombreDesafio = getIntent().getStringExtra("id_desafio");
 
         recyclerView = findViewById(R.id.rvExperiencias);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -48,7 +52,16 @@ public class ListadoExperiencias extends AppCompatActivity {
         TextView tvProgress = findViewById(R.id.tvProgress);
 
         // Referencia a Firebase
-        ref = FirebaseDatabase.getInstance().getReference("desafios").child(nombreDesafio).child("experiencias");
+        firebase = FirebaseDatabase.getInstance();
+        keyDesafio = getIntent().getStringExtra("id_desafio");
+        ref = FirebaseDatabase.getInstance().getReference("desafios").child(keyDesafio).child("experiencias");
+
+        // Para conseguir el nombre del desafío
+        refDesafios = firebase.getReference("desafios");
+
+        // Nombre del desafío
+        tvTitle = findViewById(R.id.tvTitle);
+        conseguirNombreDesafio();
 
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -95,5 +108,30 @@ public class ListadoExperiencias extends AppCompatActivity {
                 System.err.println("Error al cargar los datos: " + error.getMessage());
             }
         });
+    }
+
+    private String conseguirNombreDesafio() {
+        final String[] nombreDesafio = {null};
+        listener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot desafio : snapshot.getChildren()) {
+                    if (desafio.getKey().equals(keyDesafio)) {
+                        Log.d("Firebase", "Nombre del desafío : " + desafio.child("titulo").getValue());
+                        nombreDesafio[0] = String.valueOf(desafio.child("titulo").getValue());
+                        tvTitle.setText(nombreDesafio[0]);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+            }
+
+        };
+        refDesafios.addValueEventListener(listener);
+
+        return nombreDesafio[0];
     }
 }

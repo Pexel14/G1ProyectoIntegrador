@@ -1,9 +1,11 @@
 package dam.pmdm.a101pipas;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,11 +15,12 @@ import androidx.fragment.app.Fragment;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 
-    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion) {
+    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String key) {
         TarjetaDesafioDescubrirFragment fragment = new TarjetaDesafioDescubrirFragment();
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putString("ubicacion", ubicacion);
+        args.putString("key", key);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,6 +34,7 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
         // Recuperar datos pasados al fragmento
         String titulo = getArguments().getString("titulo");
         String ubicacion = getArguments().getString("ubicacion");
+        String key = getArguments().getString("key");
 
         // Mostrar datos en la interfaz del fragment
         TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaDescubrir);
@@ -38,6 +42,19 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
         tvTitulo.setText(titulo);
         tvUbicacion.setText(ubicacion);
+
+        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaDesafio);
+        imgTarjeta.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), GeolocalizacionActivity.class);
+            intent.putExtra("id_desafio", key);
+            startActivity(intent);
+        });
+
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListadoExperiencias.class);
+            intent.putExtra("id_desafio", key);
+            startActivity(intent);
+        });
 
         return view;
 

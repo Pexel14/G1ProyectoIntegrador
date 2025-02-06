@@ -33,18 +33,39 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"/>
 
+        <ImageView
+            android:id="@+id/imgUbiDecoracion"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/img_ubicacion_decoracion_tarjeta"
+            android:layout_marginStart="16dp"
+            android:layout_alignBottom="@+id/tvUbicacionTarjetaDescubrir"/>
+
         <TextView
             android:id="@+id/tvUbicacionTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvTituloTarjetaDescubrir"
+            android:layout_alignStart="@id/imgUbiDecoracion"
+            android:layout_alignBottom="@+id/imgTarjetaDesafio"
+            android:layout_marginLeft="24dp"
             android:layout_marginTop="8dp"
-            android:text="Ubicación"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:textColor="#CACACA"/>
+            android:layout_marginBottom="2dp"
+            android:text="Ubicación"
+            android:textColor="#CACACA"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <ImageView
+            android:id="@+id/imgTarjetaDesafio"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/tvTituloTarjetaDescubrir"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/img_tarjeta_inicio" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

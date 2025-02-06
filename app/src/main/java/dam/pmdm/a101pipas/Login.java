@@ -34,12 +34,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     static final String TAG = "Login";
     public static final String[] PROHIBIDO_FIREBASE = {"$", "/", ".", "]", "#"};
+    FirebaseDatabase firebase;
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
     Button btnInicioSesion, btnRegistro;
@@ -100,16 +104,22 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        String usuario = mAuth.getCurrentUser().getEmail();
 
-        if (usuario != null) {
-            String id = usuario.split("@")[0].replace(".", "");
-            Log.d(TAG, "ID: " + id);
-            Intent intent = new Intent(getApplicationContext(), Inicio.class);
-            intent.putExtra("usuario", id);
-            startActivity(intent);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            String usuario = currentUser.getEmail();
+            if (usuario != null) {
+                String id = usuario.split("@")[0].replace(".", "");
+                Log.d(TAG, "ID: " + id);
+                Intent intent = new Intent(getApplicationContext(), Descubrir.class);
+                intent.putExtra("usuario", id);
+                startActivity(intent);
+                finish(); // Cierra la actividad de login para que no se pueda volver atrás
+            }
+        } else {
+            Log.d(TAG, "No hay usuario autenticado");
         }
-
     }
 
     @Override

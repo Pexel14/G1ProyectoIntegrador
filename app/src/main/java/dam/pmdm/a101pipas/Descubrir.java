@@ -69,7 +69,7 @@ public class Descubrir extends AppCompatActivity {
                         // Los fragments los creo dentro de los if's porque un fragment no se puede poner en dos contenedores, asi que si un desafío cumple
                         // dos condiciones, crea dos idénticos y asigna cada uno a su filtro
                         if (ciudad.equals(filtro1.getText())) {
-                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
+                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
 
                             getSupportFragmentManager()
                                     .beginTransaction()
@@ -78,7 +78,7 @@ public class Descubrir extends AppCompatActivity {
                         }
 
                         if (sEtiquetas.contains("Gastronomía")) {
-                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
+                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
 
                             getSupportFragmentManager()
                                     .beginTransaction()
@@ -87,7 +87,7 @@ public class Descubrir extends AppCompatActivity {
                         }
 
                         if (sEtiquetas.contains("Cultura")) {
-                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
+                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
 
                             getSupportFragmentManager()
                                     .beginTransaction()

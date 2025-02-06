@@ -57,7 +57,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
 
     private GoogleMap mMap;
 
-    private String desafioAct = getIntent().getStringExtra("id_desafio");
+    private String desafioAct; // Lo inicializo en onCreate
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1000;
@@ -79,6 +79,8 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        desafioAct = getIntent().getStringExtra("id_desafio");
 
         areaMarcadores = new LatLngBounds.Builder();
         areaUsuarioExpCerca = new LatLngBounds.Builder();

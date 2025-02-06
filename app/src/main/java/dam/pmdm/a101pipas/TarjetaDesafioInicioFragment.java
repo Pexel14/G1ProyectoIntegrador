@@ -2,6 +2,7 @@ package dam.pmdm.a101pipas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class TarjetaDesafioInicioFragment extends Fragment {
         TextView tvTitulo = view.findViewById(R.id.tvTituloTarjetaInicio);
         TextView tvEtiquietas = view.findViewById(R.id.tvEtiquetasTarjetaInicio);
         TextView tvDescripción = view.findViewById(R.id.tvDescripcionTarjetaInicio);
-        TextView tvUbicacion = view.findViewById(R.id.tvUbicacionTarjetaInicio);
+        TextView tvUbicacion = view.findViewById(R.id.tvUbicacionTarjetaDescubrir);
 
         tvTitulo.setText(titulo);
         tvDescripción.setText(descripcion);
@@ -62,6 +63,12 @@ public class TarjetaDesafioInicioFragment extends Fragment {
         ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
         imgTarjeta.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), GeolocalizacionActivity.class);
+            intent.putExtra("id_desafio", key);
+            startActivity(intent);
+        });
+
+        view.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ListadoExperiencias.class);
             intent.putExtra("id_desafio", key);
             startActivity(intent);
         });
