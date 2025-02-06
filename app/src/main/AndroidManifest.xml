@@ -16,6 +16,9 @@
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".AjustesActivity"
             android:exported="false" />
 

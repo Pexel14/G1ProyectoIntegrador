@@ -2,16 +2,15 @@ package dam.pmdm.a101pipas;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,7 +27,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.models.Desafio;
 
-public class PerfilActivity extends AppCompatActivity {
+public class PerfilActivity extends Fragment {
 
     // TODO: Colocar texto info usuario del singleton
 
@@ -52,35 +51,30 @@ public class PerfilActivity extends AppCompatActivity {
 
     ImageButton ibtnAjustes;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_perfil);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
 
         usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
         usuarioId = usuarioActual != null ? usuarioActual.getUid() : null;
 
-        tvNick = findViewById(R.id.txt_nombre);
-        ibtnAjustes = findViewById(R.id.ibtnAjustes);
+        tvNick = view.findViewById(R.id.txt_nombre);
+        ibtnAjustes = view.findViewById(R.id.ibtnAjustes);
 
         tvNick.setText(usuarioActual.getDisplayName());
 
         ibtnAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), AjustesActivity.class);
+                Intent i = new Intent(getActivity(), AjustesActivity.class);
                 startActivity(i);
             }
         });
 
-        recyclerView = findViewById(R.id.rv_desafios);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView = view.findViewById(R.id.rv_desafios);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Lista de elementos del RV
         desafioList = new ArrayList<>();
@@ -115,5 +109,9 @@ public class PerfilActivity extends AppCompatActivity {
                 System.out.println("Error rv perfil desafios" + error.getMessage());
             }
         });
+
+        return view;
+
     }
+
 }
