@@ -17,7 +17,7 @@
             android:id="@+id/vColorTarjetaInicio"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#2196F3"/>
+            android:background="@color/blue"/>
 
         <TextView
             android:id="@+id/tvEtiquetasTarjetaInicio"
@@ -67,19 +67,6 @@
             android:layout_marginRight="16dp"
             android:textColor="@color/black"/>
 
-<!--        <TextView-->
-<!--            android:id="@+id/tvUbicacionTarjetaInicio"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_below="@id/tvDescripcionTarjetaInicio"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:text="Ubicación"-->
-<!--            android:textSize="14sp"-->
-<!--            android:textStyle="italic"-->
-<!--            android:layout_marginLeft="82dp"-->
-<!--            android:layout_marginRight="16dp"-->
-<!--            android:textColor="#CACACA"/>-->
-
         <ImageView
             android:id="@+id/imgUbiDecoracion"
             android:layout_width="20dp"
@@ -99,7 +86,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="2dp"
             android:text="Ubicación"
-            android:textColor="#CACACA"
+            android:textColor="@color/texto_desapercibido"
             android:textSize="14sp"
             android:textStyle="italic" />
 

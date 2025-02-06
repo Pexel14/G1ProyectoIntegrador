@@ -18,7 +18,7 @@
             android:id="@+id/vColorTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:background="#2196F3"/>
+            android:background="@color/blue"/>
 
         <TextView
             android:id="@+id/tvTituloTarjetaDescubrir"
@@ -52,7 +52,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="2dp"
             android:text="Ubicación"
-            android:textColor="#CACACA"
+            android:textColor="@color/texto_desapercibido"
             android:textSize="14sp"
             android:textStyle="italic" />
 

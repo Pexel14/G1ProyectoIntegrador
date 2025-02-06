@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="✔️"
                 android:textSize="18sp"
-                android:textColor="@color/green" />
+                android:textColor="@color/color_principal" />
         </LinearLayout>
 
 
@@ -74,7 +74,7 @@
                 android:text="Página web"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/color_principal"
                 android:layout_gravity="start" />
 
             <View
@@ -89,7 +89,7 @@
                 android:text="Ver en el mapa"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/color_principal"
                 android:layout_gravity="end" />
         </LinearLayout>
 
