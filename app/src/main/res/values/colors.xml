@@ -7,8 +7,9 @@
     <color name="color_fondo">#F7F7F7</color>
     <color name="transparent">#00000000</color>
     <color name="green">#4CAF50</color>
-    <color name="blue">#1976D2</color>
+    <color name="blue">#2196F3</color>
     <color name="rojo">#E46363</color>
     <color name="light_gray">#E0E0E0</color>
     <color name="texto_secundario">#808080</color>
+    <color name="texto_desapercibido">#CACACA</color>
 </resources>

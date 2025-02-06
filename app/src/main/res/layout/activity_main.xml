@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:background="@color/color_fondo"
         android:elevation="8dp"
-        app:itemIconTint="#1E1E1E"
+        app:itemIconTint="@color/black"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -18,8 +18,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REGÍSTRATE"
-            android:textColor="#000000"
+            android:text="@string/registro_titulo_registrate"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:textSize="34sp"
             android:layout_marginBottom="52dp"
@@ -31,8 +31,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre de usuario"
-            android:textColor="#00C853"
+            android:text="@string/registro_nombre_de_usuario"
+            android:textColor="@color/color_principal"
             android:textStyle="bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
@@ -40,19 +40,19 @@
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escribe tu nombre de usuario"
+            android:hint="@string/registro_escribe_nombre_usuario"
             android:inputType="text"
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="#808080" />
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Correo"
-            android:textColor="#00C853"
+            android:text="@string/registro_correo"
+            android:textColor="@color/color_principal"
             android:textStyle="bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
@@ -60,19 +60,19 @@
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escribe tu correo"
+            android:hint="@string/registro_escribe_tu_correo"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="#808080" />
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Contraseña"
-            android:textColor="#00C853"
+            android:text="@string/registro_contrasenia"
+            android:textColor="@color/color_principal"
             android:textStyle="bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
@@ -80,19 +80,19 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escribe tu contraseña"
+            android:hint="@string/registro_escribe_tu_contrasenia"
             android:inputType="textPassword"
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="#808080" />
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Repite la contraseña"
-            android:textColor="#00C853"
+            android:text="@string/registro_repite_contrasenia"
+            android:textColor="@color/color_principal"
             android:textStyle="bold"
             android:textSize="14sp"
             android:layout_marginBottom="4dp" />
@@ -100,20 +100,20 @@
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Repite tu contraseña"
+            android:hint="@string/registro_repite_contrasenia"
             android:inputType="textPassword"
             android:padding="10dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="#808080" />
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:id="@+id/tvPasswordError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Las contraseñas no coinciden"
-            android:textColor="#FF0000"
+            android:text="@string/registro_contrasenias_no_coinciden"
+            android:textColor="@color/rojo"
             android:textSize="12sp"
             android:visibility="gone"
             android:layout_marginBottom="16dp" />
@@ -123,11 +123,11 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Regístrate"
-            android:textColor="#FFFFFF"
+            android:text="@string/registro_registrate"
+            android:textColor="@color/white"
             android:textStyle="bold"
             android:padding="12dp"
-            android:backgroundTint="#00C853"
+            android:backgroundTint="@color/color_principal"
             android:layout_marginBottom="16dp" />
 
 
@@ -135,8 +135,8 @@
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="¿Ya tienes cuenta? Inicia sesión"
-            android:textColor="#00C853"
+            android:text="@string/registro_ya_tienes_cuenta"
+            android:textColor="@color/color_principal"
             android:layout_gravity="center"
             android:layout_marginTop="8dp"
             android:onClick="volverAtras"

@@ -27,7 +27,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="10. Croqueta de calamar"
+                android:text="@string/list_experiencias_titulo_ejemplo"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/black" />
@@ -36,9 +36,9 @@
                 android:id="@+id/tvCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="✔️"
+                android:text="@string/list_experiencias_emoji_check"
                 android:textSize="18sp"
-                android:textColor="@color/green" />
+                android:textColor="@color/color_principal" />
         </LinearLayout>
 
 
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Descripción de una experiencia muy experienciosa con jamones acuáticos de textura parecida a la goma rebozados."
+            android:text="@string/list_experiencias_descripcion_ejemplo"
             android:textSize="14sp"
             android:textColor="@color/black" />
 
@@ -71,10 +71,10 @@
                 android:id="@+id/tvWebLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Página web"
+                android:text="@string/list_experiencias_pagina_web"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/color_principal"
                 android:layout_gravity="start" />
 
             <View
@@ -86,10 +86,10 @@
                 android:id="@+id/tvMapLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ver en el mapa"
+                android:text="@string/list_experiencias_ver_en_mapa"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/color_principal"
                 android:layout_gravity="end" />
         </LinearLayout>
 
