@@ -21,7 +21,7 @@
             style="@android:style/Widget.Material.ProgressBar.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/verde"
+            android:indeterminateTint="@color/color_principal"
             android:max="100"
             android:progress="0"
             android:indeterminate="false"

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
@@ -41,7 +42,7 @@ public class Login extends AppCompatActivity {
     public static final String[] PROHIBIDO_FIREBASE = {"$", "/", ".", "]", "#"};
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
-    Button btnInicioSesion;
+    Button btnInicioSesion, btnRegistro;
     DatabaseReference ref;
     TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada;
 
@@ -61,9 +62,15 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
                                 guardarCorreo();
-                                mAuth = FirebaseAuth.getInstance();
+                                Intent intent = new Intent(getApplicationContext(), Inicio.class);
+                                String usuario = mAuth.getCurrentUser().getEmail();
+                                Log.d(TAG, "Usuario: " + usuario);
+                                String id = usuario.split("@")[0].replace(".", "");
+                                intent.putExtra("usuario", id);
+                                startActivity(intent);
                             } else {
                                 Log.d(TAG, "Inicio de sesion FALLIDO: " + task.getException());
+                                Toast.makeText(Login.this, R.string.login_google_fallido, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -78,16 +85,14 @@ public class Login extends AppCompatActivity {
 
     private void guardarCorreo() {
         if (mAuth.getCurrentUser() != null) {
-            String email = mAuth.getCurrentUser().getEmail();
-            email.split("@");
-            boolean encontrado = false;
-            if (email != null) {
+            String emailCortado = mAuth.getCurrentUser().getEmail().split("@")[0];
+            if (emailCortado != null) {
                 for (int i = 0; i < PROHIBIDO_FIREBASE.length; i++) {
-                    if (email.contains(PROHIBIDO_FIREBASE[i])) {
-                        email.replaceAll(PROHIBIDO_FIREBASE[i], "");
+                    if (emailCortado.contains(PROHIBIDO_FIREBASE[i])) {
+                        emailCortado.replaceAll(PROHIBIDO_FIREBASE[i], "");
                     }
                 }
-                ref = FirebaseDatabase.getInstance().getReference("usuarios");
+//                ref = FirebaseDatabase.getInstance().getReference("usuarios");
             }
         }
     }
@@ -95,12 +100,13 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        FirebaseUser usuario = mAuth.getCurrentUser();
+        String usuario = mAuth.getCurrentUser().getEmail();
 
         if (usuario != null) {
+            String id = usuario.split("@")[0].replace(".", "");
+            Log.d(TAG, "ID: " + id);
             Intent intent = new Intent(getApplicationContext(), Inicio.class);
-            intent.putExtra("usuario", usuario);
+            intent.putExtra("usuario", id);
             startActivity(intent);
         }
 
@@ -117,17 +123,18 @@ public class Login extends AppCompatActivity {
             return insets;
         });
 
+        FirebaseApp.getInstance("[DEFAULT]");
+
         mAuth = FirebaseAuth.getInstance();
-        FirebaseApp.initializeApp(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mAuth = FirebaseAuth.getInstance();
 
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         btnInicioSesion = findViewById(R.id.btnInicioSesion);
+        btnRegistro = findViewById(R.id.btnRegistro);
         tvLoginContraseniaError = findViewById(R.id.tvLoginContraseniaError);
         tvLoginCorreoError = findViewById(R.id.tvLoginCorreoError);
         tvContraseniaOlvidada = findViewById(R.id.tvContraseniaOlvidada);
@@ -139,6 +146,14 @@ public class Login extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = mGoogleSignInClient.getSignInIntent();
                 activityResultLauncher.launch(intent);
+            }
+        });
+
+        btnRegistro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Registro.class);
+                startActivity(intent);
             }
         });
 
@@ -156,14 +171,8 @@ public class Login extends AppCompatActivity {
                 String password = String.valueOf(etPassword.getText());
 
                 // Comprobar si los campos están vacíos
-                if (email.isEmpty()) {
-                    tvLoginCorreoError.setVisibility(View.VISIBLE);
-                    tvLoginCorreoError.setText(R.string.login_correo_vacio);
-
-                    if (password.isEmpty()) {
-                        tvLoginContraseniaError.setVisibility(View.VISIBLE);
-                        tvLoginContraseniaError.setText(R.string.login_contrasenia_vacia);
-                    } else {
+                if (!email.isEmpty()) {
+                    if (!password.isEmpty()) {
                         mAuth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener(Login.this, new OnCompleteListener<AuthResult>() {
                                     @Override
@@ -171,7 +180,8 @@ public class Login extends AppCompatActivity {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG, "signInWithEmail:success");
                                             Intent intent = new Intent(getApplicationContext(), Inicio.class);
-                                            intent.putExtra("correo_usuario", email);
+                                            String id = email.split("@")[0].replace(".", "");
+                                            intent.putExtra("usuario", id);
                                             startActivity(intent);
                                         } else {
                                             Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -183,8 +193,14 @@ public class Login extends AppCompatActivity {
                                         }
                                     }
                                 });
+                    } else {
+                        tvLoginContraseniaError.setVisibility(View.VISIBLE);
+                        tvLoginContraseniaError.setText(R.string.login_contrasenia_vacia);
                     }
 
+                } else {
+                    tvLoginCorreoError.setVisibility(View.VISIBLE);
+                    tvLoginCorreoError.setText(R.string.login_correo_vacio);
                 }
             }
         });

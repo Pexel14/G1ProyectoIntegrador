@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -54,7 +55,5 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.android.maps.utils)
     implementation(libs.picasso)
-
-
 
 }

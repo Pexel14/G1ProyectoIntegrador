@@ -23,13 +23,13 @@ public class Inicio extends AppCompatActivity {
     FirebaseDatabase firebase;
     ValueEventListener listener;
 
-    String usuario = getIntent().getStringExtra("usuario");
+    private String usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
-
+        usuario = getIntent().getStringExtra("usuario");
         firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");

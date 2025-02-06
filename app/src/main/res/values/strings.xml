@@ -18,4 +18,5 @@
     <string name="ranking_barra_usuario">Usuario</string>
     <string name="ranking_barra_completadas">Completadas</string>
     <string name="ranking_titulo">Ranking Mundial</string>
+    <string name="login_google_fallido">No se ha podido completar el inicio de sesión</string>
 </resources>
