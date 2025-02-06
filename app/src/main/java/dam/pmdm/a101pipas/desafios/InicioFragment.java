@@ -1,12 +1,17 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.desafios;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -16,26 +21,33 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Inicio extends AppCompatActivity {
+import dam.pmdm.a101pipas.R;
 
-    DatabaseReference refDesafiosUsuario;
-    DatabaseReference refDesafios;
-    FirebaseDatabase firebase;
-    ValueEventListener listener;
+public class InicioFragment extends Fragment {
+
+    private DatabaseReference refDesafiosUsuario;
+    private DatabaseReference refDesafios;
+    private FirebaseDatabase firebase;
+    private ValueEventListener listener;
 
     private String usuario;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_inicio);
-        usuario = getIntent().getStringExtra("usuario");
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_inicio, container, false);
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MiAppPrefs", Context.MODE_PRIVATE);
+        usuario = sharedPreferences.getString("usuario", "usuario");
+
         firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");
-        Log.d("Firebase", "Usuario : " + usuario);
+
         limpiarFragmentos();
         cargarFragmentos();
+
+        return view;
     }
 
     // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
@@ -44,12 +56,12 @@ public class Inicio extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 limpiarFragmentos();
-                Log.d("Firebase", "Desafíos : " + snapshot.getValue());
+
                 if (snapshot.exists()) {
                     String[] desafiosID = snapshot.getValue().toString().split(",");
                     cargarDesafiosPorId(desafiosID);
                 } else {
-                    mostrarMensajeCeroDesafios();
+                    Toast.makeText(getContext(), "No tienes desafíos iniciados", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -77,7 +89,7 @@ public class Inicio extends AppCompatActivity {
                             String ciudad = desafio.child("ciudad").getValue(String.class);
 
                             TarjetaDesafioInicioFragment fragment = TarjetaDesafioInicioFragment.newInstance(titulo, etiquetas, descripcion, ciudad, desafio.getKey());
-                            getSupportFragmentManager()
+                            getChildFragmentManager()
                                     .beginTransaction()
                                     .add(R.id.contenedorFragmentsInicio, fragment)
                                     .commit();
@@ -95,11 +107,11 @@ public class Inicio extends AppCompatActivity {
         refDesafios.addValueEventListener(listener);
     }
 
-    private void mostrarMensajeCeroDesafios() {
+    private void mostrarMensajeCeroDesafios(View view) {
         // Si no hay fragments, muestra un mensaje
         TextView tvMensajeCeroFragments;
-        tvMensajeCeroFragments = findViewById(R.id.tvMensajeCeroFragmentsInicio);
-        if (getSupportFragmentManager().getFragments().isEmpty()) {
+        tvMensajeCeroFragments = view.findViewById(R.id.tvMensajeCeroFragmentsInicio);
+        if (getChildFragmentManager().getFragments().isEmpty()) {
             tvMensajeCeroFragments.setVisibility(View.VISIBLE);
         } else {
             tvMensajeCeroFragments.setVisibility(View.GONE);
@@ -107,9 +119,9 @@ public class Inicio extends AppCompatActivity {
     }
 
     private void limpiarFragmentos() {
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
             if (fragment instanceof TarjetaDesafioInicioFragment) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                getChildFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
     }

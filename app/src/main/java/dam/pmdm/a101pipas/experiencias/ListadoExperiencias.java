@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.experiencias;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ListadoExperiencias extends AppCompatActivity {

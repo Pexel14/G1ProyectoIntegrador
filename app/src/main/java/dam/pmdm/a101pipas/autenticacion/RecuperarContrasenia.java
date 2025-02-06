@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.autenticacion;
 
 import android.content.Intent;
 import android.os.Bundle;

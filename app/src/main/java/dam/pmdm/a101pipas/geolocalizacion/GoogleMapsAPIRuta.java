@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.geolocalizacion;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

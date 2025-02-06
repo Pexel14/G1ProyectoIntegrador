@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.geolocalizacion;
 
 import android.Manifest;
 import android.content.Intent;
@@ -47,6 +47,7 @@ import com.google.maps.android.PolyUtil;
 import java.util.Arrays;
 import java.util.List;
 
+import dam.pmdm.a101pipas.R;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

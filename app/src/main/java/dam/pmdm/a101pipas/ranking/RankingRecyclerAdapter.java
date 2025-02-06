@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.ranking;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.User;
 
 public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecyclerAdapter.RankingViewHolder>{

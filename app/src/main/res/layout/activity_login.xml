@@ -8,7 +8,7 @@
     android:paddingHorizontal="60dp"
     android:paddingVertical="40dp"
     android:background="@color/color_fondo"
-    tools:context=".Login">
+    tools:context=".autenticacion.Login">
 
     <ImageView
         android:id="@+id/ivLogo"

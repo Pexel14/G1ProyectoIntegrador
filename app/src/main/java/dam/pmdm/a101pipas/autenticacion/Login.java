@@ -1,6 +1,8 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.autenticacion;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,6 +39,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+
+import dam.pmdm.a101pipas.MainActivity;
+import dam.pmdm.a101pipas.desafios.InicioFragment;
+import dam.pmdm.a101pipas.R;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -66,12 +72,10 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
                                 guardarCorreo();
-                                Intent intent = new Intent(getApplicationContext(), Inicio.class);
                                 String usuario = mAuth.getCurrentUser().getEmail();
                                 Log.d(TAG, "Usuario: " + usuario);
                                 String id = usuario.split("@")[0].replace(".", "");
-                                intent.putExtra("usuario", id);
-                                startActivity(intent);
+                                mandarUsuarioInicio(id);
                             } else {
                                 Log.d(TAG, "Inicio de sesion FALLIDO: " + task.getException());
                                 Toast.makeText(Login.this, R.string.login_google_fallido, Toast.LENGTH_SHORT).show();
@@ -105,21 +109,18 @@ public class Login extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-
-        if (currentUser != null) {
-            String usuario = currentUser.getEmail();
+        if (mAuth.getCurrentUser() != null) {
+            String usuario = mAuth.getCurrentUser().getEmail();
             if (usuario != null) {
                 String id = usuario.split("@")[0].replace(".", "");
                 Log.d(TAG, "ID: " + id);
-                Intent intent = new Intent(getApplicationContext(), Descubrir.class);
-                intent.putExtra("usuario", id);
-                startActivity(intent);
-                finish(); // Cierra la actividad de login para que no se pueda volver atrás
+                if (id.equals("prueba")) {
+                    id = "usuario";
+                }
+                mandarUsuarioInicio(id);
             }
-        } else {
-            Log.d(TAG, "No hay usuario autenticado");
         }
+
     }
 
     @Override
@@ -189,10 +190,11 @@ public class Login extends AppCompatActivity {
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
                                             Log.d(TAG, "signInWithEmail:success");
-                                            Intent intent = new Intent(getApplicationContext(), Inicio.class);
                                             String id = email.split("@")[0].replace(".", "");
-                                            intent.putExtra("usuario", id);
-                                            startActivity(intent);
+                                            if (id.equals("prueba")) {
+                                                id = "usuario";
+                                            }
+                                            mandarUsuarioInicio(id);
                                         } else {
                                             Log.w(TAG, "signInWithEmail:failure", task.getException());
                                             tvLoginCorreoError.setVisibility(View.VISIBLE);
@@ -215,6 +217,19 @@ public class Login extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void mandarUsuarioInicio(String idUsuario) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("MiAppPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("usuario", idUsuario);
+        editor.apply();
+
+
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 
 

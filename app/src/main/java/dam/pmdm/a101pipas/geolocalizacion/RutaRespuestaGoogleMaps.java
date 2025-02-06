@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.geolocalizacion;
 
 import com.google.gson.annotations.SerializedName;
 

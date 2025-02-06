@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.perfil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import dam.pmdm.a101pipas.autenticacion.Login;
+import dam.pmdm.a101pipas.R;
 
 public class AjustesActivity extends AppCompatActivity {
 
