@@ -1,15 +1,16 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.desafios;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import dam.pmdm.a101pipas.R;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 

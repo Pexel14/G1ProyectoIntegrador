@@ -1,12 +1,15 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.desafios;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
@@ -15,30 +18,34 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class Descubrir extends AppCompatActivity {
+import dam.pmdm.a101pipas.R;
 
-    DatabaseReference ref;
-    FirebaseDatabase firebase;
-    ValueEventListener listener;
+public class DescubrirFragment extends Fragment {
 
-    TextView filtro1;
-    TextView filtro2;
-    TextView filtro3;
+    private DatabaseReference ref;
+    private FirebaseDatabase firebase;
+    private ValueEventListener listener;
 
+    private TextView filtro1;
+    private TextView filtro2;
+    private TextView filtro3;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_descubrir);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_descubrir, container, false);
 
         firebase = FirebaseDatabase.getInstance(); // Inicializa Firebase correctamente
         ref = firebase.getReference("desafios"); // Apunta a "desafios"
 
-        filtro1 = findViewById(R.id.tvFiltro1Descubrir);
-        filtro2 = findViewById(R.id.tvFiltro2Descubrir);
-        filtro3 = findViewById(R.id.tvFiltro3Descubrir);
+        filtro1 = view.findViewById(R.id.tvFiltro1Descubrir);
+        filtro2 = view.findViewById(R.id.tvFiltro2Descubrir);
+        filtro3 = view.findViewById(R.id.tvFiltro3Descubrir);
 
         limpiarFragmentos();
         cargarFragmentos();
+
+        return view;
     }
 
     // De momento éste método son pruebas manuales
@@ -71,7 +78,7 @@ public class Descubrir extends AppCompatActivity {
                         if (ciudad.equals(filtro1.getText())) {
                             TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
 
-                            getSupportFragmentManager()
+                            getChildFragmentManager()
                                     .beginTransaction()
                                     .add(R.id.contenedorFragmentsDescubrir, fragment)
                                     .commit();
@@ -80,7 +87,7 @@ public class Descubrir extends AppCompatActivity {
                         if (sEtiquetas.contains("Gastronomía")) {
                             TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
 
-                            getSupportFragmentManager()
+                            getChildFragmentManager()
                                     .beginTransaction()
                                     .add(R.id.contenedorFragmentsDescubrir2, fragment)
                                     .commit();
@@ -89,7 +96,7 @@ public class Descubrir extends AppCompatActivity {
                         if (sEtiquetas.contains("Cultura")) {
                             TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad);
 
-                            getSupportFragmentManager()
+                            getChildFragmentManager()
                                     .beginTransaction()
                                     .add(R.id.contenedorFragmentsDescubrir3, fragment)
                                     .commit();
@@ -98,11 +105,11 @@ public class Descubrir extends AppCompatActivity {
                     }
 
                 } else {
-                    Toast.makeText(Descubrir.this, "El desafio no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "El desafio no existe", Toast.LENGTH_SHORT).show();
                 }
 
                 // Aseguramos que las transacciones de fragments se procesen antes de actualizar el mensaje
-                getSupportFragmentManager().executePendingTransactions();
+                getChildFragmentManager().executePendingTransactions();
 
             }
 
@@ -118,9 +125,9 @@ public class Descubrir extends AppCompatActivity {
     }
 
     private void limpiarFragmentos() {
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
             if (fragment instanceof TarjetaDesafioDescubrirFragment) {
-                getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+                getChildFragmentManager().beginTransaction().remove(fragment).commit();
             }
         }
     }

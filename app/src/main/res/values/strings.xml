@@ -19,4 +19,6 @@
     <string name="ranking_barra_completadas">Completadas</string>
     <string name="ranking_titulo">Ranking Mundial</string>
     <string name="login_google_fallido">No se ha podido completar el inicio de sesión</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -8,7 +8,7 @@
     android:layout_marginVertical="20dp"
     android:layout_marginHorizontal="20dp"
     android:background="@color/color_fondo"
-    tools:context=".Login">
+    tools:context=".autenticacion.Login">
 
     <ImageView
         android:id="@+id/ivLogo"

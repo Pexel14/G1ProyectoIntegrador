@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.ranking;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.User;
 
 public class RankingGlobal extends AppCompatActivity {

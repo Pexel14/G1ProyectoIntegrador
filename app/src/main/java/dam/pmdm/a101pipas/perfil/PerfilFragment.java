@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas;
+package dam.pmdm.a101pipas.perfil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,9 +25,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Desafio;
 
-public class PerfilActivity extends Fragment {
+public class PerfilFragment extends Fragment {
 
     // TODO: Colocar texto info usuario del singleton
 

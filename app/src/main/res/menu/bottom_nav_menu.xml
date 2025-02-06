@@ -15,6 +15,7 @@
         android:id="@+id/navigation_social"
         android:icon="@drawable/ic_social"
         android:title="" />
+
     <item
         android:id="@+id/navigation_perfil"
         android:icon="@drawable/ic_perfil"
