@@ -61,13 +61,13 @@ public class InicioFragment extends Fragment {
                     String[] desafiosID = snapshot.getValue().toString().split(",");
                     cargarDesafiosPorId(desafiosID);
                 } else {
-                    Toast.makeText(getContext(), "No tienes desafíos iniciados", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.inicio_fragment_no_desafios_iniciados, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+                Log.e("Firebase", getString(R.string.inicio_fragment_error_consulta) + error.getMessage());
             }
         };
 
@@ -82,7 +82,7 @@ public class InicioFragment extends Fragment {
                     for (int i=0; i<desafiosId.length; i++) {
                         String desafioId = desafio.child("id").getValue().toString();
                         if (desafioId.equals(desafiosId[i])) { // Si el campo 'id' del desafío está en la lista de desafíos del usuario
-                            Log.d("Firebase", usuario + " tiene está en el desafío con ID " + desafiosId[i] + ", cuyo nombre es '" + desafio.child("titulo").getValue() + "'");
+                            Log.d("Firebase", usuario + getString(R.string.inicio_fragment_log_desafio_1) + desafiosId[i] + getString(R.string.inicio_fragment_log_desafio_2) + desafio.child("titulo").getValue() + getString(R.string.inicio_fragment_coma));
                             String titulo = desafio.child("titulo").getValue(String.class);
                             String[] etiquetas = desafio.child("etiquetas").getValue(String.class).split(",");
                             String descripcion = desafio.child("descripcion").getValue(String.class);
@@ -100,7 +100,7 @@ public class InicioFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+                Log.e("Firebase", R.string.inicio_fragment_error_consulta + error.getMessage());
             }
 
         };

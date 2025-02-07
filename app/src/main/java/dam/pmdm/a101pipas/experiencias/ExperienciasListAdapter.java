@@ -72,7 +72,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         // Mostrar o esconder el check de completado
         if (experiencia.isCompletada()) {
             holder.tvCheck.setVisibility(View.VISIBLE);
-            holder.tvCheck.setText("✔️ Completada");
+            holder.tvCheck.setText(R.string.experiencias_listadas_exp_completada);
         } else {
             holder.tvCheck.setVisibility(View.GONE);
         }

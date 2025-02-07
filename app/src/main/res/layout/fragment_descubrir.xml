@@ -33,7 +33,7 @@
             android:layout_height="84dp"
             android:layout_marginBottom="15dp"
             android:gravity="center"
-            android:text="Descubrir"
+            android:text="@string/descubrir_fragment_titulo"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold" />

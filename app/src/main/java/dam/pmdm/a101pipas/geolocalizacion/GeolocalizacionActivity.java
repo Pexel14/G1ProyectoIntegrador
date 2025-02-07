@@ -115,7 +115,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                     if (coordenadasAct != null) {
                         zoomCamaraUsuarioExpMasCercana();
                     } else {
-                        Toast.makeText(GeolocalizacionActivity.this, "Ubicación no disponible", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ubicacion_no_disponible, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     pedirPermisoUbicacion();
@@ -181,7 +181,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                     cargarExperiencias();
 
                 } else {
-                    Toast.makeText(GeolocalizacionActivity.this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ubicacion_actual_inobtenible, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -204,7 +204,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                 // Permiso concedido
                 getUbicacionActual();
             } else {
-                Toast.makeText(this, "Se recomienda conceder permisos de ubicación", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.geolocalizacion_recomendacion_permisos_ubicacion, Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -272,7 +272,7 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println("Error al leer experiencias bbdd:\n" + error.getMessage());
+                System.out.println(getString(R.string.geolocalizacion_error_leer_exp) + error.getMessage());
             }
         });
     }
@@ -325,13 +325,13 @@ public class GeolocalizacionActivity extends AppCompatActivity implements OnMapR
                                 .addAll(puntosRuta).width(20).color(Color.BLUE).pattern(pattern));
                     }
                 } else {
-                    Toast.makeText(GeolocalizacionActivity.this, "No se pudo obtener la ruta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ruta_inobtenible, Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<RutaRespuestaGoogleMaps> call, Throwable t) {
-                System.out.println("Error conseguir ruta más cercana con GoogleMaps" + t.getMessage());
+                System.out.println(getString(R.string.geolocalizacion_error_ruta_cercana) + t.getMessage());
             }
         });
     }

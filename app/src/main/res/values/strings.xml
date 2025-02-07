@@ -34,7 +34,7 @@
     <string name="registro_repite_contrasenia">Repite la contraseña</string>
     <string name="registro_contrasenias_no_coinciden">Las contraseñas no coinciden</string>
     <string name="registro_registrate">Regístrate</string>
-    <string name="registro_ya_tienes_cuenta">¿Ya tienes cuenta? Inicia sesión</string>
+    <string name="registro_ya_tienes_cuenta">¿Ya tienes cuenta?\nInicia sesión</string>
     <string name="perfil_nick">nick</string>
     <string name="perfil_nombre">nombre</string>
     <string name="tarjeta_descubrir_ubicacion">Ubicación</string>
@@ -56,4 +56,37 @@
     <string name="inicio_mensaje_no_desafios">¡Ve a \'Descubrir\' \npara empezar un desafío!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="recuperar_contrasenia_cuenta_no_encontrada_2">Cuenta no encontrada en la base de datos.</string>
+    <string name="recuperar_contrasenia_error_base_de_datos">Error en la base de datos</string>
+    <string name="recuperar_contrasenia_correo_recuperacion_enviado">Correo de recuperación enviado</string>
+    <string name="recuperar_contrasenia_correo_no_registrado_auth">Este correo no está registrado en Firebase Auth.</string>
+    <string name="recuperar_contrasenia_error_enviar_correo">Error al enviar el correo.</string>
+    <string name="recuperar_contrasenia_correo_vacio">El correo no puede estar vacío</string>
+    <string name="registro_rellena_todos_los_campos">Por favor, rellena todos los campos</string>
+    <string name="registro_contrasenias_no_coinciden_2">Las contraseñas no coinciden</string>
+    <string name="registro_contrasenia_6_caracteres">La contraseña debe tener al menos 6 caracteres</string>
+    <string name="registro_error_registro">"Error al registrar usuario: "</string>
+    <string name="registro_usuario_registrado">Usuario registrado con éxito</string>
+    <string name="registro_guardar_usuario_db_error">Error al guardar el usuario en la base de datos</string>
+    <string name="descubrir_fragmentos_desafio_no_existe">El desafio no existe</string>
+    <string name="descubrir_fragment_error_consulta">"Error en la consulta: "</string>
+    <string name="inicio_fragment_no_desafios_iniciados">No tienes desafíos iniciados</string>
+    <string name="inicio_fragment_error_consulta">"Error en la consulta: "</string>
+    <string name="inicio_fragment_log_desafio_1">" tiene está en el desafío con ID "</string>
+    <string name="inicio_fragment_log_desafio_2">, cuyo nombre es \'</string>
+    <string name="inicio_fragment_coma">\'</string>
+    <string name="experiencias_listadas_exp_completada">✔️ Completada</string>
+    <string name="listado_experiencias_tvProgress_1">"Progreso: "</string>
+    <string name="listado_experiencias_tvProgress_2">" experiencias completadas"</string>
+    <string name="listado_experiencias_log_1">"Nombre del desafío : "</string>
+    <string name="listado_experiencias_error_consulta">"Error en la consulta: "</string>
+    <string name="geolocalizacion_ubicacion_no_disponible">Ubicación no disponible</string>
+    <string name="geolocalizacion_ubicacion_actual_inobtenible">No se pudo obtener la ubicación actual</string>
+    <string name="geolocalizacion_recomendacion_permisos_ubicacion">Se recomienda conceder permisos de ubicación</string>
+    <string name="geolocalizacion_error_leer_exp">Error al leer experiencias bbdd:\n</string>
+    <string name="geolocalizacion_ruta_inobtenible">No se pudo obtener la ruta</string>
+    <string name="geolocalizacion_error_ruta_cercana">Error conseguir ruta más cercana con GoogleMaps</string>
+    <string name="social_texto">APARTADO SOCIAL</string>
+    <string name="descubrir_fragment_titulo">Descubrir</string>
+    <string name="ajustes_cerrar_sesion">Cerrar Sesión</string>
 </resources>

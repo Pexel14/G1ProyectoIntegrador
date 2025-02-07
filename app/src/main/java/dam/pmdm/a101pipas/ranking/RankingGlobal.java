@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.desafios.InicioFragment;
 import dam.pmdm.a101pipas.models.User;
 
 public class RankingGlobal extends AppCompatActivity {
@@ -80,7 +81,7 @@ public class RankingGlobal extends AppCompatActivity {
     }
     // Clic en la flecha atrás
     public void volverAtras(View view) {
-        Intent intent = new Intent(RankingGlobal.this, Inicio.class);
+        Intent intent = new Intent(RankingGlobal.this, InicioFragment.class);
         startActivity(intent);
         finish();
     }

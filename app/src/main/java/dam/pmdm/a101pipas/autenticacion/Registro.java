@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.ActivityRegistroBinding;
 import dam.pmdm.a101pipas.models.User;
 
@@ -46,13 +47,13 @@ public class Registro extends AppCompatActivity {
 
 
                 if (username.isEmpty() || email.isEmpty() || contrasenia.isEmpty() || confirmPassword.isEmpty()) {
-                    Toast.makeText(Registro.this, "Por favor, rellena todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Registro.this, R.string.registro_rellena_todos_los_campos, Toast.LENGTH_SHORT).show();
                 } else if (!contrasenia.equals(confirmPassword)) {
                     binding.tvPasswordError.setVisibility(View.VISIBLE);
-                    binding.tvPasswordError.setText("Las contraseñas no coinciden");
+                    binding.tvPasswordError.setText(R.string.registro_contrasenias_no_coinciden_2);
                 } else if (contrasenia.length() < 6) {
                     binding.tvPasswordError.setVisibility(View.VISIBLE);
-                    binding.tvPasswordError.setText("La contraseña debe tener al menos 6 caracteres");
+                    binding.tvPasswordError.setText(R.string.registro_contrasenia_6_caracteres);
                 } else {
                     binding.tvPasswordError.setVisibility(View.GONE);
 
@@ -66,7 +67,7 @@ public class Registro extends AppCompatActivity {
                                         guardarUsuarioEnDatabase(username, email, contrasenia);
                                     }
                                 } else {
-                                    Toast.makeText(Registro.this, "Error al registrar usuario: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                    Toast.makeText(Registro.this, getString(R.string.registro_error_registro) + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }
                             });
                 }
@@ -83,14 +84,14 @@ public class Registro extends AppCompatActivity {
         // Guardar en Firebase Realtime Database
         databaseReference.child(id).setValue(user).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(Registro.this, "Usuario registrado con éxito", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Registro.this, R.string.registro_usuario_registrado, Toast.LENGTH_SHORT).show();
 
                 binding.etEmail.setText("");
                 binding.etPassword.setText("");
                 binding.etConfirmPassword.setText("");
                 binding.etUsername.setText("");
             } else {
-                Toast.makeText(Registro.this, "Error al guardar el usuario en la base de datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Registro.this, R.string.registro_guardar_usuario_db_error, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.experiencias.ListadoExperiencias;
 import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionActivity;
 
 public class TarjetaDesafioInicioFragment extends Fragment {

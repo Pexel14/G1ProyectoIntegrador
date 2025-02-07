@@ -105,7 +105,7 @@ public class DescubrirFragment extends Fragment {
                     }
 
                 } else {
-                    Toast.makeText(getContext(), "El desafio no existe", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.descubrir_fragmentos_desafio_no_existe, Toast.LENGTH_SHORT).show();
                 }
 
                 // Aseguramos que las transacciones de fragments se procesen antes de actualizar el mensaje
@@ -115,7 +115,7 @@ public class DescubrirFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+                Log.e("Firebase", getString(R.string.descubrir_fragment_error_consulta) + error.getMessage());
             }
 
         };

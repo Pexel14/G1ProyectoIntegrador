@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.ActivityRecuperarContraseniaBinding;
 
 public class RecuperarContrasenia extends AppCompatActivity {
@@ -44,7 +45,7 @@ public class RecuperarContrasenia extends AppCompatActivity {
                 String email = binding.etEmail.getText().toString().trim();
 
                 if (email.isEmpty()) {
-                    binding.tvErrorMessage.setText("El correo no puede estar vacío");
+                    binding.tvErrorMessage.setText(R.string.recuperar_contrasenia_correo_vacio);
                     binding.tvErrorMessage.setVisibility(View.VISIBLE);
                     return;
                 }
@@ -66,14 +67,14 @@ public class RecuperarContrasenia extends AppCompatActivity {
                     enviarCorreoRecuperacion(email);
                 } else {
                     // El usuario NO existe en la base de datos
-                    binding.tvErrorMessage.setText("Cuenta no encontrada en la base de datos.");
+                    binding.tvErrorMessage.setText(R.string.recuperar_contrasenia_cuenta_no_encontrada_2);
                     binding.tvErrorMessage.setVisibility(View.VISIBLE);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(RecuperarContrasenia.this, "Error en la base de datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RecuperarContrasenia.this, R.string.recuperar_contrasenia_error_base_de_datos, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -83,12 +84,12 @@ public class RecuperarContrasenia extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(RecuperarContrasenia.this, "Correo de recuperación enviado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RecuperarContrasenia.this, R.string.recuperar_contrasenia_correo_recuperacion_enviado, Toast.LENGTH_SHORT).show();
                 } else {
                     if (task.getException() instanceof FirebaseAuthInvalidUserException) {
-                        binding.tvErrorMessage.setText("Este correo no está registrado en Firebase Auth.");
+                        binding.tvErrorMessage.setText(R.string.recuperar_contrasenia_correo_no_registrado_auth);
                     } else {
-                        binding.tvErrorMessage.setText("Error al enviar el correo.");
+                        binding.tvErrorMessage.setText(R.string.recuperar_contrasenia_error_enviar_correo);
                     }
                     binding.tvErrorMessage.setVisibility(View.VISIBLE);
                 }

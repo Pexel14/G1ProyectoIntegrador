@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.desafios.InicioFragment;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ListadoExperiencias extends AppCompatActivity {
@@ -101,7 +102,7 @@ public class ListadoExperiencias extends AppCompatActivity {
 
                 int porcentaje = (totalExperiencias > 0) ? (experienciasCompletadas * 100 / totalExperiencias) : 0;
                 progressBar.setProgress(porcentaje);
-                tvProgress.setText("Progreso: " + experienciasCompletadas + " / " + totalExperiencias + " experiencias completadas");
+                tvProgress.setText(getString(R.string.listado_experiencias_tvProgress_1) + experienciasCompletadas + " / " + totalExperiencias + getString(R.string.listado_experiencias_tvProgress_2));
 
                 adapter.notifyDataSetChanged();
             }
@@ -120,7 +121,7 @@ public class ListadoExperiencias extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot desafio : snapshot.getChildren()) {
                     if (desafio.getKey().equals(keyDesafio)) {
-                        Log.d("Firebase", "Nombre del desafío : " + desafio.child("titulo").getValue());
+                        Log.d("Firebase", getString(R.string.listado_experiencias_log_1) + desafio.child("titulo").getValue());
                         nombreDesafio[0] = String.valueOf(desafio.child("titulo").getValue());
                         tvTitle.setText(nombreDesafio[0]);
                     }
@@ -129,7 +130,7 @@ public class ListadoExperiencias extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error en la consulta: " + error.getMessage());
+                Log.e("Firebase", getString(R.string.listado_experiencias_error_consulta) + error.getMessage());
             }
 
         };
@@ -140,7 +141,7 @@ public class ListadoExperiencias extends AppCompatActivity {
 
     // Clic en la flecha atrás
     public void volverAtras(View view) {
-        Intent intent = new Intent(ListadoExperiencias.this, Inicio.class);
+        Intent intent = new Intent(ListadoExperiencias.this, InicioFragment.class);
         startActivity(intent);
         finish();
     }
