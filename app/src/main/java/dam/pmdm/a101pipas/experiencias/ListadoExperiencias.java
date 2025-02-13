@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
-import dam.pmdm.a101pipas.desafios.InicioFragment;
+import dam.pmdm.a101pipas.desafios.inicio.InicioFragment;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ListadoExperiencias extends AppCompatActivity {

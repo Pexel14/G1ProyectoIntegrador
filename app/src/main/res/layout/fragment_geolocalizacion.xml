@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".geolocalizacion.GeolocalizacionActivity">
+    tools:context=".geolocalizacion.GeolocalizacionFragment">
 
 
     <!-- Fragmento del mapa de Google con atributos personalizados -->

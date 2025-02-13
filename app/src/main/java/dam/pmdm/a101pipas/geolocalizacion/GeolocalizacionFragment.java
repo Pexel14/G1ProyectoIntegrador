@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -54,7 +55,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class GeolocalizacionActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 

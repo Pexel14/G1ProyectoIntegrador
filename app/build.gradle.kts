@@ -26,14 +26,12 @@ android {
             )
         }
     }
-
-    viewBinding{
-        enable = true
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -50,6 +48,7 @@ dependencies {
     implementation(libs.play.services.auth)
     implementation(libs.navigation.ui)
     implementation(libs.navigation.fragment)
+    implementation(libs.lifecycle.viewmodel.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

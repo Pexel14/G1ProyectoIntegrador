@@ -1,4 +1,4 @@
-package dam.pmdm.a101pipas.desafios;
+package dam.pmdm.a101pipas.desafios.descubrir;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,15 +14,16 @@ import androidx.fragment.app.Fragment;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.experiencias.ListadoExperiencias;
-import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionActivity;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 
-    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String key) {
+    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String[] etiquetas, String key) {
         TarjetaDesafioDescubrirFragment fragment = new TarjetaDesafioDescubrirFragment();
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putString("ubicacion", ubicacion);
+        args.putStringArray("etiquetas", etiquetas);
         args.putString("key", key);
         fragment.setArguments(args);
         return fragment;
@@ -48,7 +49,7 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
         ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaDesafio);
         imgTarjeta.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), GeolocalizacionActivity.class);
+            Intent intent = new Intent(getActivity(), GeolocalizacionFragment.class);
             intent.putExtra("id_desafio", key);
             startActivity(intent);
         });
@@ -62,4 +63,5 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
         return view;
 
     }
+
 }

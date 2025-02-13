@@ -37,7 +37,7 @@
             android:name=".ranking.RankingGlobal"
             android:exported="false" />
         <activity
-            android:name=".geolocalizacion.GeolocalizacionActivity"
+            android:name=".geolocalizacion.GeolocalizacionFragment"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Login"

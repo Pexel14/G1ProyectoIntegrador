@@ -23,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import dam.pmdm.a101pipas.R;
-import dam.pmdm.a101pipas.desafios.InicioFragment;
+import dam.pmdm.a101pipas.desafios.inicio.InicioFragment;
 import dam.pmdm.a101pipas.models.User;
 
 public class RankingGlobal extends AppCompatActivity {

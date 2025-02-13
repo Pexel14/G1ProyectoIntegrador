@@ -7,15 +7,21 @@
 
     <fragment
         android:id="@+id/navigation_inicio"
-        android:name="dam.pmdm.a101pipas.desafios.InicioFragment"
+        android:name="dam.pmdm.a101pipas.desafios.inicio.InicioFragment"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio" />
 
     <fragment
         android:id="@+id/navigation_descubrir"
-        android:name="dam.pmdm.a101pipas.desafios.DescubrirFragment"
+        android:name="dam.pmdm.a101pipas.desafios.descubrir.DescubrirFragment"
         android:label="Descubrir"
         tools:layout="@layout/fragment_descubrir" />
+
+    <fragment
+        android:id="@+id/navigation_geolocalizacion"
+        android:name="dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment"
+        android:label="Geolocalizacion"
+        tools:layout="@layout/fragment_geolocalizacion" />
 
     <fragment
         android:id="@+id/navigation_social"
