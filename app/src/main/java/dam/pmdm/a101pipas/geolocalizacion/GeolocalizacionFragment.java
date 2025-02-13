@@ -7,17 +7,17 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -37,18 +37,15 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.PolyUtil;
 
 import java.util.Arrays;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.databinding.FragmentGeolocalizacionBinding;
+import dam.pmdm.a101pipas.models.Experiencia;
+import dam.pmdm.a101pipas.viewModelCompartidos.DesafioViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,7 +56,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
     private GoogleMap mMap;
 
-    private String desafioAct; // Lo inicializo en onCreate
+//    private String desafioAct; // Lo inicializo en onCreate
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1000;
@@ -71,35 +68,40 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
     private Polyline rutaMasCercana;
     private LatLng experienciaMasCercana;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_geolocalizacion);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+    private FragmentGeolocalizacionBinding binding;
 
-        desafioAct = getIntent().getStringExtra("id_desafio");
+    private DesafioViewModel viewModel;
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentGeolocalizacionBinding.inflate(inflater, container, false);
+
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
+        viewModel = new ViewModelProvider(requireActivity()).get(DesafioViewModel.class);
+        Log.d("Experiencias", "Antes de observar: " + viewModel.getExperiencias().getValue());
+
 
         areaMarcadores = new LatLngBounds.Builder();
         areaUsuarioExpCerca = new LatLngBounds.Builder();
 
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
 
         // Asocio fragment con mapa
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.fgMap);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.fgMap);
         if (mapFragment != null) {
             // CUando esté listo llama al método onMapReady
             mapFragment.getMapAsync(this);
         }
 
-        FloatingActionButton btnMiUbicacion = findViewById(R.id.btnMiUbicacion);
-        FloatingActionButton btnTodasUbicaciones = findViewById(R.id.btnTodasUbicaciones);
-
-        btnTodasUbicaciones.setOnClickListener(new View.OnClickListener() {
+        binding.btnTodasUbicaciones.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mMap != null) {
@@ -109,14 +111,14 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
             }
         });
 
-        btnMiUbicacion.setOnClickListener(new View.OnClickListener() {
+        binding.btnMiUbicacion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (comprobarPermisoUbicacion()) {
                     if (coordenadasAct != null) {
                         zoomCamaraUsuarioExpMasCercana();
                     } else {
-                        Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ubicacion_no_disponible, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.geolocalizacion_ubicacion_no_disponible, Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     pedirPermisoUbicacion();
@@ -154,14 +156,14 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
     private void getUbicacionActual() {
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             pedirPermisoUbicacion();
             return;
         }
 
         Task<Location> localizacionActual = fusedLocationClient.getLastLocation();
-        localizacionActual.addOnSuccessListener(this, new OnSuccessListener<Location>() {
+        localizacionActual.addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
@@ -182,7 +184,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                     cargarExperiencias();
 
                 } else {
-                    Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ubicacion_actual_inobtenible, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.geolocalizacion_ubicacion_actual_inobtenible, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -190,7 +192,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
 
     private boolean comprobarPermisoUbicacion() {
-        return checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        return ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     private void pedirPermisoUbicacion() {
@@ -205,30 +207,26 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                 // Permiso concedido
                 getUbicacionActual();
             } else {
-                Toast.makeText(this, R.string.geolocalizacion_recomendacion_permisos_ubicacion, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), R.string.geolocalizacion_recomendacion_permisos_ubicacion, Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     private void cargarExperiencias() {
-
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("desafios").child(desafioAct).child("experiencias");
-
-        // Método para cargar los datos una vez y no volver a hacerlo ni seguir escuchando cambios
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+        viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {
+            if (experiencias != null) {
                 String titulo;
                 String coordenadas;
                 String[] aCoordenadas;
+                LatLng posicion;
                 double distanciaMinima = Double.MAX_VALUE;
-                for (DataSnapshot experiencia : snapshot.getChildren()) {
-                    titulo = experiencia.child("titulo").getValue(String.class);
-                    coordenadas = experiencia.child("coordenadas").getValue(String.class);
+                for (Experiencia exp : experiencias) {
+                    titulo = exp.getTitulo();
+                    coordenadas = exp.getCoordenadas();
 
                     if (coordenadas != null) {
                         aCoordenadas = coordenadas.split(",");
-                        LatLng posicion = new LatLng(Double.parseDouble(aCoordenadas[0]), Double.parseDouble(aCoordenadas[1]));
+                        posicion = new LatLng(Double.parseDouble(aCoordenadas[0]), Double.parseDouble(aCoordenadas[1]));
                         areaMarcadores.include(posicion);
 
                         mMap.addMarker(new MarkerOptions()
@@ -244,10 +242,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                                 experienciaMasCercana = posicion;
                             }
                         }
-
                     }
-
-
                 }
 
                 if (experienciaMasCercana != null) {
@@ -265,15 +260,9 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                     zoomCamaraUsuarioExpMasCercana();
                 }
 
-
                 if (coordenadasAct != null && experienciaMasCercana != null) {
                     trazarRuta(coordenadasAct, experienciaMasCercana);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                System.out.println(getString(R.string.geolocalizacion_error_leer_exp) + error.getMessage());
             }
         });
     }
@@ -326,7 +315,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                                 .addAll(puntosRuta).width(20).color(Color.BLUE).pattern(pattern));
                     }
                 } else {
-                    Toast.makeText(GeolocalizacionActivity.this, R.string.geolocalizacion_ruta_inobtenible, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), R.string.geolocalizacion_ruta_inobtenible, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -335,6 +324,12 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                 System.out.println(getString(R.string.geolocalizacion_error_ruta_cercana) + t.getMessage());
             }
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 
 }

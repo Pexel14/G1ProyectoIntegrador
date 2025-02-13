@@ -2,7 +2,6 @@ package dam.pmdm.a101pipas.viewModelCompartidos;
 
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -16,56 +15,45 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class DesafioViewModel extends ViewModel {
+    private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
-    private MutableLiveData<String> desafioActual;
-    private MutableLiveData<List<Experiencia>> experiencias;
-    private DatabaseReference dbRef;
+    private final MutableLiveData<String> desafioId = new MutableLiveData<>();
+    public LiveData<String> getDesafioId() { return desafioId; }
 
-    public DesafioViewModel() {
-        desafioActual = new MutableLiveData<>();
-        experiencias = new MutableLiveData<>();
-        dbRef = FirebaseDatabase.getInstance().getReference("desafios");
+    private final MutableLiveData<List<Experiencia>> experiencias = new MutableLiveData<>();
+    public LiveData<List<Experiencia>> getExperiencias() { return experiencias; }
+
+    public void setDesafioId(String id) {
+        desafioId.setValue(id);
+        getExperienciasPorDesafio(id);
     }
 
-    // Getter para el desafío actual
-    public LiveData<String> getDesafioActual() {
-        return desafioActual;
-    }
+    public void getExperienciasPorDesafio(String id) {
+        if (id == null) return;
 
-    // Setter para el desafío actual
-    public void setDesafioActual(String desafioId) {
-        desafioActual.setValue(desafioId);
-        cargarExperiencias(desafioId);
-    }
-
-    // Getter para las experiencias
-    public LiveData<List<Experiencia>> getExperiencias() {
-        return experiencias;
-    }
-
-    public void cargarExperiencias(String desafioId) {
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("desafios").child(desafioId).child("experiencias");
-
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Experiencia> experienciaList = new ArrayList<>();
-                for (DataSnapshot experienciaSnapshot : snapshot.getChildren()) {
-                    Experiencia experiencia = experienciaSnapshot.getValue(Experiencia.class);
-                    if (experiencia != null) {
-                        experienciaList.add(experiencia);
+        database.child("desafios").child(id).child("experiencias")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        List<Experiencia> listaExperiencias = new ArrayList<>();
+                        for (DataSnapshot child : snapshot.getChildren()) {
+                            String titulo = child.child("titulo").getValue(String.class);
+                            String coordenadas = child.child("coordenadas").getValue(String.class);
+                            if (titulo != null && coordenadas != null) {
+                                listaExperiencias.add(new Experiencia(titulo, coordenadas));
+                            }
+                        }
+                        experiencias.setValue(listaExperiencias);
                     }
-                }
-                experiencias.setValue(experienciaList);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("DesafioViewModel", "Error cargando experiencias: " + error.getMessage());
-            }
-        });
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        System.out.println(R.string.geolocalizacion_error_leer_exp + error.getMessage());
+                    }
+                });
     }
 }

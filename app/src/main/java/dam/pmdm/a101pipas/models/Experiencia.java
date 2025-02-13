@@ -1,22 +1,24 @@
 package dam.pmdm.a101pipas.models;
 
 public class Experiencia {
-    private String titulo, descripcion, link, mapa, imgExperiencia;
-    private boolean completada;
-    private double latitud, longitud;  // Añadir las coordenadas
+    private String titulo, descripcion, link, mapa, imgExperiencia, coordenadas;
+    private boolean completada; // Añadir las coordenadas
 
     public Experiencia() {
     }
 
-    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada, double latitud, double longitud) {
+    public Experiencia(String titulo, String coordenadas) {
+        this.titulo = titulo;
+        this.coordenadas = coordenadas;
+    }
+
+    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.link = link;
         this.mapa = mapa;
         this.imgExperiencia = imgExperiencia;
         this.completada = completada;
-        this.latitud = latitud;
-        this.longitud = longitud;
     }
 
     public String getTitulo() {
@@ -67,19 +69,10 @@ public class Experiencia {
         this.completada = completada;
     }
 
-    public double getLatitud() {
-        return latitud;
+    public String getCoordenadas() {
+        return coordenadas;
     }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
     }
 }

@@ -80,16 +80,16 @@ public class TarjetaDesafioInicioFragment extends Fragment {
         DesafioViewModel desafioViewModel = new ViewModelProvider(requireActivity()).get(DesafioViewModel.class);
 
         binding.imgTarjetaInicio.setOnClickListener(v -> {
-                desafioViewModel.setDesafioActual(key);
+                desafioViewModel.setDesafioId(key);
                 Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);});
 
 
-        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
-        imgTarjeta.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), GeolocalizacionFragment.class);
-            intent.putExtra("id_desafio", key);
-            startActivity(intent);
-        });
+//        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
+//        imgTarjeta.setOnClickListener(v -> {
+//            Intent intent = new Intent(getActivity(), GeolocalizacionFragment.class);
+//            intent.putExtra("id_desafio", key);
+//            startActivity(intent);
+//        });
 
         view.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), ListadoExperiencias.class);
