@@ -1,11 +1,9 @@
 package dam.pmdm.a101pipas.desafios.descubrir;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +14,8 @@ import androidx.navigation.Navigation;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioDescubrirBinding;
-import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioInicioBinding;
-import dam.pmdm.a101pipas.experiencias.ListadoExperiencias;
-import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment;
-import dam.pmdm.a101pipas.viewModelCompartidos.DesafioViewModel;
+import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 
@@ -59,23 +55,18 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
         tvTitulo.setText(titulo);
         tvUbicacion.setText(ubicacion);
 
-        DesafioViewModel desafioViewModel = new ViewModelProvider(requireActivity()).get(DesafioViewModel.class);
+        GeolocalizacionViewModel geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
 
         binding.imgTarjetaDesafio.setOnClickListener(v -> {
-            desafioViewModel.setDesafioId(key);
+            geolocalizacionViewModel.setDesafioId(key);
             Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);});
 
-//        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaDesafio);
-//        imgTarjeta.setOnClickListener(v -> {
-//            Intent intent = new Intent(getActivity(), GeolocalizacionFragment.class);
-//            intent.putExtra("id_desafio", key);
-//            startActivity(intent);
-//        });
+        ListadoExperienciasViewModel listadoExperienciasViewModel
+                = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
 
         view.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ListadoExperiencias.class);
-            intent.putExtra("id_desafio", key);
-            startActivity(intent);
+            listadoExperienciasViewModel.setIdDesafio(key);
+            Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
         });
     }
 }

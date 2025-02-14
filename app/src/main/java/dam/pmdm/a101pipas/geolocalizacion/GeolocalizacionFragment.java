@@ -45,7 +45,6 @@ import java.util.List;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentGeolocalizacionBinding;
 import dam.pmdm.a101pipas.models.Experiencia;
-import dam.pmdm.a101pipas.viewModelCompartidos.DesafioViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,8 +54,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-
-//    private String desafioAct; // Lo inicializo en onCreate
 
     private FusedLocationProviderClient fusedLocationClient;
     private static final int PERMISSION_REQUEST_CODE = 1000;
@@ -70,13 +67,12 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
     private FragmentGeolocalizacionBinding binding;
 
-    private DesafioViewModel viewModel;
+    private GeolocalizacionViewModel viewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentGeolocalizacionBinding.inflate(inflater, container, false);
-
         return binding.getRoot();
     }
 
@@ -84,10 +80,8 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        viewModel = new ViewModelProvider(requireActivity()).get(DesafioViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
         Log.d("Experiencias", "Antes de observar: " + viewModel.getExperiencias().getValue());
-
 
         areaMarcadores = new LatLngBounds.Builder();
         areaUsuarioExpCerca = new LatLngBounds.Builder();
@@ -134,7 +128,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
         if (!comprobarPermisoUbicacion()) {
             pedirPermisoUbicacion();
         } else {
-            getUbicacionActual();  // Si ya tiene permiso, obtiene la ubicación directamente
+            getUbicacionActual();
         }
 
         cargarExperiencias();
@@ -254,7 +248,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                     areaUsuarioExpCerca.include(coordenadasAct);
                 }
 
-                if (!comprobarPermisoUbicacion()) {
+                if (!comprobarPermisoUbicacion() || coordenadasAct == null) {
                     zoomCamaraGeneral();
                 } else {
                     zoomCamaraUsuarioExpMasCercana();

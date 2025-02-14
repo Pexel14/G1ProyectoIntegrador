@@ -78,6 +78,11 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         }
     }
 
+    public void setExperiencias(List<Experiencia> experiencias) {
+        this.experienciaList = experiencias;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return experienciaList.size();

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.databinding.FragmentGeolocalizacionBinding;
+import dam.pmdm.a101pipas.databinding.FragmentPerfilBinding;
 import dam.pmdm.a101pipas.models.Desafio;
 
 public class PerfilFragment extends Fragment {
@@ -33,56 +36,58 @@ public class PerfilFragment extends Fragment {
     // TODO: Colocar texto info usuario del singleton
 
     // Inicalizamos RecyclerView
-    RecyclerView recyclerView;
+    private RecyclerView recyclerView;
 
     // Creamos un adaptador
-    DesafioPerfilRecyclerAdapter adapter;
+    private DesafioPerfilRecyclerAdapter adapter;
 
     // Creamos la lista de usuarios
-    List<Desafio> desafioList;
+    private List<Desafio> desafioList;
 
     // Inicializamos una instancia de DatabaseReference
-    DatabaseReference ref;
+    private DatabaseReference ref;
 
-    FirebaseUser usuarioActual;
+    private FirebaseUser usuarioActual;
 
-    String usuarioId;
+    private String usuarioId;
 
-    TextView tvNick, tvNombre;
+    private TextView tvNick, tvNombre;
 
-    ImageButton ibtnAjustes;
+    private ImageButton ibtnAjustes;
+
+    private FragmentPerfilBinding binding;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = FragmentPerfilBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
 
-        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
         usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
         usuarioId = usuarioActual != null ? usuarioActual.getUid() : null;
 
-        tvNick = view.findViewById(R.id.txt_nombre);
-        ibtnAjustes = view.findViewById(R.id.ibtnAjustes);
+        binding.txtNombre.setText(usuarioActual.getDisplayName());
 
-        tvNick.setText(usuarioActual.getDisplayName());
-
-        ibtnAjustes.setOnClickListener(new View.OnClickListener() {
+        binding.ibtnAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getActivity(), AjustesActivity.class);
-                startActivity(i);
+                Navigation.findNavController(view).navigate(R.id.navigation_ajustes);
             }
         });
 
-        recyclerView = view.findViewById(R.id.rv_desafios);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvDesafios.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Lista de elementos del RV
         desafioList = new ArrayList<>();
 
         // Configuramos el adaptador y asignamos al RV
         adapter = new DesafioPerfilRecyclerAdapter(desafioList);
-        recyclerView.setAdapter(adapter);
+        binding.rvDesafios.setAdapter(adapter);
 
         // Obtenemos los datos de Firebase RealtimeDatabase
         ref = FirebaseDatabase.getInstance().getReference("desafios");
@@ -110,9 +115,11 @@ public class PerfilFragment extends Fragment {
                 System.out.println("Error rv perfil desafios" + error.getMessage());
             }
         });
-
-        return view;
-
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

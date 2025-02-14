@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.User;
@@ -56,6 +57,12 @@ public class RankingRecyclerAdapter extends RecyclerView.Adapter<RankingRecycler
     @Override
     public int getItemCount() {
         return listaUsuarios.size();
+    }
+
+    public void actualizarRanking(List<User> nuevosUsuarios) {
+        this.listaUsuarios.clear();
+        this.listaUsuarios.addAll(nuevosUsuarios);
+        notifyDataSetChanged();
     }
 
     static class RankingViewHolder extends RecyclerView.ViewHolder{

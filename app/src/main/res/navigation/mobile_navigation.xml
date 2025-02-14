@@ -18,10 +18,22 @@
         tools:layout="@layout/fragment_descubrir" />
 
     <fragment
+        android:id="@+id/navigation_listado_experiencias"
+        android:name="dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment"
+        android:label="ListadoExperiencias"
+        tools:layout="@layout/fragment_listado_experiencias" />
+
+    <fragment
         android:id="@+id/navigation_geolocalizacion"
         android:name="dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment"
         android:label="Geolocalizacion"
         tools:layout="@layout/fragment_geolocalizacion" />
+
+    <fragment
+        android:id="@+id/navigation_ranking_global"
+        android:name="dam.pmdm.a101pipas.ranking.RankingGlobalFragment"
+        android:label="RankingGlobal"
+        tools:layout="@layout/fragment_ranking_global" />
 
     <fragment
         android:id="@+id/navigation_social"
@@ -34,5 +46,11 @@
         android:name="dam.pmdm.a101pipas.perfil.PerfilFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
+
+    <fragment
+        android:id="@+id/navigation_ajustes"
+        android:name="dam.pmdm.a101pipas.perfil.AjustesFragment"
+        android:label="Ajustes"
+        tools:layout="@layout/fragment_ajustes" />
 
 </navigation>

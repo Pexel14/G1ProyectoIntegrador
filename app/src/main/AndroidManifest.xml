@@ -22,10 +22,10 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".perfil.AjustesActivity"
+            android:name=".perfil.AjustesFragment"
             android:exported="false" />
         <activity
-            android:name=".experiencias.ListadoExperiencias"
+            android:name=".experiencias.ListadoExperienciasFragment"
             android:exported="false" />
         <activity
             android:name=".autenticacion.RecuperarContrasenia"
@@ -34,7 +34,7 @@
             android:name=".autenticacion.Registro"
             android:exported="false" />
         <activity
-            android:name=".ranking.RankingGlobal"
+            android:name=".ranking.RankingGlobalFragment"
             android:exported="false" />
         <activity
             android:name=".geolocalizacion.GeolocalizacionFragment"

@@ -1,11 +1,9 @@
 package dam.pmdm.a101pipas.desafios.inicio;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,9 +13,8 @@ import androidx.navigation.Navigation;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioInicioBinding;
-import dam.pmdm.a101pipas.experiencias.ListadoExperiencias;
-import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment;
-import dam.pmdm.a101pipas.viewModelCompartidos.DesafioViewModel;
+import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 
 public class TarjetaDesafioInicioFragment extends Fragment {
 
@@ -41,12 +38,6 @@ public class TarjetaDesafioInicioFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentTarjetaDesafioInicioBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
-
-        // TODO: click tarjeta intent con key desafio a clara (nombre intent = id_desafio)
-        // TODO: Replicar en descubrir con la imagen y la tarjeta
-
-
     }
 
     @Override
@@ -77,24 +68,19 @@ public class TarjetaDesafioInicioFragment extends Fragment {
             binding.tvEtiquetasTarjetaInicio.setText(sb.toString());
         }
 
-        DesafioViewModel desafioViewModel = new ViewModelProvider(requireActivity()).get(DesafioViewModel.class);
+        GeolocalizacionViewModel geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
 
         binding.imgTarjetaInicio.setOnClickListener(v -> {
-                desafioViewModel.setDesafioId(key);
+                geolocalizacionViewModel.setDesafioId(key);
                 Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);});
 
 
-//        ImageView imgTarjeta = view.findViewById(R.id.imgTarjetaInicio);
-//        imgTarjeta.setOnClickListener(v -> {
-//            Intent intent = new Intent(getActivity(), GeolocalizacionFragment.class);
-//            intent.putExtra("id_desafio", key);
-//            startActivity(intent);
-//        });
+        ListadoExperienciasViewModel listadoExperienciasViewModel
+                = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
 
         view.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), ListadoExperiencias.class);
-            intent.putExtra("id_desafio", key);
-            startActivity(intent);
+            listadoExperienciasViewModel.setIdDesafio(key);
+            Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
         });
     }
 

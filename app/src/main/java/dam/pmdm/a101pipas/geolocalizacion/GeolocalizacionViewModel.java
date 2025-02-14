@@ -1,6 +1,4 @@
-package dam.pmdm.a101pipas.viewModelCompartidos;
-
-import android.util.Log;
+package dam.pmdm.a101pipas.geolocalizacion;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -18,7 +16,7 @@ import java.util.List;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
 
-public class DesafioViewModel extends ViewModel {
+public class GeolocalizacionViewModel extends ViewModel {
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
 
     private final MutableLiveData<String> desafioId = new MutableLiveData<>();

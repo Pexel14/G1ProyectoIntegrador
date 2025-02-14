@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ranking.RankingGlobal">
+    tools:context=".ranking.RankingGlobalFragment">
 
     <ImageView
         android:id="@+id/imgBackRanking"
@@ -14,7 +14,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/flecha_izquierda"
-        android:onClick="volverAtras"
         android:layout_marginTop="14dp"
         android:layout_marginStart="12dp"/>
 
