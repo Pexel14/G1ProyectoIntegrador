@@ -66,13 +66,24 @@
 
    <Button
        android:id="@+id/btnBuscarDescubrir"
+       android:padding="15dp"
        android:layout_width="65dp"
        android:layout_height="65dp"
        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
        app:layout_constraintEnd_toEndOf="@id/vCajaBusquedaDescubrir"
-       android:layout_marginRight="15dp"
-       android:background="@drawable/rounded_corner_box"/>
+       android:layout_marginEnd="15dp"
+       android:background="none"/>
+
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintStart_toStartOf="@id/btnBuscarDescubrir"
+        app:layout_constraintEnd_toEndOf="@id/btnBuscarDescubrir"
+        app:layout_constraintTop_toTopOf="@id/btnBuscarDescubrir"
+        app:layout_constraintBottom_toBottomOf="@id/btnBuscarDescubrir"
+        android:src="@drawable/ic_lupa"
+        android:elevation="2dp"/>
 
     <!-- Añadir desafío -->
     <TextView
@@ -96,6 +107,9 @@
         app:layout_constraintStart_toEndOf="@+id/vCajaBusquedaDescubrir"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/rounded_corner_button"
+        android:text="@string/simboloMas_inicio"
+        android:textSize="30sp"
+        android:textColor="@color/white"
         android:gravity="center"
         android:textAlignment="center"/>
 
@@ -123,8 +137,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <LinearLayout
             android:id="@+id/contenedorFragmentsInicio"
             android:layout_width="match_parent"
@@ -134,6 +148,7 @@
             app:layout_constraintTop_toBottomOf="@+id/btnAniadirDesafioInicio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
+
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

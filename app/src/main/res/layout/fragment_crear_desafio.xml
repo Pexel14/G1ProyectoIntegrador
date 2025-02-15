@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".desafios.CrearDesafioFragment">
+
+    <!-- DECORACIÓN SUPERIOR -->
+    <Button
+        android:id="@+id/btnAtrasCrearDesafio"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/flecha_izquierda"/>
+
+    <TextView
+        android:id="@+id/tvCrearDesafio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="30dp"
+        android:text="@string/crear_desafio"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+<!-- CUERPO -->
+        <!-- Nombre del desafío -->
+        <TextView
+            android:id="@+id/tvNombreDesafioCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvCrearDesafio"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/separacion_start_crear_desafio"
+            android:layout_marginTop="20dp"
+            android:text="@string/nombre_del_desafio"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_principal"/>
+
+        <EditText
+            android:id="@+id/etNombreDesafioCrearDesafio"
+            android:layout_width="352dp"
+            android:layout_height="35dp"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreDesafioCrearDesafio"
+            app:layout_constraintStart_toStartOf="@id/tvNombreDesafioCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_border"/>
+
+        <!-- Ciudad -->
+        <TextView
+            android:id="@+id/tvCiudadCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/etNombreDesafioCrearDesafio"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginStart="@dimen/separacion_start_crear_desafio"
+            android:text="@string/ciudad_crear_desafio"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_principal"/>
+
+        <EditText
+            android:id="@+id/etCiudadCrearDesafio"
+            android:layout_width="352dp"
+            android:layout_height="35dp"
+            app:layout_constraintTop_toBottomOf="@id/tvCiudadCrearDesafio"
+            app:layout_constraintStart_toStartOf="@id/tvCiudadCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_border"/>
+
+        <!-- Descripción -->
+        <TextView
+            android:id="@+id/tvDescripcionCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/etCiudadCrearDesafio"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginStart="@dimen/separacion_start_crear_desafio"
+            android:text="@string/descripcion_crear_desafio"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_principal"/>
+
+        <EditText
+            android:id="@+id/etDescripcionCrearDesafio"
+            android:layout_width="352dp"
+            android:layout_height="70dp"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionCrearDesafio"
+            app:layout_constraintStart_toStartOf="@id/tvDescripcionCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/edit_text_border"
+            android:maxLines="3"/>
+
+        <!-- Etiquetas -->
+        <TextView
+            android:id="@+id/tvEtiquetasCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/etDescripcionCrearDesafio"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginStart="@dimen/separacion_start_crear_desafio"
+            android:text="@string/etiquetas_crear_desafio"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/color_principal"/>
+
+        <CheckBox
+            android:id="@+id/cbCulturaCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvEtiquetasCrearDesafio"
+            app:layout_constraintTop_toBottomOf="@id/tvEtiquetasCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:text="@string/cultura_crear_desafio"
+            android:textSize="15sp"/>
+
+        <CheckBox
+            android:id="@+id/cbArteCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/cbCulturaCrearDesafio"
+            app:layout_constraintTop_toBottomOf="@id/tvEtiquetasCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:text="@string/arte_crear_desafio"
+            android:textSize="15sp"/>
+
+        <CheckBox
+            android:id="@+id/cbMasDieciochoCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/cbArteCrearDesafio"
+            app:layout_constraintTop_toBottomOf="@id/tvEtiquetasCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:text="@string/masDieciocho_crear_desafio"
+            android:textSize="15sp"/>
+
+        <CheckBox
+            android:id="@+id/cbGastronomiaCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvEtiquetasCrearDesafio"
+            app:layout_constraintTop_toBottomOf="@id/cbCulturaCrearDesafio"
+            android:layout_marginTop="5dp"
+            android:text="@string/gastronomia_crear_desafio"
+            android:textSize="15sp"/>
+
+        <CheckBox
+            android:id="@+id/cbNaturalezaCrearDesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/cbGastronomiaCrearDesafio"
+            app:layout_constraintTop_toBottomOf="@id/cbCulturaCrearDesafio"
+            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:layout_marginTop="5dp"
+            android:text="@string/naturaleza_crear_desafio"
+            android:textSize="15sp"/>
+
+    <!-- CREAR DESAFÍO -->
+    <Button
+        android:id="@+id/btnInsertarExperiencias"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"
+        android:text="@string/ir_a_experiencias"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_corner_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

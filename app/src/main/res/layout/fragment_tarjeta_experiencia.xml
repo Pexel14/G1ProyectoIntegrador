@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginStart="30dp"
+    android:layout_marginEnd="30dp"
+    app:cardElevation="8dp"
+    app:cardBackgroundColor="@color/white"
+    tools:context=".experiencias.TarjetaExperienciaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/separacion_items_crear_desafio">
+
+        <!-- TÍTULO -->
+        <TextView
+            android:id="@+id/tvTituloCrearExperiencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:text="@string/titulo_crear_experiencia"
+            android:textColor="@color/color_principal"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/etTituloCrearExperiencia"
+            android:layout_width="307dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/edit_text_border"
+            app:layout_constraintStart_toStartOf="@id/tvTituloCrearExperiencia"
+            app:layout_constraintTop_toBottomOf="@id/tvTituloCrearExperiencia"/>
+
+        <!-- DESCRIPCIÓN -->
+        <TextView
+            android:id="@+id/tvDescripcionCrearExperiencia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etTituloCrearExperiencia"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:text="@string/descripcion_crear_experiencia"
+            android:textColor="@color/color_principal"
+            android:textStyle="bold"
+            android:textSize="15sp"/>
+
+        <EditText
+            android:id="@+id/etDescripcionCrearExperiencia"
+            android:layout_width="307dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/edit_text_border"
+            app:layout_constraintStart_toStartOf="@id/tvTituloCrearExperiencia"
+            app:layout_constraintTop_toBottomOf="@id/tvDescripcionCrearExperiencia"/>
+
+        <!-- SUBIR IMAGEN -->
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="@id/etDescripcionCrearExperiencia"
+            app:layout_constraintEnd_toEndOf="@id/etDescripcionCrearExperiencia"
+            app:layout_constraintTop_toBottomOf="@id/etDescripcionCrearExperiencia"
+            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:background="@drawable/rounded_corner_button"
+            android:text="@string/subir_foto_crear_experiencia"
+            android:textColor="@color/white"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
