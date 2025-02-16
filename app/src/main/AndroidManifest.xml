@@ -15,9 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
+        <activity
+            android:name=".desafios.CrearDesafioActivity2"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -48,6 +53,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".desafios.CrearDesafioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".experiencias.CrearExperienciasActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

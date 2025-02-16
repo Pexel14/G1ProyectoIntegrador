@@ -7,6 +7,12 @@ public class Experiencia {
     public Experiencia() {
     }
 
+    // Constructor para Crear Experiencias
+    public Experiencia(String titulo, String descripcion) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
+
     public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
         this.titulo = titulo;
         this.descripcion = descripcion;

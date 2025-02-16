@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:background="none"/>
+        android:background="@color/transparent"/>
 
     <View
         android:layout_width="24dp"
