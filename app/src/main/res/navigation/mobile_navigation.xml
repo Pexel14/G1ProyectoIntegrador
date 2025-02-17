@@ -42,6 +42,12 @@
         tools:layout="@layout/fragment_social" />
 
     <fragment
+        android:id="@+id/navigation_grupo"
+        android:name="dam.pmdm.a101pipas.ranking.GrupoFragment"
+        android:label="Grupo"
+        tools:layout="@layout/fragment_grupo" />
+
+    <fragment
         android:id="@+id/navigation_perfil"
         android:name="dam.pmdm.a101pipas.perfil.PerfilFragment"
         android:label="Perfil"
