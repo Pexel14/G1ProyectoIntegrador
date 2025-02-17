@@ -145,6 +145,33 @@
         android:textSize="16sp"
         android:textColor="@color/white"/>
 
+    <!-- CONTRASEÑA (SI ES PRIVADO) -->
+    <TextView
+        android:id="@+id/tvContraseniaCrearGrupo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAniadirAmigosCrearGrupo"
+        android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+        android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+        android:text="@string/contrasenia_crear_grupo"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/etContraseniaCrearGrupo"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvContraseniaCrearGrupo"
+        android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+        android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+        android:background="@drawable/edit_text_border"
+        android:inputType="textPassword"
+        android:visibility="gone"/>
+
     <!-- CREAR GRUPO-->
     <Button
         android:id="@+id/btnCrearGrupo"

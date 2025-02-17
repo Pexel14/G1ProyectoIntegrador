@@ -1,21 +1,21 @@
 package dam.pmdm.a101pipas.models;
 
 public class Experiencia {
-    private String titulo, descripcion, link, mapa, imgExperiencia;
+    private String titulo, desc_exp, link, mapa, imgExperiencia;
     private boolean completada;
 
     public Experiencia() {
     }
 
     // Constructor para Crear Experiencias
-    public Experiencia(String titulo, String descripcion) {
+    public Experiencia(String titulo, String desc_exp) {
         this.titulo = titulo;
-        this.descripcion = descripcion;
+        this.desc_exp = desc_exp;
     }
 
-    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
+    public Experiencia(String titulo, String desc_exp, String link, String mapa, String imgExperiencia, boolean completada) {
         this.titulo = titulo;
-        this.descripcion = descripcion;
+        this.desc_exp = desc_exp;
         this.link = link;
         this.mapa = mapa;
         this.imgExperiencia = imgExperiencia;
@@ -30,12 +30,12 @@ public class Experiencia {
         this.titulo = titulo;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public String getDesc_exp() {
+        return desc_exp;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public void setDesc_exp(String desc_exp) {
+        this.desc_exp = desc_exp;
     }
 
     public String getLink() {

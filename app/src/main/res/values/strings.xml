@@ -111,4 +111,5 @@
     <string name="descripcion_crear_experiencia">Descripción de la experiencia :</string>
     <string name="subir_foto_crear_experiencia">Subir foto</string>
     <string name="insertar_experiencias">Insertar experiencias</string>
+    <string name="contrasenia_crear_grupo">Contraseña :</string>
 </resources>

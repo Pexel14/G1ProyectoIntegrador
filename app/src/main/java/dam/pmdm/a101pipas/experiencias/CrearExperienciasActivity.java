@@ -1,7 +1,6 @@
 package dam.pmdm.a101pipas.experiencias;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,13 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,7 +32,6 @@ import java.util.Map;
 
 import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
-import dam.pmdm.a101pipas.desafios.InicioFragment;
 import dam.pmdm.a101pipas.models.Desafio;
 import dam.pmdm.a101pipas.models.Experiencia;
 
@@ -108,10 +102,24 @@ public class CrearExperienciasActivity extends AppCompatActivity {
                     }
 
                     Desafio desafio = (Desafio) getIntent().getSerializableExtra("desafio");
-                    desafio.setListaExperiencias(mapExperiencias);
+                    desafio.setExperiencias(mapExperiencias);
 
-                    databaseReference.child(desafio.getTitulo().replace(" ", ""))
-                            .setValue(mapExperiencias)
+                    String keyDesafio = desafio.getTitulo().replace(" ", "");
+
+//                    // Añadir ciudad
+//                    databaseReference.child(keyDesafio)
+//                            .child("ciudad")
+//                            .setValue(desafio.getCiudad());
+//
+//                    // Añadir título
+//                    databaseReference.child(keyDesafio)
+//                            .child("titulo")
+//                            .setValue(desafio.getTitulo());
+
+                    databaseReference.child(keyDesafio)
+//                            .child("experiencias")
+//                            .setValue(mapExperiencias)
+                            .setValue(desafio)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

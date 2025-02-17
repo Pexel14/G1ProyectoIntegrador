@@ -1,13 +1,12 @@
 package dam.pmdm.a101pipas.models;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 public class Desafio implements Serializable {
     private String titulo, ciudad, descripcion, etiquetas;
     private int porcentajeProgreso;
-    private Map<String, Experiencia> listaExperiencias;
+    private Map<String, Experiencia> experiencias;
 
     // Constructor para el Perfil
     public Desafio(String titulo, int porcentajeProgreso) {
@@ -24,20 +23,20 @@ public class Desafio implements Serializable {
     }
 
     // Constructor para Crear Experiencias
-    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> listaExperiencias) {
+    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> experiencias) {
         this.titulo = titulo;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
         this.etiquetas = etiquetas;
-        this.listaExperiencias = listaExperiencias;
+        this.experiencias = experiencias;
     }
 
-    public Map<String, Experiencia> getListaExperiencias() {
-        return listaExperiencias;
+    public Map<String, Experiencia> getExperiencias() {
+        return experiencias;
     }
 
-    public void setListaExperiencias(Map<String, Experiencia> listaExperiencias) {
-        this.listaExperiencias = listaExperiencias;
+    public void setExperiencias(Map<String, Experiencia> experiencias) {
+        this.experiencias = experiencias;
     }
 
     public String getCiudad() {

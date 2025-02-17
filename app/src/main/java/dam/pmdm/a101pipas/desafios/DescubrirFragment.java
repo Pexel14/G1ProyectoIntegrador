@@ -59,8 +59,6 @@ public class DescubrirFragment extends Fragment {
 
                 limpiarFragmentos();
 
-                Log.d("Firebase", "Listener registrado");
-
                 if (snapshot.exists()) { // 'snapshot!=null' siempre es 'true'
 
                     for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {

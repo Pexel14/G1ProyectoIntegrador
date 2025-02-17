@@ -17,11 +17,12 @@
         android:label="Descubrir"
         tools:layout="@layout/fragment_descubrir" />
 
+    <!-- CAMBIADO SÓLO PARA HACER PRUEBAS -->
     <fragment
         android:id="@+id/navigation_social"
-        android:name="dam.pmdm.a101pipas.social.SocialFragment"
+        android:name="dam.pmdm.a101pipas.social.CrearGrupoFragment"
         android:label="Social"
-        tools:layout="@layout/fragment_social" />
+        tools:layout="@layout/fragment_crear_grupo" />
 
     <fragment
         android:id="@+id/navigation_perfil"
