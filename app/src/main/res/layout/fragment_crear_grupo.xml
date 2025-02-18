@@ -55,135 +55,179 @@
         app:layout_constraintBottom_toBottomOf="@id/btnAtrasCrearGrupo"
         android:src="@drawable/flecha_izquierda"/>
 
-    <!-- ELEGIR DESAFÍO -->
-    <TextView
-        android:id="@+id/tvEligeDesafio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/vCajaSuperiorCrearGrupo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:text="@string/elige_un_desafio"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-
-    <HorizontalScrollView
-        android:id="@+id/hsvElegirDesafioCrearGrupo"
+    <!-- CUERPO -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/tvEligeDesafio"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="15dp">
-
-        <LinearLayout
-            android:id="@+id/contenedorFragmentsCrearGrupo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
-
-    </HorizontalScrollView>
-
-    <!-- NOMBRE GRUPO -->
-    <TextView
-        android:id="@+id/tvNombreGrupoCrearGrupo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/hsvElegirDesafioCrearGrupo"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/nombre_del_grupo"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:id="@+id/etNombreGrupoCrearGrupo"
-        android:layout_width="300dp"
-        android:layout_height="35dp"
-        app:layout_constraintTop_toBottomOf="@id/tvNombreGrupoCrearGrupo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/edit_text_border"/>
-
-    <!-- GRUPO PRIVADO -->
-    <TextView
-        android:id="@+id/tvGrupoPrivadoCrearGrupo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etNombreGrupoCrearGrupo"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/grupo_privado"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-
-    <Switch
-        android:id="@+id/swHacerPrivadoCrearGrupo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        app:layout_constraintStart_toEndOf="@id/tvGrupoPrivadoCrearGrupo"
-        app:layout_constraintTop_toTopOf="@id/tvGrupoPrivadoCrearGrupo"
-        app:layout_constraintBottom_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"/>
-
-    <!-- AÑADIR AMIGOS -->
-    <Button
-        android:id="@+id/btnAniadirAmigosCrearGrupo"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="15dp"
-        android:background="@drawable/rounded_corner_button"
-        android:text="@string/aniadir_amigos"
-        android:textSize="16sp"
-        android:textColor="@color/white"/>
-
-    <!-- CONTRASEÑA (SI ES PRIVADO) -->
-    <TextView
-        android:id="@+id/tvContraseniaCrearGrupo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnAniadirAmigosCrearGrupo"
-        android:layout_marginStart="@dimen/separacion_items_crear_desafio"
-        android:layout_marginTop="@dimen/separacion_items_crear_desafio"
-        android:text="@string/contrasenia_crear_grupo"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:visibility="gone"/>
-
-    <EditText
-        android:id="@+id/etContraseniaCrearGrupo"
-        android:layout_width="300dp"
-        android:layout_height="35dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvContraseniaCrearGrupo"
-        android:layout_marginStart="@dimen/separacion_items_crear_desafio"
-        android:layout_marginTop="@dimen/separacion_items_crear_desafio"
-        android:background="@drawable/edit_text_border"
-        android:inputType="textPassword"
-        android:visibility="gone"/>
-
-    <!-- CREAR GRUPO-->
-    <Button
-        android:id="@+id/btnCrearGrupo"
-        android:layout_width="200dp"
-        android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/rounded_corner_button"
-        android:text="@string/texto_btn_crear_grupo"
-        android:textSize="16sp"
-        android:textColor="@color/white"/>
+        app:layout_constraintTop_toBottomOf="@id/vCajaSuperiorCrearGrupo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:scrollbars="none">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/separacion_start_crear_desafio">
+
+            <!-- ELEGIR DESAFÍO -->
+            <TextView
+                android:id="@+id/tvEligeDesafio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:text="@string/elige_un_desafio"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsvElegirDesafioCrearGrupo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvEligeDesafio"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/contenedorFragmentsCrearGrupo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <!-- NOMBRE GRUPO -->
+            <TextView
+                android:id="@+id/tvNombreGrupoCrearGrupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsvElegirDesafioCrearGrupo"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/nombre_del_grupo"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <EditText
+                android:id="@+id/etNombreGrupoCrearGrupo"
+                android:layout_width="300dp"
+                android:layout_height="35dp"
+                app:layout_constraintTop_toBottomOf="@id/tvNombreGrupoCrearGrupo"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/edit_text_border"/>
+
+            <!-- GRUPO PRIVADO -->
+            <TextView
+                android:id="@+id/tvGrupoPrivadoCrearGrupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etNombreGrupoCrearGrupo"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/grupo_privado"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <Switch
+                android:id="@+id/swHacerPrivadoCrearGrupo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toEndOf="@id/tvGrupoPrivadoCrearGrupo"
+                app:layout_constraintTop_toTopOf="@id/tvGrupoPrivadoCrearGrupo"
+                app:layout_constraintBottom_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"/>
+
+            <!-- AÑADIR AMIGOS -->
+            <LinearLayout
+                android:id="@+id/llAmigosCrearGrupo"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAmigosCrearGrupo"
+                android:orientation="vertical"/>
+
+            <TextView
+                android:id="@+id/tvAmigosCrearGrupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etContraseniaCrearGrupo"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Amigos :"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <Button
+                android:id="@+id/btnAniadirAmigosCrearGrupo"
+                android:layout_width="125dp"
+                android:layout_height="60dp"
+                android:padding="10dp"
+                app:layout_constraintTop_toBottomOf="@id/llAmigosCrearGrupo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner_button"
+                android:text="@string/aniadir_amigo"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+            <!-- CONTRASEÑA (SI ES PRIVADO) -->
+            <TextView
+                android:id="@+id/tvContraseniaCrearGrupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"
+                android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+                android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+                android:text="@string/contrasenia_crear_grupo"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:visibility="gone"/>
+
+            <EditText
+                android:id="@+id/etContraseniaCrearGrupo"
+                android:layout_width="300dp"
+                android:layout_height="35dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvContraseniaCrearGrupo"
+                android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+                android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+                android:background="@drawable/edit_text_border"
+                android:inputType="textPassword"
+                android:visibility="gone"/>
+
+            <!-- CREAR GRUPO-->
+            <Button
+                android:id="@+id/btnCrearGrupo"
+                android:layout_width="200dp"
+                android:layout_height="60dp"
+                app:layout_constraintTop_toBottomOf="@+id/btnAniadirAmigosCrearGrupo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="@dimen/separacion_items_crear_desafio"
+                android:background="@drawable/rounded_corner_button"
+                android:text="@string/texto_btn_crear_grupo"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

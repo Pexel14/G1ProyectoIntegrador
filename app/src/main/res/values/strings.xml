@@ -93,7 +93,7 @@
     <string name="elige_un_desafio">Elige un desafío :</string>
     <string name="nombre_del_grupo">Nombre del grupo :</string>
     <string name="grupo_privado">Grupo privado :</string>
-    <string name="aniadir_amigos">+ Añadir amigos</string>
+    <string name="aniadir_amigo">Añadir amigo</string>
     <string name="texto_btn_crear_grupo">Crear grupo</string>
     <string name="crear_desafio">Crear desafío</string>
     <string name="ir_a_experiencias">Ir a experiencias</string>
