@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    tools:context=".Descubrir">
+
+    <!-- Barra superior -->
+    <RelativeLayout
+        android:id="@+id/rlBarraSuperiorDescubrir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="8dp">
+
+        <View
+            android:id="@+id/vCajaSuperiorDescubrir"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:background="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvDesafiosDescubrir"
+            android:layout_width="match_parent"
+            android:layout_height="84dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center"
+            android:text="Descubrir"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <!-- Barra de búsqueda -->
+    <View
+        android:id="@+id/vCajaBusquedaDescubrir"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/rlBarraSuperiorDescubrir"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rounded_corner_box" />
+
+    <EditText
+        android:id="@+id/etBuscarDescubrir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
+        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
+        app:layout_constraintStart_toStartOf="@id/vCajaBusquedaDescubrir"
+        app:layout_constraintEnd_toStartOf="@id/btnBuscarDescubrir"
+        android:hint="Buscar"
+        android:background="@null"
+        android:inputType="text|textNoSuggestions"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btnBuscarDescubrir"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
+        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
+        app:layout_constraintEnd_toEndOf="@id/vCajaBusquedaDescubrir"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/rounded_corner_box"/>
+
+
+    <!-- Filtros -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Primer filtro -->
+            <TextView
+                android:id="@+id/tvFiltro1Descubrir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Madrid"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvFiltro1Descubrir"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/contenedorFragmentsDescubrir"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <!-- Segundo filtro -->
+            <TextView
+                android:id="@+id/tvFiltro2Descubrir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv1"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Gastronomía"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <HorizontalScrollView
+                android:id="@+id/hsv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvFiltro2Descubrir"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/contenedorFragmentsDescubrir2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+
+            <!-- Tercer filtro -->
+            <TextView
+                android:id="@+id/tvFiltro3Descubrir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv2"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:text="Cultura"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/tvFiltro3Descubrir"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/contenedorFragmentsDescubrir3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"/>
+
+            </HorizontalScrollView>
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

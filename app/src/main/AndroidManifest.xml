@@ -15,9 +15,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
+        <activity
+            android:name=".social.GroupDetail"
+            android:exported="true" />
+
+        <activity
+            android:name=".social.SocialPrincipal"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".social.ListaGrupos"
+            android:exported="true" />
+        <activity
+            android:name=".ver_amigos_grupos"
+            android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0" />
+
+        <activity
+            android:name=".social.ListaAmigos"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -26,7 +51,9 @@
             android:exported="false" />
         <activity
             android:name=".experiencias.ListadoExperiencias"
-            android:exported="false" />
+            android:exported="true" />
+
+
         <activity
             android:name=".autenticacion.RecuperarContrasenia"
             android:exported="false" />
@@ -39,15 +66,11 @@
         <activity
             android:name=".geolocalizacion.GeolocalizacionActivity"
             android:exported="false" />
+        <activity android:name=".Descubrir" />
         <activity
             android:name=".autenticacion.Login"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            />
     </application>
 
 </manifest>

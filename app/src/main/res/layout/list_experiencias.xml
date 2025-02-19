@@ -67,26 +67,17 @@
             android:orientation="horizontal"
             android:layout_marginTop="10dp">
 
-            <TextView
-                android:id="@+id/tvWebLink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/list_experiencias_pagina_web"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:textColor="@color/color_principal"
-                android:layout_gravity="start" />
 
             <View
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <TextView
+            <ImageView
                 android:id="@+id/tvMapLink"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/list_experiencias_ver_en_mapa"
+                android:src="@drawable/ic_global_localizaciones"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:textColor="@color/color_principal"

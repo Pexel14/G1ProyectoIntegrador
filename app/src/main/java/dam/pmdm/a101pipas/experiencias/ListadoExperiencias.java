@@ -77,7 +77,6 @@ public class ListadoExperiencias extends AppCompatActivity {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String titulo = data.getKey(); // Nombre de la experiencia
                     String descripcion = data.child("descripcion").getValue(String.class);
-                    String link = data.child("link").getValue(String.class);
                     String mapa = data.child("mapa").getValue(String.class);
                     String imgExperiencia = data.child("imgExperiencia").getValue(String.class);
                     Boolean completadaValue = data.child("completada").getValue(Boolean.class);
@@ -86,7 +85,6 @@ public class ListadoExperiencias extends AppCompatActivity {
                     if (titulo != null && descripcion != null) {
                         Experiencia experiencia = new Experiencia(
                                 titulo, descripcion,
-                                link != null ? link : "",
                                 mapa != null ? mapa : "",
                                 imgExperiencia != null ? imgExperiencia : "",
                                 completada

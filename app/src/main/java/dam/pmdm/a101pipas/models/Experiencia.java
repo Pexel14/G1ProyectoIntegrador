@@ -1,16 +1,18 @@
 package dam.pmdm.a101pipas.models;
 
+import android.content.Intent;
+import android.view.View;
+
 public class Experiencia {
-    private String titulo, descripcion, link, mapa, imgExperiencia;
+    private String titulo, descripcion, mapa, imgExperiencia;
     private boolean completada;
 
     public Experiencia() {
     }
 
-    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
+    public Experiencia(String titulo, String descripcion, String mapa, String imgExperiencia, boolean completada) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.link = link;
         this.mapa = mapa;
         this.imgExperiencia = imgExperiencia;
         this.completada = completada;
@@ -32,13 +34,7 @@ public class Experiencia {
         this.descripcion = descripcion;
     }
 
-    public String getLink() {
-        return link;
-    }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
 
     public String getMapa() {
         return mapa;
@@ -63,4 +59,7 @@ public class Experiencia {
     public void setCompletada(boolean completada) {
         this.completada = completada;
     }
+
+
+
 }

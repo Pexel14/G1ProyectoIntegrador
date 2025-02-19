@@ -7,7 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- Toolbar que actuará como ActionBar -->
+    <Button
+        android:id="@+id/btnIrAInicioMain"
+        android:layout_width="wrap_content"
+        android:background="@color/color_fondo"
+        android:elevation="8dp"
+        app:itemIconTint="#1E1E1E"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="24dp"/>
+
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -37,12 +49,23 @@
         android:id="@+id/nav_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/color_fondo"
-        android:elevation="8dp"
-        app:itemIconTint="#1E1E1E"
-        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btnIrADescubrirMain"
+        android:text="Ir a Inicio"/>
+
+    <Button
+        android:id="@+id/btnIrADescubrirMain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/btnIrAInicioMain"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        android:text="Ir a Descubrir"/>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
