@@ -13,19 +13,19 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_ajustes"
         android:background="@color/white"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginEnd="@dimen/separacion_mediana_quince"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Avatar del usuario -->
     <ImageView
         android:id="@+id/img_avatar"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_perfil"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
         app:layout_constraintTop_toBottomOf="@id/ibtnAjustes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -39,7 +39,7 @@
         android:textSize="32sp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
         app:layout_constraintTop_toBottomOf="@+id/img_avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -54,54 +54,80 @@
         android:textColor="@color/texto_secundario"
         app:layout_constraintTop_toBottomOf="@+id/txt_nick"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/separacion_pequenia_diez" />
 
     <!-- Separador -->
     <View
         android:id="@+id/view_separator1"
         android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:elevation="5dp"
+        android:layout_height="1dp"
         android:background="@color/texto_secundario"
         app:layout_constraintTop_toBottomOf="@+id/txt_nombre"
         app:layout_constraintBottom_toTopOf="@+id/ibtnDesafiosEmpezados"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="@dimen/separacion_grande_treinta" />
 
-    <ImageButton
+    <!-- BOTÓN DESAFIOS EMPEZADOS -->
+    <ImageView
         android:id="@+id/ibtnDesafiosEmpezados"
         android:layout_width="0dp"
         android:layout_height="70dp"
+        android:padding="5dp"
         android:background="@color/white"
         android:src="@drawable/ic_perfil_desafios_empezados"
-        android:layout_marginVertical="5dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ibtnDesafiosCompletados"
-        app:layout_constraintTop_toBottomOf="@+id/view_separator1"/>
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"
+        android:elevation="3dp"/>
 
-    <ImageButton
+    <ToggleButton
+        android:id="@+id/tbtnDesafiosEmpezados"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintEnd_toEndOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintTop_toTopOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDesafiosEmpezados"
+        android:background="@color/white"
+        android:textOn=""
+        android:textOff=""
+        android:text=""/>
+
+    <!-- BOTÓN DESAFIOS COMPLETADOS -->
+    <ImageView
         android:id="@+id/ibtnDesafiosCompletados"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:background="@color/white"
         android:src="@drawable/ic_perfil_desafios_completados"
-        android:layout_marginVertical="5dp"
         app:layout_constraintStart_toEndOf="@+id/ibtnDesafiosEmpezados"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view_separator1"/>
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"
+        android:elevation="3dp"/>
+
+    <ToggleButton
+        android:id="@+id/tbtnDesafiosCompletados"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintEnd_toEndOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintTop_toTopOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDesafiosCompletados"
+        android:background="@color/white"
+        android:textOn=""
+        android:textOff=""
+        android:text=""/>
 
     <View
         android:id="@+id/view_separator2"
         android:layout_width="0dp"
-        android:layout_height="2dp"
-        android:elevation="5dp"
+        android:layout_height="1dp"
         android:background="@color/texto_secundario"
         app:layout_constraintTop_toBottomOf="@+id/ibtnDesafiosEmpezados"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="5dp" />
-
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <!-- RecyclerView para la lista dinámica -->
     <androidx.recyclerview.widget.RecyclerView
@@ -111,6 +137,38 @@
         app:layout_constraintTop_toBottomOf="@+id/view_separator2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/separacion_pequenia_diez"/>
+
+    <!-- Textos si no hay desafíos comenzados o terminados -->
+    <TextView
+        android:id="@+id/tvNoDesafiosComenzados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_separator2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Todavía no hay desafíos comenzados"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvNoDesafiosTerminados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_separator2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Aún no has terminado ningún desafío"
+        android:textSize="24sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

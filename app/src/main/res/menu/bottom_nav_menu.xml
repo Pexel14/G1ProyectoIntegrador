@@ -18,7 +18,7 @@
 
     <item
         android:id="@+id/navigation_perfil"
-        android:icon="@drawable/ic_perfil"
+        android:icon="@drawable/ic_perfil_antigua"
         android:title="" />
 
 </menu>

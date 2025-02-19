@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="separacion_items_crear_desafio">15dp</dimen>
-    <dimen name="separacion_start_crear_desafio">30dp</dimen>
+<!--    <dimen name="separacion_items_crear_desafio">15dp</dimen>-->
+    <dimen name="separacion_grande_treinta">30dp</dimen>
+    <dimen name="separacion_mediana_quince">15dp</dimen>
+    <dimen name="separacion_pequenia_diez">5dp</dimen>
 </resources>

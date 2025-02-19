@@ -68,7 +68,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/separacion_start_crear_desafio">
+            android:paddingBottom="@dimen/separacion_grande_treinta">
 
             <!-- ELEGIR DESAFÍO -->
             <TextView
@@ -191,8 +191,8 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"
-                android:layout_marginStart="@dimen/separacion_items_crear_desafio"
-                android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+                android:layout_marginStart="@dimen/separacion_mediana_quince"
+                android:layout_marginTop="@dimen/separacion_mediana_quince"
                 android:text="@string/contrasenia_crear_grupo"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -205,8 +205,8 @@
                 android:layout_height="35dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvContraseniaCrearGrupo"
-                android:layout_marginStart="@dimen/separacion_items_crear_desafio"
-                android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+                android:layout_marginStart="@dimen/separacion_mediana_quince"
+                android:layout_marginTop="@dimen/separacion_mediana_quince"
                 android:background="@drawable/edit_text_border"
                 android:inputType="textPassword"
                 android:visibility="gone"/>
@@ -220,7 +220,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="50dp"
-                android:layout_marginBottom="@dimen/separacion_items_crear_desafio"
+                android:layout_marginBottom="@dimen/separacion_mediana_quince"
                 android:background="@drawable/rounded_corner_button"
                 android:text="@string/texto_btn_crear_grupo"
                 android:textSize="16sp"

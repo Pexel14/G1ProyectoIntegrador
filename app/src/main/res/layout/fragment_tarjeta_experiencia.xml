@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/separacion_items_crear_desafio"
-    android:layout_marginBottom="@dimen/separacion_items_crear_desafio"
+    android:layout_marginTop="@dimen/separacion_mediana_quince"
+    android:layout_marginBottom="@dimen/separacion_mediana_quince"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:layout_marginStart="30dp"
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/separacion_items_crear_desafio">
+        android:layout_marginBottom="@dimen/separacion_mediana_quince">
 
         <!-- TÍTULO -->
         <TextView
@@ -26,8 +26,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
-            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
+            android:layout_marginStart="@dimen/separacion_mediana_quince"
             android:text="@string/titulo_crear_experiencia"
             android:textColor="@color/color_principal"
             android:textStyle="bold"
@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etTituloCrearExperiencia"
-            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
-            android:layout_marginStart="@dimen/separacion_items_crear_desafio"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
+            android:layout_marginStart="@dimen/separacion_mediana_quince"
             android:text="@string/descripcion_crear_experiencia"
             android:textColor="@color/color_principal"
             android:textStyle="bold"
@@ -74,7 +74,7 @@
             app:layout_constraintStart_toStartOf="@id/etDescripcionCrearExperiencia"
             app:layout_constraintEnd_toEndOf="@id/etDescripcionCrearExperiencia"
             app:layout_constraintTop_toBottomOf="@id/etDescripcionCrearExperiencia"
-            android:layout_marginTop="@dimen/separacion_items_crear_desafio"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:background="@drawable/rounded_corner_button"
             android:text="@string/subir_foto_crear_experiencia"
             android:textColor="@color/white"/>
