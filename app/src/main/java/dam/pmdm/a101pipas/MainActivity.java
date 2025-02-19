@@ -6,6 +6,11 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        BottomNavigationView navView = findViewById(R.id.nav_view);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

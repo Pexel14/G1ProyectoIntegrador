@@ -15,29 +15,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
+        <activity
+            android:name=".social.GroupDetail"
+            android:exported="true" />
+
+        <activity
+            android:name=".social.SocialPrincipal"
+            android:exported="true">
+        </activity>
+
+        <activity
+            android:name=".social.ListaGrupos"
+            android:exported="true" />
+        <activity
+            android:name=".ver_amigos_grupos"
+            android:exported="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0" />
+
+        <activity
+            android:name=".social.ListaAmigos"
+            android:exported="true" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-        <activity
-            android:name=".perfil.AjustesFragment"
-            android:exported="false" />
-        <activity
-            android:name=".experiencias.ListadoExperienciasFragment"
-            android:exported="false" />
+
         <activity
             android:name=".autenticacion.RecuperarContrasenia"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Registro"
-            android:exported="false" />
-        <activity
-            android:name=".ranking.RankingGlobalFragment"
-            android:exported="false" />
-        <activity
-            android:name=".geolocalizacion.GeolocalizacionFragment"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Login"

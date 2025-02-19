@@ -57,14 +57,6 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         holder.tvTitulo.setText(experiencia.getTitulo());
         holder.tvDescripcion.setText(experiencia.getDescripcion());
 
-        // Configurar enlace web
-        holder.tvWebLink.setOnClickListener(view -> {
-            String url = experiencia.getLink();
-            if (url != null && !url.isEmpty()) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                view.getContext().startActivity(intent);
-            }
-        });
 
         // Configurar enlace del mapa
         holder.tvMapLink.setOnClickListener(view -> {
@@ -95,8 +87,8 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
     static class ExperienciaViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imgExperiencia;
-        TextView tvTitulo, tvDescripcion, tvWebLink, tvMapLink, tvCheck;
+        ImageView imgExperiencia, tvMapLink;
+        TextView tvTitulo, tvDescripcion, tvCheck;
 
         public ExperienciaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,7 +96,6 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
             imgExperiencia = itemView.findViewById(R.id.imgExperiencia);
             tvTitulo = itemView.findViewById(R.id.tvTitle);
             tvDescripcion = itemView.findViewById(R.id.tvDescription);
-            tvWebLink = itemView.findViewById(R.id.tvWebLink);
             tvMapLink = itemView.findViewById(R.id.tvMapLink);
             tvCheck = itemView.findViewById(R.id.tvCheck);
         }
