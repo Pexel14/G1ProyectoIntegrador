@@ -17,11 +17,6 @@ public class Grupo {
         this.contrasena = contrasena;
     }
 
-    public Grupo(String titulo, String miembros){
-        this.titulo = titulo;
-        this.miembros = miembros;
-    }
-
     public int getId() {
         return id;
     }

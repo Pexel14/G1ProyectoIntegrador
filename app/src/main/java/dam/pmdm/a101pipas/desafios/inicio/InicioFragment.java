@@ -56,6 +56,8 @@ public class InicioFragment extends Fragment {
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");
 
+        //TODO: setOnClick para ir a CrearDesafio
+
         inicioViewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), this::cargarDesafios);
 
         inicioViewModel.cargarFragmentosDesafiosDesdeFirebase(refDesafiosUsuario, refDesafios);

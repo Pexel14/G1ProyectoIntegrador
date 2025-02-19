@@ -43,7 +43,7 @@ public class GroupDetail extends AppCompatActivity {
         // Obtener el ID del grupo desde el intent
         String groupId = getIntent().getStringExtra("groupId");
         if (groupId == null || groupId.isEmpty()) {
-            Toast.makeText(this, "Error: ID de grupo no recibido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.group_detail_id_no_recibido, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -59,7 +59,7 @@ public class GroupDetail extends AppCompatActivity {
 
         // Acción de unirse al grupo (puede ser personalizada)
         btnUnirse.setOnClickListener(v -> {
-            Toast.makeText(this, "Te has unido al grupo " + tvNombreGrupo.getText(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.group_detail_te_has_unido_a) + tvNombreGrupo.getText(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -68,7 +68,7 @@ public class GroupDetail extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    Toast.makeText(GroupDetail.this, "Grupo no encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(GroupDetail.this, R.string.group_detail_grupo_no_encontrado, Toast.LENGTH_SHORT).show();
                     finish();
                     return;
                 }

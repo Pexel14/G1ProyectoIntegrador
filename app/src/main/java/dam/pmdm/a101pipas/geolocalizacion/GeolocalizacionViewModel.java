@@ -1,5 +1,6 @@
 package dam.pmdm.a101pipas.geolocalizacion;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -46,6 +47,8 @@ public class GeolocalizacionViewModel extends ViewModel {
     private final MutableLiveData<List<Experiencia>> experiencias = new MutableLiveData<>();
     public LiveData<List<Experiencia>> getExperiencias() { return experiencias; }
 
+    private static List<Experiencia> listaExperiencias;
+
     public void setDesafioId(String id) {
         desafioId.setValue(id);
         getExperienciasPorDesafio(id);
@@ -53,19 +56,36 @@ public class GeolocalizacionViewModel extends ViewModel {
 
     public void getExperienciasPorDesafio(String id) {
         if (id == null) return;
-
+        listaExperiencias = new ArrayList<>();
         database.child("desafios").child(id).child("experiencias")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        List<Experiencia> listaExperiencias = new ArrayList<>();
-                        for (DataSnapshot child : snapshot.getChildren()) {
-                            String titulo = child.child("titulo").getValue(String.class);
-                            String coordenadas = child.child("coordenadas").getValue(String.class);
-                            if (titulo != null && coordenadas != null) {
-                                listaExperiencias.add(new Experiencia(titulo, coordenadas));
-                            }
+                        String [] exp = snapshot.getValue(String.class).split(",");
+                        for (String idExp: exp) {
+                            database.child("experiencias").child(idExp).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                                    for (DataSnapshot child : snapshot2.getChildren()) {
+                                        String titulo = child.child("titulo").getValue(String.class);
+                                        String coordenadas = child.child("coordenadas").getValue(String.class);
+                                        if (titulo != null && coordenadas != null) {
+                                            Experiencia exp = new Experiencia();
+                                            exp.setTitulo(titulo);
+                                            exp.setCoordenadas(coordenadas);
+                                            listaExperiencias.add(exp);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
                         }
+
                         experiencias.setValue(listaExperiencias);
                     }
 

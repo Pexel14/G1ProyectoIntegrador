@@ -3,29 +3,20 @@ package dam.pmdm.a101pipas.models;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Experiencia {
-    private String titulo, descripcion, link, mapa, imgExperiencia, coordenadas;
-    private boolean completada; // Añadir las coordenadas
+    private String titulo, descripcion, imagen, coordenadas;
 
     public Experiencia() {
     }
 
-    public Experiencia(String titulo, String coordenadas) {
-        this.titulo = titulo;
-        this.coordenadas = coordenadas;
-    }
-
-    public Experiencia(String titulo, String descripcion){
+    public Experiencia(String titulo, String descripcion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
     }
 
-    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada, String coordenadas) {
+    public Experiencia(String titulo, String descripcion, String imagen, String coordenadas) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.link = link;
-        this.mapa = mapa;
-        this.imgExperiencia = imgExperiencia;
-        this.completada = completada;
+        this.imagen = imagen;
         this.coordenadas = coordenadas;
     }
 
@@ -59,36 +50,12 @@ public class Experiencia {
         this.descripcion = descripcion;
     }
 
-    public String getLink() {
-        return link;
+    public String getImagen() {
+        return imagen;
     }
 
-    public void setLink(String link) {
-        this.link = link;
-    }
-
-    public String getMapa() {
-        return mapa;
-    }
-
-    public void setMapa(String mapa) {
-        this.mapa = mapa;
-    }
-
-    public String getImgExperiencia() {
-        return imgExperiencia;
-    }
-
-    public void setImgExperiencia(String imgExperiencia) {
-        this.imgExperiencia = imgExperiencia;
-    }
-
-    public boolean isCompletada() {
-        return completada;
-    }
-
-    public void setCompletada(boolean completada) {
-        this.completada = completada;
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public String getCoordenadas() {

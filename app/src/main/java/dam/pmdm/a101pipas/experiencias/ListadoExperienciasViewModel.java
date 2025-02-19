@@ -42,7 +42,7 @@ public class ListadoExperienciasViewModel extends ViewModel {
     public void cargarExperiencias(String idDesafio) {
         if (idDesafio == null) return;
 
-        database.child("desafios").child(idDesafio).child("experiencias")
+        database.child("experiencias")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -50,28 +50,26 @@ public class ListadoExperienciasViewModel extends ViewModel {
                         int total = 0, completadas = 0;
 
                         for (DataSnapshot data : snapshot.getChildren()) {
-                            String titulo = data.getKey();
+                            String titulo = data.child("titulo").getValue(String.class);
                             String descripcion = data.child("descripcion").getValue(String.class);
-                            String link = data.child("link").getValue(String.class);
-                            String mapa = data.child("mapa").getValue(String.class);
-                            String imgExperiencia = data.child("imgExperiencia").getValue(String.class);
-                            Boolean completadaValue = data.child("completada").getValue(Boolean.class);
-                            boolean completada = completadaValue != null && completadaValue;
+                            String imagen = data.child("imagen").getValue(String.class);
                             String coordenadas = data.child("coordenadas").getValue(String.class);
 
                             if (titulo != null && descripcion != null) {
                                 listaExperiencias.add(new Experiencia(
-                                        titulo, descripcion, link != null ? link : "",
-                                        mapa != null ? mapa : "", imgExperiencia != null ? imgExperiencia : "",
-                                        completada, coordenadas
+                                        titulo,
+                                        descripcion,
+                                        imagen != null ? imagen : "",
+                                        coordenadas
                                 ));
                                 total++;
-                                if (completada) completadas++;
                             }
                         }
 
                         experiencias.setValue(listaExperiencias);
-                        progreso.setValue(total > 0 ? (completadas * 100 / total) : 0);
+                        //TODO: En usuarios se encuentra experiencias_completadas,
+                        // cuando se complete una experiencia que se sume en el usuario
+                        //progreso.setValue(total > 0 ? (completadas * 100 / total) : 0);
                     }
 
                     @Override

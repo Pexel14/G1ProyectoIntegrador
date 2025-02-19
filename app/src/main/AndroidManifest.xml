@@ -42,9 +42,6 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".perfil.AjustesActivity"
-            android:exported="false" />
-        <activity
             android:name=".experiencias.ListadoExperiencias"
             android:exported="false" />
         <activity
@@ -52,12 +49,6 @@
             android:exported="false" />
         <activity
             android:name=".autenticacion.Registro"
-            android:exported="false" />
-        <activity
-            android:name=".ranking.RankingGlobal"
-            android:exported="false" />
-        <activity
-            android:name=".geolocalizacion.GeolocalizacionActivity"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Login"

@@ -140,4 +140,21 @@
     <string name="cultura_descubrir">Cultura</string>
     <string name="no_hay_desafios_comenzados_perfil">Todavía no hay desafíos comenzados</string>
     <string name="no_has_terminado_desafio_perfil">Aún no has terminado ningún desafío</string>
+    <string name="crear_experiencias_rellena_todos_los_campos">Rellena los campos antes de añadir otra experiencia</string>
+    <string name="crear_experiencias_debe_incluir_una_exp">Debe incluir al menos una experiencia</string>
+    <string name="crear_experiencias_no_se_van_a_guardar_exp">No se van a guardar las experiencias. ¿Deseas volver a la pantalla anterior?</string>
+    <string name="crear_experiencias_si">Si</string>
+    <string name="crear_experiencias_no">No</string>
+    <string name="crear_experiencias_desafio_creado">Desafío creado</string>
+    <string name="crear_experiencias_error_al_crear_desafio">Error al crear el desafío</string>
+    <string name="grupo_fragment_mensaje_invitacion_1">¡Únete a mi grupo en 101!\n</string>
+    <string name="grupo_fragment_mensaje_invitacion_2">"Nombre del grupo: "</string>
+    <string name="grupo_fragment_mensaje_invitacion_3">"Contraseña: "</string>
+    <string name="grupo_fragment_compartir_a_traves">Compartir a través de</string>
+    <string name="crear_grupo_fragmen_ultimo_campo_amigo_vacio">El último campo de amigo está vacío</string>
+    <string name="crear_grupo_fragment_rellene_todos_los_campos">Rellene todos los campos</string>
+    <string name="group_detail_id_no_recibido">Error: ID de grupo no recibido</string>
+    <string name="group_detail_te_has_unido_a">"Te has unido al grupo "</string>
+    <string name="group_detail_grupo_no_encontrado">Grupo no encontrado</string>
+    <string name="login_bienvenido_app">Bienvenido a 101 Pipas</string>
 </resources>

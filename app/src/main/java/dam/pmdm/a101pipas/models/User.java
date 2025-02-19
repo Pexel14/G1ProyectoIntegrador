@@ -5,7 +5,7 @@ public class User {
     private String username;
     private String email;
     private String contrasenia;
-    private int expCompletadas;
+    private int experiencias_completadas;
 
     public User(String id, String username, String email, String contrasenia) {
         this.id = id;
@@ -14,8 +14,15 @@ public class User {
         this.contrasenia = contrasenia;
     }
 
+    public User(String id, String username, String email, int experiencias_completadas) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.experiencias_completadas = experiencias_completadas;
+    }
+
     public User(int expCompletadas, String username) {
-        this.expCompletadas = expCompletadas;
+        this.experiencias_completadas = expCompletadas;
         this.username = username;
     }
 
@@ -39,6 +46,6 @@ public class User {
     }
 
     public int getExpCompletadas() {
-        return expCompletadas;
+        return experiencias_completadas;
     }
 }

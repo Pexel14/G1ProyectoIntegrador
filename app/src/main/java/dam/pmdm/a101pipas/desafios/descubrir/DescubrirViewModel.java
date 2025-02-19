@@ -39,12 +39,10 @@ public class DescubrirViewModel extends ViewModel {
                 for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {
                     String titulo = nodeSnapshot.child("titulo").getValue(String.class);
                     String ciudad = nodeSnapshot.child("ciudad").getValue(String.class);
-                    String sEtiquetas = nodeSnapshot.child("etiquetas").getValue(String.class);
-                    String[] etiquetas = sEtiquetas.split(",");
                     String key = nodeSnapshot.getKey();
 
-                    if (ciudad != null && (ciudad.equals(filtro1Text) || sEtiquetas.contains("Gastronomía") || sEtiquetas.contains("Cultura"))) {
-                        fragmentos.add(TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, etiquetas, key));
+                    if (ciudad != null && (ciudad.equals(filtro1Text) )) {
+                        fragmentos.add(TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, key));
                     }
 
                 }

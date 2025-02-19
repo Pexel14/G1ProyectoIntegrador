@@ -34,7 +34,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
-import dam.pmdm.a101pipas.desafios.TarjetaDesafioDescubrirFragment;
+import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
 
 public class CrearGrupoFragment extends Fragment {
@@ -100,7 +100,7 @@ public class CrearGrupoFragment extends Fragment {
 
                     // Si el campo está vacío
                     if (amigo.isEmpty()) {
-                        Toast.makeText(getContext(), "El último campo de amigo está vacío", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.crear_grupo_fragmen_ultimo_campo_amigo_vacio, Toast.LENGTH_SHORT).show();
                     }
 
                     // Sino
@@ -122,7 +122,7 @@ public class CrearGrupoFragment extends Fragment {
                     }
                 }
                 if (datosIncompletos()) {
-                    Toast.makeText(getContext(), "Rellene todos los campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.crear_grupo_fragment_rellene_todos_los_campos, Toast.LENGTH_SHORT).show();
                 } else {
                     crearGrupo();
                 }
@@ -236,7 +236,7 @@ public class CrearGrupoFragment extends Fragment {
 
         if (swHacerPrivadoCrearGrupo.isChecked()) {
             String contrasenia = etContraseniaCrearGrupo.getText().toString();
-            grupo.setContrasenia(contrasenia);
+            grupo.setContrasena(contrasenia);
         }
 
         usuarioExiste(amigo, new OnUsuarioExisteListener() {

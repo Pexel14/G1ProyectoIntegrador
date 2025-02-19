@@ -35,21 +35,26 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 
 import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.models.User;
+
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     static final String TAG = "Login";
-    public static final String[] PROHIBIDO_FIREBASE = {"$", "/", ".", "]", "#"};
-    FirebaseDatabase firebase;
+
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
     Button btnInicioSesion, btnRegistro;
     DatabaseReference ref;
     TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada;
+    private static boolean encontrado = false;
 
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
@@ -90,14 +95,37 @@ public class Login extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null) {
             String emailCortado = mAuth.getCurrentUser().getEmail().split("@")[0];
             if (emailCortado != null) {
-                for (int i = 0; i < PROHIBIDO_FIREBASE.length; i++) {
-                    if (emailCortado.contains(PROHIBIDO_FIREBASE[i])) {
-                        emailCortado.replaceAll(PROHIBIDO_FIREBASE[i], "");
+                if (emailCortado.contains(".")) {
+                    emailCortado.replaceAll(".", "");
+                    usuarioExiste(emailCortado);
+                    if(!encontrado){
+                        String correo = mAuth.getCurrentUser().getEmail();
+                        String nombre = mAuth.getCurrentUser().getDisplayName();
+                        ref.child(emailCortado).setValue(new User(emailCortado, nombre, correo, 0)).addOnCompleteListener(command -> {
+                            Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
+                        });
                     }
                 }
-//                ref = FirebaseDatabase.getInstance().getReference("usuarios");
             }
         }
+    }
+
+    private void usuarioExiste(String emailCortado) {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot subNodos : snapshot.getChildren()) {
+                    if(emailCortado.equals(subNodos.child("id").getValue(String.class))){
+                        encontrado = true;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -109,9 +137,7 @@ public class Login extends AppCompatActivity {
             if (usuario != null) {
                 String id = usuario.split("@")[0].replace(".", "");
                 Log.d(TAG, "ID: " + id);
-                if (id.equals("prueba")) {
-                    id = "usuario";
-                }
+
                 mandarUsuarioInicio(id);
             }
         }
@@ -146,6 +172,8 @@ public class Login extends AppCompatActivity {
         tvContraseniaOlvidada = findViewById(R.id.tvContraseniaOlvidada);
         etCorreo = findViewById(R.id.etCorreo);
         etPassword = findViewById(R.id.etContrasenia);
+
+        ref = FirebaseDatabase.getInstance().getReference("usuarios");
 
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override

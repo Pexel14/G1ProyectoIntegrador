@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentGrupoBinding;
 import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 
@@ -41,19 +42,19 @@ public class GrupoFragment extends Fragment {
                     public void onClick(View view) {
 
                         StringBuilder message = new StringBuilder();
-                        message.append("¡Únete a mi grupo en 101!\n");
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
 
-                        message.append("Nombre del grupo: ").append(grupo.getTitulo()).append("\n");
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2)).append(grupo.getTitulo()).append("\n");
 
                         if (grupo.getContrasena() != null) {
-                            message.append("Contraseña: ").append(grupo.getContrasena());
+                            message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3)).append(grupo.getContrasena());
                         }
 
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");
                         shareIntent.putExtra(Intent.EXTRA_TEXT, message.toString());
 
-                        startActivity(Intent.createChooser(shareIntent, "Compartir a través de"));
+                        startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
                     }
                 });
             }

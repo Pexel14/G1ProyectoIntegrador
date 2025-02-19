@@ -16,17 +16,17 @@ import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioDescubrirBinding;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
 import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
+import dam.pmdm.a101pipas.social.CrearGrupoFragment;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 
     private FragmentTarjetaDesafioDescubrirBinding binding;
-
-    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String[] etiquetas, String key) {
+    private boolean seleccionado = false;
+    public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String key) {
         TarjetaDesafioDescubrirFragment fragment = new TarjetaDesafioDescubrirFragment();
         Bundle args = new Bundle();
         args.putString("titulo", titulo);
         args.putString("ubicacion", ubicacion);
-        args.putStringArray("etiquetas", etiquetas);
         args.putString("key", key);
         fragment.setArguments(args);
         return fragment;
@@ -68,5 +68,30 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
             listadoExperienciasViewModel.setIdDesafio(key);
             Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
         });
+
+        if (getParentFragment() instanceof DescubrirFragment) {
+            view.setOnClickListener(v -> {
+
+            });
+        } else if (getParentFragment() instanceof CrearGrupoFragment) {
+            view.setOnClickListener(v -> {
+                if (seleccionado) {
+                    cambiarColor(R.color.blue);
+                    seleccionado = false;
+                } else {
+                    cambiarColor(R.color.color_principal);
+                    seleccionado = true;
+                }
+            });
+        }
+
     }
+    public boolean isSeleccionado(){
+        return seleccionado;
+    }
+
+    public void cambiarColor(int color) {
+        binding.vColorTarjetaDescubrir.setBackgroundColor(getResources().getColor(color));
+    }
+
 }

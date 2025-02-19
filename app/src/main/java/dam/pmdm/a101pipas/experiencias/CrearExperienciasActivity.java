@@ -78,7 +78,7 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             public void onClick(View view) {
                 int ultimoFragment = listaDeFragments.size() - 1;
                 if (listaDeFragments.get(ultimoFragment).isEmpty()) {
-                    Toast.makeText(CrearExperienciasActivity.this, "Rellena los campos antes de añadir otra experiencia", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_rellena_todos_los_campos, Toast.LENGTH_SHORT).show();
                 } else {
                     agregarNuevoFragment();
                 }
@@ -91,20 +91,20 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 if (listaDeFragments.isEmpty()) {
-                    Toast.makeText(CrearExperienciasActivity.this, "Debe incluir al menos una experiencia", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_debe_incluir_una_exp, Toast.LENGTH_SHORT).show();
                 } else {
 
                     Map<String, Experiencia> mapExperiencias = new HashMap<>();
 
                     for (TarjetaExperienciaFragment fragment : listaDeFragments) {
                         Experiencia ex = new Experiencia(fragment.getTitulo(), fragment.getDescripcion());
-                        mapExperiencias.put(ex.getTitulo().replace(" ", ""), ex);
+                        mapExperiencias.put(ex.getTitulo(), ex);
                     }
 
                     Desafio desafio = (Desafio) getIntent().getSerializableExtra("desafio");
                     desafio.setExperiencias(mapExperiencias);
 
-                    String keyDesafio = desafio.getTitulo().replace(" ", "");
+                    String keyDesafio = desafio.getTitulo();
 
 //                    // Añadir ciudad
 //                    databaseReference.child(keyDesafio)
@@ -124,13 +124,13 @@ public class CrearExperienciasActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(CrearExperienciasActivity.this, "Desafío creado", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(CrearExperienciasActivity.this, MainActivity.class);
                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                                 startActivity(intent);
                                 finish();
                             } else {
-                                Toast.makeText(CrearExperienciasActivity.this, "Error al crear el desafío", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -143,14 +143,14 @@ public class CrearExperienciasActivity extends AppCompatActivity {
     private void confirmarVolverAtras() {
         new AlertDialog.Builder(CrearExperienciasActivity.this)
                 .setTitle("")
-                .setMessage("No se van a guardar las experiencias. ¿Deseas volver a la pantalla anterior?")
-                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                .setMessage(R.string.crear_experiencias_no_se_van_a_guardar_exp)
+                .setPositiveButton(R.string.crear_experiencias_si, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         finish();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.crear_experiencias_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
