@@ -131,4 +131,20 @@
         libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
+    <string name="btnVerTodosGrupos">Ver todos los grupos</string>
+    <string name="InfoGrupo">Información del grupo:</string>
+    <string name="fechaCreacion">Oct. 5 2024\nFecha de creación</string>
+    <string name="Aventureros">4\nAventureros</string>
+    <string name="txtCroquetas">101 Croquetas</string>
+    <string name="edBuscar">Buscar</string>
+    <string name="ListaGruposVolver">Volver</string>
+    <string name="ListaGruposGrupos">Grupos</string>
+    <string name="ListaGruposBuscar">Buscar</string>
+    <string name="SocialPrincipalBuscar">Buscar</string>
+    <string name="SocialPrincipalAmigos">Amigos:</string>
+    <string name="SocialPrincipalGrupos">Grupos:</string>
+    <string name="FragmentAmigosAmigos">Amigos:</string>
+    <string name="FragmentAmigosVerTodosAmigos">Ver todos los amigos</string>
+    <string name="ItemGrupoNombreGrupo">Nombre del Grupo</string>
+    <string name="ItemSocialNombre">Nombre</string>
 </resources>

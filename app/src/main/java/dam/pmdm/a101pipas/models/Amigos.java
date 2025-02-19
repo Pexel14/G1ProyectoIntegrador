@@ -5,7 +5,7 @@ public class Amigos {
     private String fotoPerfil;
 
     public Amigos() {
-        // Constructor vacío requerido por Firestore
+
     }
 
     public Amigos(String username, String fotoPerfil) {

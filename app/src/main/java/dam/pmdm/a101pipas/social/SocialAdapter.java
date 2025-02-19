@@ -37,7 +37,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         Object item = listaSocial.get(position);
 
         if (item instanceof Amigos) {
-            // 🟢 Es un amigo
+
             Amigos amigo = (Amigos) item;
             holder.tvNombre.setText(amigo.getUsername());
 
@@ -48,7 +48,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     .into(holder.imgPerfil);
 
         } else if (item instanceof Grupo) {
-            // 🔵 Es un grupo
+
             Grupo grupo = (Grupo) item;
             holder.tvNombre.setText(grupo.getNombreGrupo());
 
@@ -58,7 +58,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     .error(R.drawable.perfil_por_defecto)
                     .into(holder.imgPerfil);
 
-            // 🟡 Evento de clic para abrir `GroupDetail`
+
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(v.getContext(), GroupDetail.class);
                 intent.putExtra("groupId", grupo.getIdGrupo());

@@ -6,7 +6,7 @@ public class Grupo {
     private String fotoGrupo;
 
     public Grupo() {
-        // Constructor vacío requerido por Firebase
+
     }
 
     public Grupo(String idGrupo, String nombreGrupo, String fotoGrupo) {

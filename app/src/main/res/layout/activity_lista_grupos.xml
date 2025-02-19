@@ -13,17 +13,17 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/flecha_izquierda"
-        android:contentDescription="Volver"
+        android:contentDescription="@string/ListaGruposVolver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="?attr/selectableItemBackgroundBorderless" />
+      />
 
     <!-- Título -->
     <TextView
         android:id="@+id/tv_title_grupos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Grupos"
+        android:text="@string/ListaGruposGrupos"
         android:textStyle="bold"
         android:textSize="22sp"
         app:layout_constraintTop_toTopOf="parent"
@@ -37,7 +37,7 @@
         android:id="@+id/search_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Buscar"
+        android:hint="@string/ListaGruposBuscar"
         android:padding="10dp"
         android:background="@android:drawable/editbox_background"
         android:drawableStart="@android:drawable/ic_menu_search"

@@ -59,7 +59,6 @@ public class GroupDetail extends AppCompatActivity {
 
         // Acción de unirse al grupo (puede ser personalizada)
         btnUnirse.setOnClickListener(v -> {
-            // Aquí puedes agregar la lógica para unirse al grupo
             Toast.makeText(this, "Te has unido al grupo " + tvNombreGrupo.getText(), Toast.LENGTH_SHORT).show();
         });
     }

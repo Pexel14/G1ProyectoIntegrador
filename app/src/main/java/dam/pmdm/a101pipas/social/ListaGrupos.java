@@ -37,10 +37,10 @@ public class ListaGrupos extends AppCompatActivity {
         setContentView(R.layout.activity_lista_grupos);
 
         // Vincular elementos del layout
-        rvListaGrupos = findViewById(R.id.rv_lista_amigos); // Asegúrate que el ID coincida en XML
+        rvListaGrupos = findViewById(R.id.rv_lista_amigos);
         searchBar = findViewById(R.id.search_bar);
         btnBack = findViewById(R.id.btn_back);
-        dbRef = FirebaseDatabase.getInstance().getReference("grupos"); // Referencia a "grupos" en Firebase
+        dbRef = FirebaseDatabase.getInstance().getReference("grupos");
 
         gruposList = new ArrayList<>();
         gruposAdapter = new GruposAdapter(gruposList);
@@ -62,11 +62,11 @@ public class ListaGrupos extends AppCompatActivity {
 
                 for (DataSnapshot data : snapshot.getChildren()) {
                     // Obtener el ID del grupo (clave del nodo)
-                    String idGrupo = data.getKey(); // Esto tomará "0", "1", "migrupo", etc.
+                    String idGrupo = data.getKey();
                     String nombreGrupo = data.child("titulo").getValue(String.class);
                     String fotoGrupo = data.child("foto_grupo").getValue(String.class);
 
-                    // Si la imagen es null o vacía, asignamos una imagen por defecto
+
                     if (fotoGrupo == null || fotoGrupo.isEmpty()) {
                         fotoGrupo = "https://example.com/default_group.png"; // URL de imagen por defecto
                     }
