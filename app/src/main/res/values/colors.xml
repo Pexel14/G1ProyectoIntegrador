@@ -12,5 +12,6 @@
     <color name="light_gray">#E0E0E0</color>
     <color name="texto_secundario">#808080</color>
     <color name="texto_desapercibido">#CACACA</color>
+    <color name="verde_secundario_progres_bar">#A9D9C3</color>
     <color name="color_nav_bar">#1E1E1E</color>
 </resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".experiencias.CrearExperienciasActivity">
+
+    <!-- DECORACIÓN SUPERIOR -->
+    <Button
+        android:id="@+id/btnAtrasCrearExperiencias"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/flecha_izquierda"/>
+
+    <TextView
+        android:id="@+id/tvInsertarExperiencias"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"
+        android:text="@string/insertar_experiencias"
+        android:textSize="35sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <!-- EXPERIENCIAS -->
+    <ScrollView
+        android:id="@+id/svScrollViewCrearExperiencias"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvInsertarExperiencias"
+        app:layout_constraintBottom_toTopOf="@id/btnCrearDesafio"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="@dimen/separacion_mediana_quince">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <LinearLayout
+                android:id="@+id/llExperienciasCrearExperiencias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/btnAniadirExperienciaCrearDesafio"/>
+
+            <!-- AÑADIR EXPERIENCIA -->
+            <Button
+                android:id="@+id/btnAniadirExperienciaCrearDesafio"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/llExperienciasCrearExperiencias"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/separacion_mediana_quince"
+                android:background="@drawable/rounded_corner_button"
+                android:text="@string/simboloMas_inicio"
+                android:textColor="@color/white"
+                android:textSize="25sp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+    <!-- CREAR DESAFÍO -->
+    <Button
+        android:id="@+id/btnCrearDesafio"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="30dp"
+        android:text="@string/crear_desafio"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_corner_button"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

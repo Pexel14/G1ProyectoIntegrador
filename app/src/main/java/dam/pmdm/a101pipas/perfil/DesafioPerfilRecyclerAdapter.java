@@ -1,12 +1,15 @@
 package dam.pmdm.a101pipas.perfil;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -44,7 +47,9 @@ public class DesafioPerfilRecyclerAdapter extends RecyclerView.Adapter<DesafioPe
         //Cargamos la imagen con la librería Picasso
 
         holder.tvTitle.setText(desafio.getTitulo());
-        holder.pbDesafio.setProgress(desafio.getPorcentajeProgreso(), true);
+//        holder.tvTitle.setTextColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.black));
+
+        holder.pbDesafio.setProgress(desafio.getPorcentajeProgreso());
 
     }
 
@@ -67,4 +72,12 @@ public class DesafioPerfilRecyclerAdapter extends RecyclerView.Adapter<DesafioPe
 
         }
     }
+
+    // TODO PRUEBAS
+    public void actualizarLista(List<Desafio> nuevaLista) {
+        this.desafioList.clear();
+        this.desafioList.addAll(nuevaLista);
+        notifyDataSetChanged();
+    }
+
 }

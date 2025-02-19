@@ -14,6 +14,11 @@ public class Experiencia {
         this.coordenadas = coordenadas;
     }
 
+    public Experiencia(String titulo, String descripcion){
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+    }
+
     public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada, String coordenadas) {
         this.titulo = titulo;
         this.descripcion = descripcion;

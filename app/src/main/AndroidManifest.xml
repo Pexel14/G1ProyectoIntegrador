@@ -41,12 +41,23 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-
+        <activity
+            android:name=".perfil.AjustesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".experiencias.ListadoExperiencias"
+            android:exported="false" />
         <activity
             android:name=".autenticacion.RecuperarContrasenia"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Registro"
+            android:exported="false" />
+        <activity
+            android:name=".ranking.RankingGlobal"
+            android:exported="false" />
+        <activity
+            android:name=".geolocalizacion.GeolocalizacionActivity"
             android:exported="false" />
         <activity
             android:name=".autenticacion.Login"
@@ -57,6 +68,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".desafios.CrearDesafioActivity"
+            android:exported="false" />
+        <activity
+            android:name=".experiencias.CrearExperienciasActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

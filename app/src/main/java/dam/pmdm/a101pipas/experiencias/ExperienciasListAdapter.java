@@ -55,7 +55,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
         // Configurar datos de la tarjeta
         holder.tvTitulo.setText(experiencia.getTitulo());
-        holder.tvDescripcion.setText(experiencia.getDescripcion());
+        holder.tvDescripcion.setText(experiencia.getDesc_exp());
 
 
         // Configurar enlace del mapa

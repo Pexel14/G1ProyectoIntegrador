@@ -1,7 +1,5 @@
 package dam.pmdm.a101pipas.models;
 
-import java.util.ArrayList;
-
 public class Grupo {
 
     private int id;
@@ -10,13 +8,18 @@ public class Grupo {
     private int creador;
     private int desafio;
     private String fechaCreacion;
-    private ArrayList<Integer> miembros;
+    private String miembros;
 
     public Grupo() {}
 
     public Grupo(String titulo, String contrasena) {
         this.titulo = titulo;
         this.contrasena = contrasena;
+    }
+
+    public Grupo(String titulo, String miembros){
+        this.titulo = titulo;
+        this.miembros = miembros;
     }
 
     public int getId() {
@@ -67,11 +70,11 @@ public class Grupo {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public ArrayList<Integer> getMiembros() {
+    public String getMiembros() {
         return miembros;
     }
 
-    public void setMiembros(ArrayList<Integer> miembros) {
+    public void setMiembros(String miembros) {
         this.miembros = miembros;
     }
 }

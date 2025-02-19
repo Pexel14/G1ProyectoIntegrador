@@ -7,6 +7,7 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="1dp"
     android:elevation="1dp"
+    android:layout_marginTop="@dimen/separacion_mediana_quince"
     app:cardBackgroundColor="@color/white">
 
 
@@ -16,26 +17,30 @@
         android:orientation="horizontal"
         android:padding="10dp">
 
+        <!-- style="@android:style/Widget.Material.ProgressBar.Large" -->
+
         <ProgressBar
             android:id="@+id/pbDesafio"
-            style="@android:style/Widget.Material.ProgressBar.Large"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:indeterminateTint="@color/color_principal"
             android:max="100"
             android:progress="0"
             android:indeterminate="false"
-            />
-
+            android:background="@drawable/circular_shape_progress_bar"
+            android:progressDrawable="@drawable/circular_progress_bar"/>
 
         <TextView
             android:id="@+id/tvNombreDesafio"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/separacion_mediana_quince"
             android:maxLines="2"
             android:gravity="center"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
