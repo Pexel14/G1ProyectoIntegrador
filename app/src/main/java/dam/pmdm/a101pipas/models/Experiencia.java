@@ -1,5 +1,7 @@
 package dam.pmdm.a101pipas.models;
 
+import com.google.android.gms.maps.model.LatLng;
+
 public class Experiencia {
     private String titulo, descripcion, link, mapa, imgExperiencia, coordenadas;
     private boolean completada; // Añadir las coordenadas
@@ -12,13 +14,28 @@ public class Experiencia {
         this.coordenadas = coordenadas;
     }
 
-    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada) {
+    public Experiencia(String titulo, String descripcion, String link, String mapa, String imgExperiencia, boolean completada, String coordenadas) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.link = link;
         this.mapa = mapa;
         this.imgExperiencia = imgExperiencia;
         this.completada = completada;
+        this.coordenadas = coordenadas;
+    }
+
+    public LatLng getLatLng() {
+        if (coordenadas != null && coordenadas.contains(",")) {
+            String[] parts = coordenadas.split(",");
+            try {
+                double lat = Double.parseDouble(parts[0].trim());
+                double lng = Double.parseDouble(parts[1].trim());
+                return new LatLng(lat, lng);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     public String getTitulo() {
@@ -72,6 +89,7 @@ public class Experiencia {
     public String getCoordenadas() {
         return coordenadas;
     }
+
     public void setCoordenadas(String coordenadas) {
         this.coordenadas = coordenadas;
     }

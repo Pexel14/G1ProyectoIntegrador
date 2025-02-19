@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +19,26 @@ import dam.pmdm.a101pipas.models.Experiencia;
 
 public class GeolocalizacionViewModel extends ViewModel {
     private final DatabaseReference database = FirebaseDatabase.getInstance().getReference();
+
+    private final MutableLiveData<LatLng> currentLocation = new MutableLiveData<>();
+
+    public LiveData<LatLng> getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(LatLng location) {
+        currentLocation.setValue(location);
+    }
+
+    private final MutableLiveData<LatLng> destinoExpSelec = new MutableLiveData<>();
+
+    public void setDestinoExperiencia(LatLng destino) {
+        destinoExpSelec.setValue(destino);
+    }
+
+    public LiveData<LatLng> getDestinoExperiencia() {
+        return destinoExpSelec;
+    }
 
     private final MutableLiveData<String> desafioId = new MutableLiveData<>();
     public LiveData<String> getDesafioId() { return desafioId; }

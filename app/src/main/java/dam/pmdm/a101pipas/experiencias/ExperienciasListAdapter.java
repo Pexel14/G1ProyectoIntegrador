@@ -21,10 +21,16 @@ import dam.pmdm.a101pipas.models.Experiencia;
 public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasListAdapter.ExperienciaViewHolder> {
 
     private List<Experiencia> experienciaList;
+    private OnExperienciaClickListener listener;
+
+    public interface OnExperienciaClickListener {
+        void onExperienciaClick(Experiencia experiencia);
+    }
 
     // Constructor
-    public ExperienciasListAdapter(List<Experiencia> experienciaList) {
+    public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener) {
         this.experienciaList = experienciaList;
+        this.listener = listener;
     }
 
     @NonNull
@@ -62,10 +68,8 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
         // Configurar enlace del mapa
         holder.tvMapLink.setOnClickListener(view -> {
-            String mapaUrl = experiencia.getMapa();
-            if (mapaUrl != null && !mapaUrl.isEmpty()) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mapaUrl));
-                view.getContext().startActivity(intent);
+            if (listener != null) {
+                listener.onExperienciaClick(experiencia);
             }
         });
 
@@ -96,7 +100,6 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
         public ExperienciaViewHolder(@NonNull View itemView) {
             super(itemView);
-
 
             imgExperiencia = itemView.findViewById(R.id.imgExperiencia);
             tvTitulo = itemView.findViewById(R.id.tvTitle);

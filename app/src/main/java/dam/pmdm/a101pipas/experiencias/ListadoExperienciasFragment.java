@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,10 +18,13 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentListadoExperienciasBinding;
+import dam.pmdm.a101pipas.databinding.ListExperienciasBinding;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ListadoExperienciasFragment extends Fragment {
 
+    private GeolocalizacionViewModel geolocalizacionViewModel;
     private ListadoExperienciasViewModel viewModel;
 
     private ExperienciasListAdapter adapter;
@@ -40,12 +44,20 @@ public class ListadoExperienciasFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
+        geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
 
         binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Inicializar lista y adaptador
         experienciaList = new ArrayList<>();
-        adapter = new ExperienciasListAdapter(experienciaList);
+        adapter = new ExperienciasListAdapter(experienciaList, experiencia -> {
+            if (experiencia.getLatLng() != null) {
+                geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
+
+                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+            }
+        });
+
         binding.rvExperiencias.setAdapter(adapter);
 
         viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {

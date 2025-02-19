@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -81,7 +80,6 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
-        Log.d("Experiencias", "Antes de observar: " + viewModel.getExperiencias().getValue());
 
         areaMarcadores = new LatLngBounds.Builder();
         areaUsuarioExpCerca = new LatLngBounds.Builder();
@@ -133,6 +131,9 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
         cargarExperiencias();
 
+        viewModel.getDestinoExperiencia().observe(getViewLifecycleOwner(), destino -> updateRouteIfReady());
+        viewModel.getCurrentLocation().observe(getViewLifecycleOwner(), location -> updateRouteIfReady());
+
         // Como llegar en Google Maps andando
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
@@ -145,8 +146,27 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
             }
         });
 
+        mMap.setOnMarkerClickListener(marker -> {
+            if (coordenadasAct != null) {
+                trazarRuta(coordenadasAct, marker.getPosition());
+            }
+            return true;
+        });
     }
 
+    private void updateRouteIfReady() {
+        LatLng current = viewModel.getCurrentLocation().getValue();
+        LatLng destination = viewModel.getDestinoExperiencia().getValue();
+
+        if (destination != null) {
+            if (current != null) {
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
+                trazarRuta(current, destination);
+            } else {
+                Toast.makeText(getActivity(), "Obteniendo ubicación actual...", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     private void getUbicacionActual() {
 
@@ -162,6 +182,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
             public void onSuccess(Location location) {
                 if (location != null) {
                     coordenadasAct = new LatLng(location.getLatitude(), location.getLongitude());
+                    viewModel.setCurrentLocation(coordenadasAct);
 
                     // Eliminar el marcador anterior del usuario si existe
                     if (markerUsuario != null) {

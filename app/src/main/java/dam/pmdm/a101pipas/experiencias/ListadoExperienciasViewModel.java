@@ -57,12 +57,13 @@ public class ListadoExperienciasViewModel extends ViewModel {
                             String imgExperiencia = data.child("imgExperiencia").getValue(String.class);
                             Boolean completadaValue = data.child("completada").getValue(Boolean.class);
                             boolean completada = completadaValue != null && completadaValue;
+                            String coordenadas = data.child("coordenadas").getValue(String.class);
 
                             if (titulo != null && descripcion != null) {
                                 listaExperiencias.add(new Experiencia(
                                         titulo, descripcion, link != null ? link : "",
                                         mapa != null ? mapa : "", imgExperiencia != null ? imgExperiencia : "",
-                                        completada
+                                        completada, coordenadas
                                 ));
                                 total++;
                                 if (completada) completadas++;
