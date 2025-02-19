@@ -59,7 +59,7 @@
         app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
         app:layout_constraintStart_toStartOf="@id/vCajaBusquedaDescubrir"
         app:layout_constraintEnd_toStartOf="@id/btnBuscarDescubrir"
-        android:hint="Buscar"
+        android:hint="@string/buscar_descubrir"
         android:background="@null"
         android:inputType="text|textNoSuggestions"
         android:textSize="20sp"/>
@@ -102,7 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Madrid"
+                android:text="@string/madrid_descubrir"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
@@ -133,7 +133,7 @@
                 app:layout_constraintTop_toBottomOf="@id/hsv1"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Gastronomía"
+                android:text="@string/gastronomia_desafios"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 
@@ -164,7 +164,7 @@
                 app:layout_constraintTop_toBottomOf="@id/hsv2"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Cultura"
+                android:text="@string/cultura_descubrir"
                 android:textStyle="bold"
                 android:textSize="20sp"/>
 

@@ -112,4 +112,10 @@
     <string name="subir_foto_crear_experiencia">Subir foto</string>
     <string name="insertar_experiencias">Insertar experiencias</string>
     <string name="contrasenia_crear_grupo">Contraseña :</string>
+    <string name="buscar_descubrir">Buscar</string>
+    <string name="madrid_descubrir">Madrid</string>
+    <string name="gastronomia_desafios">Gastronomía</string>
+    <string name="cultura_descubrir">Cultura</string>
+    <string name="no_hay_desafios_comenzados_perfil">Todavía no hay desafíos comenzados</string>
+    <string name="no_has_terminado_desafio_perfil">Aún no has terminado ningún desafío</string>
 </resources>
