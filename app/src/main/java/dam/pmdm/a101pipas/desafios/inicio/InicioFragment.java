@@ -1,6 +1,7 @@
 package dam.pmdm.a101pipas.desafios.inicio;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentInicioBinding;
+import dam.pmdm.a101pipas.desafios.CrearDesafioActivity;
 
 public class InicioFragment extends Fragment {
 
@@ -56,11 +59,17 @@ public class InicioFragment extends Fragment {
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");
 
-        //TODO: setOnClick para ir a CrearDesafio
-
         inicioViewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), this::cargarDesafios);
 
         inicioViewModel.cargarFragmentosDesafiosDesdeFirebase(refDesafiosUsuario, refDesafios);
+
+        binding.btnAniadirDesafioInicio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getContext(), CrearDesafioActivity.class);
+                startActivity(i);
+            }
+        });
 
     }
 

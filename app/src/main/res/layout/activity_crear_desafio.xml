@@ -51,6 +51,7 @@
             android:id="@+id/etNombreDesafioCrearDesafio"
             android:layout_width="352dp"
             android:layout_height="35dp"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/tvNombreDesafioCrearDesafio"
             app:layout_constraintStart_toStartOf="@id/tvNombreDesafioCrearDesafio"
             android:layout_marginTop="5dp"
@@ -74,6 +75,7 @@
             android:id="@+id/etCiudadCrearDesafio"
             android:layout_width="352dp"
             android:layout_height="35dp"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/tvCiudadCrearDesafio"
             app:layout_constraintStart_toStartOf="@id/tvCiudadCrearDesafio"
             android:layout_marginTop="5dp"
@@ -97,6 +99,7 @@
             android:id="@+id/etDescripcionCrearDesafio"
             android:layout_width="352dp"
             android:layout_height="70dp"
+            android:textColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/tvDescripcionCrearDesafio"
             app:layout_constraintStart_toStartOf="@id/tvDescripcionCrearDesafio"
             android:layout_marginTop="5dp"
@@ -133,6 +136,8 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="5dp"
                 android:text="@string/cultura_crear_desafio"
+                android:textColor="@color/black"
+                android:buttonTint="@color/color_principal"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -144,6 +149,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:text="@string/arte_crear_desafio"
+                android:textColor="@color/black"
+                android:buttonTint="@color/color_principal"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -155,6 +162,8 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:text="@string/masDieciocho_crear_desafio"
+                android:textColor="@color/black"
+                android:buttonTint="@color/color_principal"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -165,6 +174,8 @@
                 app:layout_constraintTop_toBottomOf="@id/cbCulturaCrearDesafio"
                 android:layout_marginTop="5dp"
                 android:text="@string/gastronomia_crear_desafio"
+                android:textColor="@color/black"
+                android:buttonTint="@color/color_principal"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -176,6 +187,8 @@
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:layout_marginTop="5dp"
                 android:text="@string/naturaleza_crear_desafio"
+                android:textColor="@color/black"
+                android:buttonTint="@color/color_principal"
                 android:textSize="15sp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -185,11 +198,11 @@
         android:id="@+id/btnInsertarExperiencias"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/clCheckboxesCrearDesafio"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="30dp"
         android:text="@string/ir_a_experiencias"
+        android:layout_marginTop="30dp"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corner_button"/>

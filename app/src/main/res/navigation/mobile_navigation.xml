@@ -5,55 +5,84 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_inicio">
 
+    <!-- INICIO -->
     <fragment
         android:id="@+id/navigation_inicio"
         android:name="dam.pmdm.a101pipas.desafios.inicio.InicioFragment"
         android:label="Inicio"
         tools:layout="@layout/fragment_inicio" />
 
+    <!-- DESCUBRIR -->
     <fragment
         android:id="@+id/navigation_descubrir"
         android:name="dam.pmdm.a101pipas.desafios.descubrir.DescubrirFragment"
         android:label="Descubrir"
         tools:layout="@layout/fragment_descubrir" />
 
-    <!-- CAMBIADO SÓLO PARA HACER PRUEBAS -->
+        <!-- CLICK EN DESAFÍO (LISTA DE LAS EXPERIENCIAS) -->
     <fragment
         android:id="@+id/navigation_listado_experiencias"
         android:name="dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment"
         android:label="ListadoExperiencias"
         tools:layout="@layout/fragment_listado_experiencias" />
 
+        <!-- GEOLOCALIZACIÓN -->
     <fragment
         android:id="@+id/navigation_geolocalizacion"
         android:name="dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionFragment"
         android:label="Geolocalizacion"
         tools:layout="@layout/fragment_geolocalizacion" />
 
+        <!-- RANKING GLOBAL -->
     <fragment
         android:id="@+id/navigation_ranking_global"
         android:name="dam.pmdm.a101pipas.ranking.RankingGlobalFragment"
         android:label="RankingGlobal"
         tools:layout="@layout/fragment_ranking_global" />
 
+    <!-- SOCIAL -->
     <fragment
         android:id="@+id/navigation_social"
-        android:name="dam.pmdm.a101pipas.social.CrearGrupoFragment"
+        android:name="dam.pmdm.a101pipas.social.SocialFragment"
         android:label="Social"
-        tools:layout="@layout/fragment_crear_grupo" />
+        tools:layout="@layout/fragment_social" />
 
+        <!-- LISTA DE TUS AMIGOS -->
+    <fragment
+        android:id="@+id/navigation_lista_amigos"
+        android:name="dam.pmdm.a101pipas.social.ListaAmigosFragment"
+        android:label="ListaAmigos"
+        tools:layout="@layout/fragment_lista_amigos" />
+
+        <!-- LISTA DE TUS GRUPOS -->
+    <fragment
+        android:id="@+id/navigation_lista_grupos"
+        android:name="dam.pmdm.a101pipas.social.ListaGruposFragment"
+        android:label="ListaGrupos"
+        tools:layout="@layout/fragment_lista_grupos" />
+
+        <!-- GRUPO POR DENTRO YA UNIDO -->
     <fragment
         android:id="@+id/navigation_grupo"
         android:name="dam.pmdm.a101pipas.ranking.GrupoFragment"
         android:label="Grupo"
         tools:layout="@layout/fragment_grupo" />
 
+        <!-- CREAR GRUPO -->
+    <fragment
+        android:id="@+id/navigation_crear_grupo"
+        android:name="dam.pmdm.a101pipas.social.CrearGrupoFragment"
+        android:label="CrearGrupo"
+        tools:layout="@layout/fragment_crear_grupo" />
+
+    <!-- PERFIL -->
     <fragment
         android:id="@+id/navigation_perfil"
         android:name="dam.pmdm.a101pipas.perfil.PerfilFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
 
+        <!-- AJUSTES -->
     <fragment
         android:id="@+id/navigation_ajustes"
         android:name="dam.pmdm.a101pipas.perfil.AjustesFragment"

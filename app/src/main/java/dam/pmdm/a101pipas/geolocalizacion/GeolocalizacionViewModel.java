@@ -66,15 +66,8 @@ public class GeolocalizacionViewModel extends ViewModel {
                             database.child("experiencias").child(idExp).addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                    for (DataSnapshot child : snapshot2.getChildren()) {
-                                        String titulo = child.child("titulo").getValue(String.class);
-                                        String coordenadas = child.child("coordenadas").getValue(String.class);
-                                        if (titulo != null && coordenadas != null) {
-                                            Experiencia exp = new Experiencia();
-                                            exp.setTitulo(titulo);
-                                            exp.setCoordenadas(coordenadas);
-                                            listaExperiencias.add(exp);
-                                        }
+                                    for (DataSnapshot data : snapshot2.getChildren()) {
+
                                     }
                                 }
 
@@ -94,5 +87,7 @@ public class GeolocalizacionViewModel extends ViewModel {
                         System.out.println(R.string.geolocalizacion_error_leer_exp + error.getMessage());
                     }
                 });
+
+
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.util.TypedValue;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -45,7 +47,7 @@ public class CrearGrupoFragment extends Fragment {
     private Switch swHacerPrivadoCrearGrupo;
     private TextView tvContraseniaCrearGrupo;
     private EditText etNombreGrupoCrearGrupo, etContraseniaCrearGrupo;
-    private Button btnCrearGrupo, btnAniadirAmigosCrearGrupo;
+    private Button btnCrearGrupo, btnAniadirAmigosCrearGrupo, btnAtras;
     private FirebaseAuth mAuth;
     private LinearLayout llAmigosCrearGrupo;
     private HorizontalScrollView hsvElegirDesafioCrearGrupo;
@@ -171,6 +173,15 @@ public class CrearGrupoFragment extends Fragment {
 
             }
         });
+
+        btnAtras = view.findViewById(R.id.btnAtrasCrearGrupo);
+        btnAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.navigation_social);
+        }
+        });
+
 
         return view;
 

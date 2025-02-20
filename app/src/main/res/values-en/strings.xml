@@ -138,6 +138,6 @@
     <string name="gastronomia_desafios">Gastronomy</string>
     <string name="cultura_descubrir">Culture</string>
     <string name="no_hay_desafios_comenzados_perfil">No challenges started yet</string>
-    <string name="no_has_terminado_desafio_perfil">You haven't completed any challenges yet</string>
+    <string name="no_has_terminado_desafio_perfil">You haven\'t completed any challenges yet</string>
 
 </resources>

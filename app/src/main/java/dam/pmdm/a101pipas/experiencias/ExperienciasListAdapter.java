@@ -1,7 +1,7 @@
 package dam.pmdm.a101pipas.experiencias;
 
-import android.content.Intent;
-import android.net.Uri;
+
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +48,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
         // Cargar imagen usando Picasso
         Picasso.get()
-                .load(experiencia.getImgExperiencia())
+                .load(experiencia.getImagen())
                 .placeholder(R.drawable.experiencia) // Imagen de carga
                 .error(R.drawable.experiencia) // Imagen de error
                 .into(holder.imgExperiencia);
@@ -65,13 +65,14 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
             }
         });
 
+        //TODO: ARREGLAR SIN UTILIZAR IS COMPLETADA, HAY CAMPOS DESAFIOS_COMPLETADOS DENTRO DE CADA USUARIO
         // Mostrar o esconder el check de completado
-        if (experiencia.isCompletada()) {
-            holder.tvCheck.setVisibility(View.VISIBLE);
-            holder.tvCheck.setText(R.string.experiencias_listadas_exp_completada);
-        } else {
-            holder.tvCheck.setVisibility(View.GONE);
-        }
+//        if (experiencia.isCompletada()) {
+//            holder.tvCheck.setVisibility(View.VISIBLE);
+//            holder.tvCheck.setText(R.string.experiencias_listadas_exp_completada);
+//        } else {
+//            holder.tvCheck.setVisibility(View.GONE);
+//        }
     }
 
     public void setExperiencias(List<Experiencia> experiencias) {

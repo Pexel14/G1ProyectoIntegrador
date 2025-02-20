@@ -45,6 +45,7 @@
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
+            android:textColor="@color/black"
             android:textColorHint="@color/texto_secundario" />
 
 
@@ -65,7 +66,8 @@
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/black"/>
 
 
         <TextView
@@ -85,7 +87,8 @@
             android:padding="10dp"
             android:layout_marginBottom="12dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/black"/>
 
 
         <TextView
@@ -105,7 +108,8 @@
             android:padding="10dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario" />
+            android:textColorHint="@color/texto_secundario"
+            android:textColor="@color/black"/>
 
 
         <TextView

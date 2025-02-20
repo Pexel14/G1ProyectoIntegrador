@@ -25,7 +25,7 @@
         </activity>
 
         <activity
-            android:name=".social.ListaGrupos"
+            android:name=".social.ListaGruposFragment"
             android:exported="true" />
         <activity
             android:name=".ver_amigos_grupos"
@@ -36,7 +36,7 @@
             android:value="AIzaSyAdPtmRtCHZXetR4pBDpn5Y2uukwocQUr0" />
 
         <activity
-            android:name=".social.ListaAmigos"
+            android:name=".social.ListaAmigosFragment"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

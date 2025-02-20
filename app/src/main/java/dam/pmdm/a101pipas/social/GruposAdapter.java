@@ -1,6 +1,5 @@
 package dam.pmdm.a101pipas.social;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -15,14 +17,17 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.ranking.GrupoViewModel;
 
 public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GrupoViewHolder> {
 
     private List<Grupo> gruposList;
+    private Fragment fragment;
 
     // Constructor
-    public GruposAdapter(List<Grupo> gruposList) {
+    public GruposAdapter(List<Grupo> gruposList, Fragment fragment) {
         this.gruposList = gruposList;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -46,11 +51,15 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GrupoViewH
         // Asignar datos
         holder.tvNombreGrupo.setText(grupo.getNombreGrupo());
 
+        GrupoViewModel grupoViewModel = new ViewModelProvider(fragment).get(GrupoViewModel.class);
+
         // Evento de clic para abrir la pantalla de detalles
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(v.getContext(), GroupDetail.class);
-            intent.putExtra("groupId", grupo.getIdGrupo()); // Pasar solo el ID del grupo
-            v.getContext().startActivity(intent);
+            grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
+            Navigation.findNavController(v).navigate(R.id.navigation_grupo);
+//            Intent intent = new Intent(v.getContext(), GroupDetail.class);
+//            intent.putExtra("groupId", grupo.getIdGrupo()); // Pasar solo el ID del grupo
+//            v.getContext().startActivity(intent);
         });
     }
 

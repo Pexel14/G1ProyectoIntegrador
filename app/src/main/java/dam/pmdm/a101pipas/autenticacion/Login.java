@@ -61,14 +61,18 @@ public class Login extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
+            Log.d(TAG, "PASA POR AQUI 0");
             if (result.getResultCode() == RESULT_OK) {
                 Task<GoogleSignInAccount> accountTask = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
+                Log.d(TAG, "PASA POR AQUI 1");
                 try {
                     GoogleSignInAccount googleSignInAccount = accountTask.getResult(ApiException.class);
                     AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
+                    Log.d(TAG, "PASA POR AQUI 2");
                     mAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            Log.d(TAG, "PASA POR AQUI 3");
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
                                 guardarCorreo();
@@ -92,7 +96,7 @@ public class Login extends AppCompatActivity {
     });
 
     private void guardarCorreo() {
-        if (mAuth.getCurrentUser() != null) {
+        if (mAuth.getCurrentUser() == null) {
             String emailCortado = mAuth.getCurrentUser().getEmail().split("@")[0];
             if (emailCortado != null) {
                 if (emailCortado.contains(".")) {

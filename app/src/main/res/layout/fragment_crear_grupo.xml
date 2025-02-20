@@ -119,6 +119,7 @@
                 android:id="@+id/etNombreGrupoCrearGrupo"
                 android:layout_width="300dp"
                 android:layout_height="35dp"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/tvNombreGrupoCrearGrupo"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="15dp"
@@ -165,10 +166,10 @@
                 app:layout_constraintTop_toBottomOf="@id/etContraseniaCrearGrupo"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:text="Amigos :"
+                android:text="@string/amigos"
+                android:textColor="@color/black"
                 android:textSize="24sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"/>
+                android:textStyle="bold"/>
 
             <Button
                 android:id="@+id/btnAniadirAmigosCrearGrupo"
@@ -207,6 +208,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvContraseniaCrearGrupo"
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:layout_marginTop="@dimen/separacion_mediana_quince"
+                android:textColor="@color/black"
                 android:background="@drawable/edit_text_border"
                 android:inputType="textPassword"
                 android:visibility="gone"/>
