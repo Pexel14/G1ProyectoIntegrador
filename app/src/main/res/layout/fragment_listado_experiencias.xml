@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/navigation_listado_experiencias"
     tools:context=".experiencias.ListadoExperienciasFragment"
     android:background="@color/white">
 
@@ -72,7 +73,19 @@
             android:textSize="16sp"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:gravity="center" />
+            android:gravity="center"
+            android:visibility="gone"/>
+        
+        <Button
+            android:id="@+id/btnMeterseADesafio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="@dimen/separacion_mediana_quince"
+            android:text="@string/comenzar_desafio_listado_experiencias"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_corner_button"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

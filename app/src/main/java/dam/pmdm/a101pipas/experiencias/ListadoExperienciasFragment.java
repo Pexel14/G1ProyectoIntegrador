@@ -1,10 +1,10 @@
 package dam.pmdm.a101pipas.experiencias;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +18,6 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentListadoExperienciasBinding;
-import dam.pmdm.a101pipas.databinding.ListExperienciasBinding;
 import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 import dam.pmdm.a101pipas.models.Experiencia;
 
@@ -31,6 +30,8 @@ public class ListadoExperienciasFragment extends Fragment {
     private List<Experiencia> experienciaList;
 
     private FragmentListadoExperienciasBinding binding;
+
+    private boolean[] desafioEmpezado = {false};
 
     @Nullable
     @Override
@@ -54,7 +55,7 @@ public class ListadoExperienciasFragment extends Fragment {
             if (experiencia.getLatLng() != null) {
                 geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
 
-                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+//                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
         });
 
@@ -73,6 +74,46 @@ public class ListadoExperienciasFragment extends Fragment {
             }
         });
 
+        desafioEmpezado();
+
+//        binding.btnMeterseADesafio.setOnClickListener(v -> {
+//            viewModel.aniadirDesafioAUsuario();
+//            desafioEmpezado(); // Vuelve a comprobar si el desafio está empezado para mostrar el progreso
+//        });
+
+        binding.btnMeterseADesafio.setOnClickListener(v -> {
+            viewModel.aniadirDesafioAUsuario(resultado -> {
+                if (resultado) {
+                    // Actualiza la UI si el desafío fue agregado correctamente
+                    desafioEmpezado();
+                }
+            });
+        });
+
+
+    }
+
+    private void desafioEmpezado() {
+        viewModel.desafioEmpezado(new ListadoExperienciasViewModel.OnResultListener() {
+            @Override
+            public void onResult(boolean resultado) {
+                // Asignamos el resultado al objeto Boolean
+                desafioEmpezado[0] = resultado;
+
+                // Si el desafío está empezado, muestra el progreso, y sino, muestra el botón para unirse
+                if (desafioEmpezado[0]) {
+                    binding.tvProgress.setVisibility(View.VISIBLE);
+                    binding.btnMeterseADesafio.setVisibility(View.GONE);
+                } else {
+                    binding.btnMeterseADesafio.setVisibility(View.VISIBLE);
+                    binding.tvProgress.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private boolean[] getDesafioEmpezado() {
+        return desafioEmpezado;
     }
 
     private void actualizarProgreso(Integer progreso) {

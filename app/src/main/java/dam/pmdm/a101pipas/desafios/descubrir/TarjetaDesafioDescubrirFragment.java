@@ -1,6 +1,7 @@
 package dam.pmdm.a101pipas.desafios.descubrir;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,15 +60,11 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
         binding.imgTarjetaDesafio.setOnClickListener(v -> {
             geolocalizacionViewModel.setDesafioId(key);
-            Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);});
+//            Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+        });
 
         ListadoExperienciasViewModel listadoExperienciasViewModel
                 = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
-
-        view.setOnClickListener(v -> {
-            listadoExperienciasViewModel.setIdDesafio(key);
-            Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
-        });
 
         if (getParentFragment() instanceof DescubrirFragment) {
             view.setOnClickListener(v -> {
@@ -84,6 +81,11 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
                 }
             });
         }
+
+        view.setOnClickListener(v -> {
+            listadoExperienciasViewModel.setIdDesafio(key);
+            Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
+        });
 
     }
     public boolean isSeleccionado(){

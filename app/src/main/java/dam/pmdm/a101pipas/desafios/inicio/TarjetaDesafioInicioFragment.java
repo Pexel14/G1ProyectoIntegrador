@@ -1,6 +1,7 @@
 package dam.pmdm.a101pipas.desafios.inicio;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentTarjetaDesafioInicioBinding;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
@@ -19,6 +26,8 @@ import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 public class TarjetaDesafioInicioFragment extends Fragment {
 
     private FragmentTarjetaDesafioInicioBinding binding;
+    private Long idReal;
+    private DatabaseReference db = FirebaseDatabase.getInstance().getReference();
 
     // FALTA AÑADIR LA IMAGEN
     public static TarjetaDesafioInicioFragment newInstance(String titulo, String[] etiquetas, String descripcion, String ubicacion, String key) {
@@ -72,7 +81,8 @@ public class TarjetaDesafioInicioFragment extends Fragment {
 
         binding.imgTarjetaInicio.setOnClickListener(v -> {
                 geolocalizacionViewModel.setDesafioId(key);
-                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);});
+//                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+        });
 
 
         ListadoExperienciasViewModel listadoExperienciasViewModel
