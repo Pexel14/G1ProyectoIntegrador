@@ -16,20 +16,17 @@
         android:theme="@style/Theme._101Pipas"
         tools:targetApi="31">
         <activity
+            android:name=".social.PerfilAmigoFragment"
+            android:exported="false" />
+        <activity
             android:name=".social.GroupDetail"
             android:exported="true" />
 
-        <activity
-            android:name=".social.SocialPrincipal"
-            android:exported="true">
-        </activity>
 
         <activity
             android:name=".social.ListaGruposFragment"
-            android:exported="true" />
-        <activity
-            android:name=".ver_amigos_grupos"
-            android:exported="true" />
+            android:exported="true"/> >
+
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -53,12 +50,14 @@
         <activity
             android:name=".autenticacion.Login"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".desafios.CrearDesafioActivity"
             android:exported="false" />

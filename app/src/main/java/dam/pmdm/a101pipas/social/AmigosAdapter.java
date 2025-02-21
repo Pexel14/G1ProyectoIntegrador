@@ -7,10 +7,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
@@ -18,12 +20,7 @@ import dam.pmdm.a101pipas.models.Amigos;
 
 public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewHolder> {
 
-    private List<Amigos> amigosList;
-
-    // Constructor
-    public AmigosAdapter(List<Amigos> amigosList) {
-        this.amigosList = amigosList;
-    }
+    private List<Amigos> amigosList = new ArrayList<>();
 
     @NonNull
     @Override
@@ -36,15 +33,17 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
     public void onBindViewHolder(@NonNull AmigoViewHolder holder, int position) {
         Amigos amigo = amigosList.get(position);
 
-        // Cargar imagen de perfil con Picasso
         Picasso.get()
                 .load(amigo.getFotoPerfil())
-                .placeholder(R.drawable.perfil_por_defecto) // Imagen de carga
-                .error(R.drawable.perfil_por_defecto) // Imagen de error
+                .placeholder(R.drawable.perfil_por_defecto)
+                .error(R.drawable.perfil_por_defecto)
                 .into(holder.imgPerfil);
 
-        // Configurar datos del usuario
         holder.tvUsername.setText(amigo.getUsername());
+
+        holder.itemView.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.navigation_perfil_amigo);
+        });
     }
 
     @Override
@@ -52,7 +51,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
         return amigosList.size();
     }
 
-    // Método para actualizar la lista de amigos
     public void setAmigosList(List<Amigos> nuevaLista) {
         this.amigosList = nuevaLista;
         notifyDataSetChanged();
@@ -64,7 +62,6 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
 
         public AmigoViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imgPerfil = itemView.findViewById(R.id.imgPerfil);
             tvUsername = itemView.findViewById(R.id.tvUsername);
         }

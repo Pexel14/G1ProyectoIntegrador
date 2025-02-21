@@ -36,6 +36,16 @@
             android:textColor="@color/black"
             android:layout_marginStart="12dp"
             android:gravity="center_vertical"/>
+
+        <TextView
+            android:id="@+id/tvDesafios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Desafíos completados"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:paddingTop="4dp"/>
+
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
