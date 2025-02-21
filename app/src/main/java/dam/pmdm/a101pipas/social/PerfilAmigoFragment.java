@@ -9,9 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.squareup.picasso.Picasso;
 
+import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentPerfilAmigoBinding;
 import dam.pmdm.a101pipas.models.Amigos;
 
@@ -37,6 +39,10 @@ public class PerfilAmigoFragment extends Fragment {
             Amigos amigo = amigos.get(0);
             binding.txtNombre.setText(amigo.getUsername());
             Picasso.get().load(amigo.getFotoPerfil()).into(binding.imgAvatar);
+        });
+
+        binding.ibtnAtras.setOnClickListener(v-> {
+            Navigation.findNavController(view).navigate(R.id.navigation_social);
         });
     }
 }

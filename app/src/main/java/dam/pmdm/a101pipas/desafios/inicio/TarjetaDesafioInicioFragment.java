@@ -81,7 +81,7 @@ public class TarjetaDesafioInicioFragment extends Fragment {
 
         binding.imgTarjetaInicio.setOnClickListener(v -> {
                 geolocalizacionViewModel.setDesafioId(key);
-//                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
         });
 
 

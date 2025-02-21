@@ -60,15 +60,18 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
         binding.imgTarjetaDesafio.setOnClickListener(v -> {
             geolocalizacionViewModel.setDesafioId(key);
-//            Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+            Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
         });
 
         ListadoExperienciasViewModel listadoExperienciasViewModel
                 = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
 
+
+
         if (getParentFragment() instanceof DescubrirFragment) {
             view.setOnClickListener(v -> {
-
+                listadoExperienciasViewModel.setIdDesafio(key);
+                Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
             });
         } else if (getParentFragment() instanceof CrearGrupoFragment) {
             view.setOnClickListener(v -> {
@@ -81,11 +84,6 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
                 }
             });
         }
-
-        view.setOnClickListener(v -> {
-            listadoExperienciasViewModel.setIdDesafio(key);
-            Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
-        });
 
     }
     public boolean isSeleccionado(){

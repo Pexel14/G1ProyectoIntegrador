@@ -55,7 +55,7 @@ public class ListadoExperienciasFragment extends Fragment {
             if (experiencia.getLatLng() != null) {
                 geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
 
-//                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
+                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
         });
 

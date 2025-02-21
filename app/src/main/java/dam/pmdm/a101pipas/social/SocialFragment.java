@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.android.play.core.integrity.v;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +55,11 @@ public class SocialFragment extends Fragment {
 
         // Botón para ver más amigos
         binding.btnMasAmigos.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_lista_amigos));
+
+        binding.btnCrearGrupo.setOnClickListener(v -> {
+            Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo);
+        });
+
     }
 
     @Override

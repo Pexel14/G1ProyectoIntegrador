@@ -58,6 +58,8 @@ public class Login extends AppCompatActivity {
 
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
+
+
     private final ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
@@ -69,6 +71,7 @@ public class Login extends AppCompatActivity {
                     GoogleSignInAccount googleSignInAccount = accountTask.getResult(ApiException.class);
                     AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
                     Log.d(TAG, "PASA POR AQUI 2");
+
                     mAuth.signInWithCredential(authCredential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -164,9 +167,12 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+            .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
 
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         btnInicioSesion = findViewById(R.id.btnInicioSesion);
