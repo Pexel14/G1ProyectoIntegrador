@@ -9,22 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
-import dam.pmdm.a101pipas.R;
-import dam.pmdm.a101pipas.databinding.FragmentListaAmigosBinding;
+import com.squareup.picasso.Picasso;
 
-public class ListaAmigosFragment extends Fragment {
+import dam.pmdm.a101pipas.databinding.FragmentPerfilAmigoBinding;
+import dam.pmdm.a101pipas.models.Amigos;
 
-    private FragmentListaAmigosBinding binding;
-    private AmigosAdapter amigosAdapter;
+public class PerfilAmigoFragment extends Fragment {
+
+    private FragmentPerfilAmigoBinding binding;
     private AmigosViewModel amigosViewModel;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentListaAmigosBinding.inflate(inflater, container, false);
+        binding = FragmentPerfilAmigoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -32,22 +31,12 @@ public class ListaAmigosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        amigosAdapter = new AmigosAdapter();
-        binding.rvListaAmigos.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.rvListaAmigos.setAdapter(amigosAdapter);
-
         amigosViewModel = new ViewModelProvider(requireActivity()).get(AmigosViewModel.class);
 
         amigosViewModel.getAmigosList().observe(getViewLifecycleOwner(), amigos -> {
-            amigosAdapter.setAmigosList(amigos);
+            Amigos amigo = amigos.get(0);
+            binding.txtNombre.setText(amigo.getUsername());
+            Picasso.get().load(amigo.getFotoPerfil()).into(binding.imgAvatar);
         });
-
-        binding.btnBack.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_social));
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
     }
 }

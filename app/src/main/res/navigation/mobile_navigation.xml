@@ -82,6 +82,13 @@
         android:label="Perfil"
         tools:layout="@layout/fragment_perfil" />
 
+    <!-- PERFIL AMIGO -->
+    <fragment
+        android:id="@+id/navigation_perfil_amigo"
+        android:name="dam.pmdm.a101pipas.social.PerfilAmigoFragment"
+        android:label="PerfilAmigo"
+        tools:layout="@layout/fragment_perfil_amigo" />
+
         <!-- AJUSTES -->
     <fragment
         android:id="@+id/navigation_ajustes"
