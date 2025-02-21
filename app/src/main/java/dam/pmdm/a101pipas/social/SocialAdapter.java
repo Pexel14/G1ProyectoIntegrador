@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
@@ -16,13 +19,16 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Amigos;
+import dam.pmdm.a101pipas.ranking.GrupoViewModel;
 
 public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialViewHolder> {
+    private GrupoViewModel grupoViewModel;
 
     private List<?> listaSocial; // Lista que maneja amigos y grupos
-
-    public SocialAdapter(List<?> listaSocial) {
+    private Fragment fragment;
+    public SocialAdapter(List<?> listaSocial, Fragment fragment) {
         this.listaSocial = listaSocial;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -58,13 +64,16 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     .error(R.drawable.perfil_por_defecto)
                     .into(holder.imgPerfil);
 
+            GrupoViewModel grupoViewModel = new ViewModelProvider(fragment).get(GrupoViewModel.class);
 
             holder.itemView.setOnClickListener(v -> {
-                Intent intent = new Intent(v.getContext(), GroupDetail.class);
-                intent.putExtra("groupId", grupo.getIdGrupo());
-                intent.putExtra("nombreGrupo", grupo.getNombreGrupo());
-                intent.putExtra("fotoGrupo", grupo.getFotoGrupo());
-                v.getContext().startActivity(intent);
+//                Intent intent = new Intent(v.getContext(), GroupDetail.class);
+//                intent.putExtra("groupId", grupo.getIdGrupo());
+//                intent.putExtra("nombreGrupo", grupo.getNombreGrupo());
+//                intent.putExtra("fotoGrupo", grupo.getFotoGrupo());
+//                v.getContext().startActivity(intent);
+                grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
+                Navigation.findNavController(v).navigate(R.id.navigation_grupo);
             });
         }
     }

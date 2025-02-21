@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
@@ -20,7 +19,12 @@ import dam.pmdm.a101pipas.models.Amigos;
 
 public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewHolder> {
 
-    private List<Amigos> amigosList = new ArrayList<>();
+    private List<Amigos> amigosList;
+
+    // Constructor
+    public AmigosAdapter(List<Amigos> amigosList) {
+        this.amigosList = amigosList;
+    }
 
     @NonNull
     @Override
@@ -35,8 +39,8 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
 
         Picasso.get()
                 .load(amigo.getFotoPerfil())
-                .placeholder(R.drawable.perfil_por_defecto)
-                .error(R.drawable.perfil_por_defecto)
+                .placeholder(R.drawable.perfil_por_defecto) // Imagen de carga
+                .error(R.drawable.perfil_por_defecto) // Imagen de error
                 .into(holder.imgPerfil);
 
         holder.tvUsername.setText(amigo.getUsername());

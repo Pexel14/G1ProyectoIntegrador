@@ -76,10 +76,10 @@ public class GroupDetail extends AppCompatActivity {
                 // Obtener los valores desde Firebase
                 String nombreGrupo = snapshot.child("titulo").getValue(String.class);
                 String fotoGrupo = snapshot.child("foto_grupo").getValue(String.class);
-                String creador = snapshot.child("creador").getValue(String.class);
+                Long creador = Long.parseLong(snapshot.child("creador").getValue().toString());
                 String fechaCreacion = snapshot.child("fecha_creacion").getValue(String.class);
                 Long numeroIntegrantes = snapshot.child("numero_integrantes").getValue(Long.class);
-                String desafio = snapshot.child("desafio").getValue(String.class);
+                Long desafio = Long.parseLong(snapshot.child("desafio").getValue().toString());
 
                 // Asignar valores a las vistas (evitar valores null)
                 tvNombreGrupo.setText(nombreGrupo != null ? nombreGrupo : "Sin título");

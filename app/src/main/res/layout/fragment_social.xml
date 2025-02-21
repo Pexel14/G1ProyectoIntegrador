@@ -109,5 +109,17 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corner_button"/>
+    <Button
+        android:id="@+id/btnGrupoDetalles"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearGrupo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Detalles"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_corner_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

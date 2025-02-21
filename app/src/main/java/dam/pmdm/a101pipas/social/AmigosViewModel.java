@@ -38,7 +38,7 @@ public class AmigosViewModel extends ViewModel {
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
 
                     if (username != null && userId != null) {
-                        lista.add(new Amigos(userId, username, fotoPerfil != null ? fotoPerfil : ""));
+                        lista.add(new Amigos(username, fotoPerfil));
                     }
                 }
                 amigosList.setValue(lista);

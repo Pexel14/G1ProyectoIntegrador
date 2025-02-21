@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,11 +37,12 @@ public class GrupoFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(GrupoViewModel.class);
 
         viewModel.getGrupo().observe(getViewLifecycleOwner(), grupo -> {
+            Log.d("Compartir","TOY AQUI 2");
             if (grupo != null) {
                 binding.imgCompartir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        Log.d("Compartir","TOY AQUI");
                         StringBuilder message = new StringBuilder();
                         message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
 

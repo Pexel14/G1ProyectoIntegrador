@@ -66,6 +66,8 @@ public class PerfilFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+
         usuarioActual = FirebaseAuth.getInstance().getCurrentUser();
         usuarioId = usuarioActual != null ? usuarioActual.getUid() : null;
 
@@ -145,6 +147,7 @@ public class PerfilFragment extends Fragment {
                 System.out.println("Error rv perfil desafios" + error.getMessage());
             }
         });
+        personalizarNick();
     }
 
 
