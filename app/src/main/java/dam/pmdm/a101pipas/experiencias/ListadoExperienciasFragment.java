@@ -61,7 +61,9 @@ public class ListadoExperienciasFragment extends Fragment {
         binding.rvExperiencias.setAdapter(adapter);
 
         viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {
-            adapter.setExperiencias(experiencias);
+            if (!experiencias.isEmpty()) {
+                adapter.setExperiencias(experiencias);
+            }
         });
         viewModel.getProgreso().observe(getViewLifecycleOwner(), this::actualizarProgreso);
         viewModel.getTituloDesafio().observe(getViewLifecycleOwner(), this::actualizarTitulo);

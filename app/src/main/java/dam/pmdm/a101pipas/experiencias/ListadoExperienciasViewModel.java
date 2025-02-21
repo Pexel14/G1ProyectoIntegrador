@@ -45,43 +45,45 @@ public class ListadoExperienciasViewModel extends ViewModel {
 
     public void cargarExperiencias(String idDesafio) {
         if (idDesafio == null) return;
+
         List<Experiencia> listaExperiencias = new ArrayList<>();
+        final int[] totalExperiencias = {0};
 
         database.child("desafios").child(idDesafio).child("experiencias")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        String [] exp = snapshot.getValue(String.class).split(",");
-                        for (String idExp: exp) {
-                            database.child("experiencias").child(idExp).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                    for (DataSnapshot data : snapshot2.getChildren()) {
-                                        Experiencia exp = data.getValue(Experiencia.class);
-
-                                        if (exp != null) {
-                                            listaExperiencias.add(exp);
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String[] exp = snapshot.getValue(String.class).split(",");
+                        for (String idExp : exp) {
+                            database.child("experiencias").child(idExp)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                                            Experiencia experiencia = snapshot2.getValue(Experiencia.class);
+                                            if (experiencia != null) {
+                                                listaExperiencias.add(experiencia);
+                                            }
+                                            totalExperiencias[0]++;
+                                            if (totalExperiencias[0] == exp.length) {
+                                                experiencias.setValue(listaExperiencias);
+                                            }
                                         }
-                                    }
-                                }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Log.e("Firebase", "Error al obtener experiencia: " + error.getMessage());
+                                        }
+                                    });
                         }
-
-                        experiencias.setValue(listaExperiencias);
                     }
 
                     @Override
                     public void onCancelled(DatabaseError error) {
-                        System.out.println(R.string.geolocalizacion_error_leer_exp + error.getMessage());
+                        Log.e("Firebase", "Error al obtener experiencias: " + error.getMessage());
                     }
                 });
     }
+
 //        database.child("experiencias")
 //                .addValueEventListener(new ValueEventListener() {
 //                    @Override
