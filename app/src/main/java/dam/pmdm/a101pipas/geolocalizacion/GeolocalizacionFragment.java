@@ -68,6 +68,9 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
     private GeolocalizacionViewModel viewModel;
 
+    private boolean isZoomedToExperience = false;
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -131,8 +134,15 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
 
         cargarExperiencias();
 
-        viewModel.getDestinoExperiencia().observe(getViewLifecycleOwner(), destino -> updateRouteIfReady());
+        if (mMap != null && coordenadasAct != null) {
+            markerUsuario = mMap.addMarker(new MarkerOptions()
+                    .position(coordenadasAct)
+                    .title("Aventurero")
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_localizacion_usuario)));
+        }
+
         viewModel.getCurrentLocation().observe(getViewLifecycleOwner(), location -> updateRouteIfReady());
+        viewModel.getDestinoExperiencia().observe(getViewLifecycleOwner(), destino -> updateRouteIfReady());
 
         // Como llegar en Google Maps andando
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -150,7 +160,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
             if (coordenadasAct != null) {
                 trazarRuta(coordenadasAct, marker.getPosition());
             }
-            return true;
+            return false;
         });
     }
 
@@ -159,12 +169,13 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
         LatLng destination = viewModel.getDestinoExperiencia().getValue();
 
         if (destination != null) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
             if (current != null) {
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(destination, 15));
                 trazarRuta(current, destination);
             } else {
                 Toast.makeText(getActivity(), "Obteniendo ubicación actual...", Toast.LENGTH_SHORT).show();
             }
+            isZoomedToExperience = true;
         }
     }
 
@@ -228,8 +239,13 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
     }
 
     private void cargarExperiencias() {
+
+
         viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {
             if (experiencias != null) {
+
+                mMap.clear();
+
                 String titulo;
                 String coordenadas;
                 String[] aCoordenadas;
@@ -283,11 +299,14 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
     }
 
     private void zoomCamaraUsuarioExpMasCercana() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaUsuarioExpCerca.build(), 100));
+        if (!isZoomedToExperience) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaUsuarioExpCerca.build(), 100));
+        }
     }
 
     private void zoomCamaraGeneral() {
         mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
+        isZoomedToExperience = false;
     }
 
     private double calcularDistancia(LatLng posUsuario, LatLng posExp) {

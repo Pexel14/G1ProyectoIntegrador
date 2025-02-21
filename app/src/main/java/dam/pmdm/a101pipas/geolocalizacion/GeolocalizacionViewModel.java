@@ -14,6 +14,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
@@ -56,30 +57,50 @@ public class GeolocalizacionViewModel extends ViewModel {
 
     public void getExperienciasPorDesafio(String id) {
         if (id == null) return;
+
         listaExperiencias = new ArrayList<>();
+
         database.child("desafios").child(id).child("experiencias")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        String [] exp = snapshot.getValue(String.class).split(",");
-                        for (String idExp: exp) {
-                            database.child("experiencias").child(idExp).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                    for (DataSnapshot data : snapshot2.getChildren()) {
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
+                        if (!snapshot.exists()) {
+                            experiencias.setValue(new ArrayList<>()); // No hay experiencias
+                            return;
                         }
 
-                        experiencias.setValue(listaExperiencias);
+                        String[] exp = snapshot.getValue(String.class).split(",");
+                        if (exp.length == 0) {
+                            experiencias.setValue(new ArrayList<>());
+                            return;
+                        }
+
+                        AtomicInteger counter = new AtomicInteger(exp.length);
+
+                        for (String idExp : exp) {
+                            database.child("experiencias").child(idExp)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+                                            Experiencia exp = snapshot2.getValue(Experiencia.class);
+                                            if (exp != null) {
+                                                listaExperiencias.add(exp);
+                                            }
+
+                                            if (counter.decrementAndGet() == 0) {
+                                                experiencias.setValue(new ArrayList<>(listaExperiencias));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            System.out.println("Error al obtener experiencia: " + error.getMessage());
+                                            if (counter.decrementAndGet() == 0) {
+                                                experiencias.setValue(new ArrayList<>(listaExperiencias));
+                                            }
+                                        }
+                                    });
+                        }
                     }
 
                     @Override
@@ -87,7 +108,6 @@ public class GeolocalizacionViewModel extends ViewModel {
                         System.out.println(R.string.geolocalizacion_error_leer_exp + error.getMessage());
                     }
                 });
-
-
     }
+
 }
