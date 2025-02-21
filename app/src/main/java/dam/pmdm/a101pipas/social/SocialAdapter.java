@@ -64,7 +64,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                     .error(R.drawable.perfil_por_defecto)
                     .into(holder.imgPerfil);
 
-            GrupoViewModel grupoViewModel = new ViewModelProvider(fragment).get(GrupoViewModel.class);
+            GrupoViewModel grupoViewModel = new ViewModelProvider(fragment.requireActivity()).get(GrupoViewModel.class);
 
             holder.itemView.setOnClickListener(v -> {
 //                Intent intent = new Intent(v.getContext(), GroupDetail.class);

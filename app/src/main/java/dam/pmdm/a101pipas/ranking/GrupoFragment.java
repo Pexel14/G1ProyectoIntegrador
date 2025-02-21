@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentGrupoBinding;
-import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
+import dam.pmdm.a101pipas.models.Grupo;
 
 public class GrupoFragment extends Fragment {
 
@@ -37,30 +37,82 @@ public class GrupoFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(GrupoViewModel.class);
 
         viewModel.getGrupo().observe(getViewLifecycleOwner(), grupo -> {
-            Log.d("Compartir","TOY AQUI 2");
             if (grupo != null) {
-                binding.imgCompartir.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d("Compartir","TOY AQUI");
-                        StringBuilder message = new StringBuilder();
-                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
+                Log.d("GrupoFragment", "Grupo recibido: " + grupo.getTitulo());
 
-                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2)).append(grupo.getTitulo()).append("\n");
+                binding.imgCompartir.setOnClickListener(v -> {
+                    Log.d("Compartir", "Botón de compartir pulsado");
 
-                        if (grupo.getContrasena() != null) {
-                            message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3)).append(grupo.getContrasena());
-                        }
+                    StringBuilder message = new StringBuilder();
+                    message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
+                    message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2))
+                            .append(grupo.getTitulo()).append("\n");
 
-                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                        shareIntent.setType("text/plain");
-                        shareIntent.putExtra(Intent.EXTRA_TEXT, message.toString());
-
-                        startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
+                    if (grupo.getContrasena() != null) {
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3))
+                                .append(grupo.getContrasena());
                     }
+
+                    Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, message.toString());
+                    startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
                 });
+            } else {
+                Log.d("GrupoFragment", "Grupo aún no disponible");
             }
         });
+
+//        viewModel = new ViewModelProvider(requireActivity()).get(GrupoViewModel.class);
+//
+//        binding.imgCompartir.setOnClickListener(v -> {
+//
+//        Grupo grupo = viewModel.getGrupo().getValue();
+//            if (grupo != null) {
+//                Log.d("Compartir", "TOY AQUI");
+//                StringBuilder message = new StringBuilder();
+//                message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
+//                message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2))
+//                        .append(grupo.getTitulo()).append("\n");
+//                if (grupo.getContrasena() != null) {
+//                    message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3))
+//                            .append(grupo.getContrasena());
+//                }
+//                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                shareIntent.setType("text/plain");
+//                shareIntent.putExtra(Intent.EXTRA_TEXT, message.toString());
+//                startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
+//            } else {
+//                Log.d("Compartir", "Grupo aún no disponible");
+//            }
+//        });
+
+
+//        viewModel.getGrupo().observe(getViewLifecycleOwner(), grupo -> {
+//            Log.d("Compartir","TOY AQUI 2");
+//            if (grupo != null) {
+//                binding.imgCompartir.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Log.d("Compartir","TOY AQUI");
+//                        StringBuilder message = new StringBuilder();
+//                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
+//
+//                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2)).append(grupo.getTitulo()).append("\n");
+//
+//                        if (grupo.getContrasena() != null) {
+//                            message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3)).append(grupo.getContrasena());
+//                        }
+//
+//                        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                        shareIntent.setType("text/plain");
+//                        shareIntent.putExtra(Intent.EXTRA_TEXT, message.toString());
+//
+//                        startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
+//                    }
+//                });
+//            }
+//        });
 
     }
 
