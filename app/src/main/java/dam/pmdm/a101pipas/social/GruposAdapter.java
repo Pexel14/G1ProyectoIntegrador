@@ -51,7 +51,7 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GrupoViewH
         // Asignar datos
         holder.tvNombreGrupo.setText(grupo.getNombreGrupo());
 
-        GrupoViewModel grupoViewModel = new ViewModelProvider(fragment).get(GrupoViewModel.class);
+        GrupoViewModel grupoViewModel = new ViewModelProvider(fragment.requireActivity()).get(GrupoViewModel.class);
 
         // Evento de clic para abrir la pantalla de detalles
         holder.itemView.setOnClickListener(v -> {
