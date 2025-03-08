@@ -8,10 +8,10 @@
     <string name="login_contrasenia">Contraseña</string>
     <string name="login_hint_contrasenia">Introduce la contraseña</string>
     <string name="login_inicia_sesion">Iniciar Sesión</string>
-    <string name="login_contrasenia_olvidada">¿Has olvidado tu contraseña?</string>
+    <string name="login_contrasenia_olvidada"><u>¿Has olvidado tu contraseña?</u></string>
     <string name="login_textview_registro">¿No tienes cuenta?\nRegistrate</string>
     <string name="login_hint_correo">Introduce el correo</string>
-    <string name="login_mas_opciones">----------- MÁS OPCIONES ----------</string>
+    <string name="login_mas_opciones">MÁS OPCIONES</string>
     <string name="default_web_client_id">993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com</string>
     <string name="login_btn_google">INICIAR SESIÓN CON GOOGLE</string>
     <string name="login_btn_registro">Regístrate</string>
@@ -20,8 +20,8 @@
     <string name="ranking_titulo">Ranking Mundial</string>
     <string name="login_google_fallido">No se ha podido completar el inicio de sesión</string>
     <string name="recuperar_contrasenia_cuenta_no_encontrada">Cuenta no encontrada</string>
-    <string name="recuperar_contrasenia_enviar_correo">Enviar correo</string>
-    <string name="recuperar_contrasenia_introduce_correo">Introduce el correo asociado a tu cuenta</string>
+    <string name="recuperar_contrasenia_enviar_correo">Enviar\ncorreo</string>
+    <string name="recuperar_contrasenia_introduce_correo">Introduce el correo asociado a tu cuenta :</string>
     <string name="recuperar_contrasenia_correo">Correo</string>
     <string name="recuperar_contrasenia_introduce_tu_correo">Introduce tu correo</string>
     <string name="registro_titulo_registrate">REGÍSTRATE</string>
@@ -147,9 +147,11 @@
     <string name="crear_experiencias_no">No</string>
     <string name="crear_experiencias_desafio_creado">Desafío creado</string>
     <string name="crear_experiencias_error_al_crear_desafio">Error al crear el desafío</string>
-    <string name="grupo_fragment_mensaje_invitacion_1">¡Únete a mi grupo en 101!\n</string>
-    <string name="grupo_fragment_mensaje_invitacion_2">"Nombre del grupo: "</string>
-    <string name="grupo_fragment_mensaje_invitacion_3">"Contraseña: "</string>
+    <string name="grupo_fragment_mensaje_invitacion_1">🔹 ¿Te apuntas al desafío? 🔹</string>
+    <string name="grupo_fragment_mensaje_invitacion_2">🔥¡Únete al grupo \'</string>
+    <string name="grupo_fragment_mensaje_invitacion_3">\' y demuestra lo que vales!🔥</string>
+    <string name="grupo_fragment_mensaje_invitacion_4">\🔑Para entrar usa esta contraseña : </string>
+    <string name="grupo_fragment_mensaje_invitacion_5">¡Contamos contigo!</string>
     <string name="grupo_fragment_compartir_a_traves">Compartir a través de</string>
     <string name="crear_grupo_fragmen_ultimo_campo_amigo_vacio">El último campo de amigo está vacío</string>
     <string name="crear_grupo_fragment_rellene_todos_los_campos">Rellene todos los campos</string>
@@ -160,4 +162,7 @@
     <string name="crear_grupo">Crear Grupo</string>
     <string name="amigos">Amigos :</string>
     <string name="comenzar_desafio_listado_experiencias">Comenzar desafío</string>
+    <string name="ajustes">Ajustes</string>
+    <string name="recuperar_contraseia">Recuperar contraseña</string>
+    <string name="login_registrate"><u>Registrate</u></string>
 </resources>

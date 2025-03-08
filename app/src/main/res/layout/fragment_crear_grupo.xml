@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toEndOf="@id/btnAtrasCrearGrupo"
         app:layout_constraintTop_toTopOf="@id/btnAtrasCrearGrupo"
         app:layout_constraintBottom_toBottomOf="@id/btnAtrasCrearGrupo"
-        android:src="@drawable/flecha_izquierda"/>
+        android:src="@drawable/flecha_izquierda_antigua_eliminar"/>
 
     <!-- CUERPO -->
     <ScrollView
@@ -68,6 +68,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:minHeight="605dp"
             android:paddingBottom="@dimen/separacion_grande_treinta">
 
             <!-- ELEGIR DESAFÍO -->
@@ -148,22 +149,56 @@
                 app:layout_constraintTop_toTopOf="@id/tvGrupoPrivadoCrearGrupo"
                 app:layout_constraintBottom_toBottomOf="@id/tvGrupoPrivadoCrearGrupo"/>
 
+            <!-- SELECCIONAR IMAGEN -->
+            <ImageView
+                android:id="@+id/ivImagenIconoCrearGrupo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btnSeleccionarImagen"
+                app:layout_constraintTop_toBottomOf="@id/etContraseniaCrearGrupo"
+                android:layout_marginTop="15dp"
+                android:scaleType="fitCenter"/>
+
+            <Button
+                android:id="@+id/btnSeleccionarImagen"
+                android:layout_width="150dp"
+                android:layout_height="65dp"
+                app:layout_constraintStart_toEndOf="@id/ivImagenIconoCrearGrupo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ivImagenIconoCrearGrupo"
+                app:layout_constraintBottom_toBottomOf="@id/ivImagenIconoCrearGrupo"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/rounded_corner_button"
+                android:text="Seleccionar imagen"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
+
             <!-- AÑADIR AMIGOS -->
-            <LinearLayout
-                android:id="@+id/llAmigosCrearGrupo"
+            <ScrollView
+                android:id="@+id/svAmigosCrearGrupo"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvAmigosCrearGrupo"
-                android:orientation="vertical"/>
+                android:maxHeight="150dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/llAmigosCrearGrupo"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:orientation="vertical"/>
+
+            </ScrollView>
 
             <TextView
                 android:id="@+id/tvAmigosCrearGrupo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/etContraseniaCrearGrupo"
+                app:layout_constraintTop_toBottomOf="@id/ivImagenIconoCrearGrupo"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/amigos"
@@ -176,10 +211,11 @@
                 android:layout_width="125dp"
                 android:layout_height="60dp"
                 android:padding="10dp"
-                app:layout_constraintTop_toBottomOf="@id/llAmigosCrearGrupo"
+                app:layout_constraintTop_toBottomOf="@id/svAmigosCrearGrupo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginStart="15dp"
                 android:background="@drawable/rounded_corner_button"
                 android:text="@string/aniadir_amigo"
                 android:textSize="16sp"
@@ -213,23 +249,24 @@
                 android:inputType="textPassword"
                 android:visibility="gone"/>
 
-            <!-- CREAR GRUPO-->
-            <Button
-                android:id="@+id/btnCrearGrupo"
-                android:layout_width="200dp"
-                android:layout_height="60dp"
-                app:layout_constraintTop_toBottomOf="@+id/btnAniadirAmigosCrearGrupo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="50dp"
-                android:layout_marginBottom="@dimen/separacion_mediana_quince"
-                android:background="@drawable/rounded_corner_button"
-                android:text="@string/texto_btn_crear_grupo"
-                android:textSize="16sp"
-                android:textColor="@color/white"/>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
+
+
+
+    <!-- CREAR GRUPO-->
+    <Button
+        android:id="@+id/btnCrearGrupo"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="@dimen/separacion_mediana_quince"
+        android:background="@drawable/rounded_corner_button"
+        android:text="@string/texto_btn_crear_grupo"
+        android:textSize="16sp"
+        android:textColor="@color/white"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

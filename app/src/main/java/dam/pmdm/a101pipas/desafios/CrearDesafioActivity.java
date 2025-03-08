@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -33,7 +34,8 @@ public class CrearDesafioActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
 
-    private Button btnInsertarExperiencias, btnAtrasCrearDesafio;
+    private Button btnInsertarExperiencias;
+    private ImageButton btnAtrasCrearDesafio;
     private EditText etNombreDesafioCrearDesafio, etCiudadCrearDesafio, etDescripcionCrearDesafio;
     private ConstraintLayout clCheckboxesCrearDesafio;
 

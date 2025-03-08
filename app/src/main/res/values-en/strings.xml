@@ -8,10 +8,10 @@
     <string name="login_contrasenia">Password</string>
     <string name="login_hint_contrasenia">Enter the password</string>
     <string name="login_inicia_sesion">Log In</string>
-    <string name="login_contrasenia_olvidada">Forgot your password?</string>
+    <string name="login_contrasenia_olvidada"><u>Forgot your password?</u></string>
     <string name="login_textview_registro">Don\'t have an account?\nSign up</string>
     <string name="login_hint_correo">Enter the email</string>
-    <string name="login_mas_opciones">----------- MORE OPTIONS ----------</string>
+    <string name="login_mas_opciones">MORE OPTIONS</string>
     <string name="default_web_client_id">993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com</string>
     <string name="login_btn_google">LOG IN WITH GOOGLE</string>
     <string name="login_btn_registro">Sign Up</string>
@@ -20,8 +20,8 @@
     <string name="ranking_titulo">World Ranking</string>
     <string name="login_google_fallido">Failed to complete login</string>
     <string name="recuperar_contrasenia_cuenta_no_encontrada">Account not found</string>
-    <string name="recuperar_contrasenia_enviar_correo">Send email</string>
-    <string name="recuperar_contrasenia_introduce_correo">Enter the email associated with your account</string>
+    <string name="recuperar_contrasenia_enviar_correo">Send\nemail</string>
+    <string name="recuperar_contrasenia_introduce_correo">Enter the email associated with your account :</string>
     <string name="recuperar_contrasenia_correo">Email</string>
     <string name="recuperar_contrasenia_introduce_tu_correo">Enter your email</string>
     <string name="registro_titulo_registrate">SIGN UP</string>

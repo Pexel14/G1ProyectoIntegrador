@@ -12,7 +12,7 @@
         android:id="@+id/btn_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:src="@drawable/flecha_izquierda"
+        android:src="@drawable/flecha_izquierda_antigua_eliminar"
         android:contentDescription="@string/ListaGruposVolver"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

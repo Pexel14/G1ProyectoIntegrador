@@ -44,13 +44,22 @@ public class GrupoFragment extends Fragment {
                     public void onClick(View view) {
                         Log.d("Compartir","TOY AQUI");
                         StringBuilder message = new StringBuilder();
-                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1));
 
-                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2)).append(grupo.getTitulo()).append("\n");
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_1))
+                                .append("\n");
+
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_2))
+                                .append(grupo.getTitulo())
+                                .append(getString(R.string.grupo_fragment_mensaje_invitacion_3))
+                                .append("\n");
 
                         if (grupo.getContrasena() != null) {
-                            message.append(getString(R.string.grupo_fragment_mensaje_invitacion_3)).append(grupo.getContrasena());
+                            message.append(getString(R.string.grupo_fragment_mensaje_invitacion_4))
+                                    .append(grupo.getContrasena())
+                                    .append("\n");
                         }
+
+                        message.append(getString(R.string.grupo_fragment_mensaje_invitacion_5));
 
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
                         shareIntent.setType("text/plain");

@@ -11,7 +11,7 @@
         android:id="@+id/ibtnAtras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/flecha_izquierda"
+        android:src="@drawable/flecha_izquierda_antigua_eliminar"
         android:background="@color/white"
         android:layout_marginStart="@dimen/separacion_mediana_quince"
         android:layout_marginTop="@dimen/separacion_mediana_quince"
