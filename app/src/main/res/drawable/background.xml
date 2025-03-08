@@ -1,0 +1,16 @@
+<!-- Opción 3: Fondo con bordes degradados con más transparencia -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="90"
+                android:startColor="#60A9D9C3"
+                android:endColor="#20F7F7F7" />
+        </shape>
+    </item>
+</layer-list>
+
+
+
+

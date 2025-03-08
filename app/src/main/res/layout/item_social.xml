@@ -23,9 +23,10 @@
         android:id="@+id/tvUsernameSocial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ItemSocialNombre"
-        android:textSize="12sp"
+        android:fontFamily="@font/akaya_telivigala"
         android:gravity="center"
         android:paddingTop="4dp"
-        android:textStyle="bold"/>
+        android:text="@string/ItemSocialNombre"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 </LinearLayout>

@@ -8,10 +8,12 @@
     <color name="transparent">#00000000</color>
     <color name="green">#4CAF50</color>
     <color name="blue">#2196F3</color>
-    <color name="rojo">#E60000</color>
+    <color name="rojo">#E57373</color>
     <color name="light_gray">#E0E0E0</color>
     <color name="texto_secundario">#808080</color>
     <color name="texto_desapercibido">#CACACA</color>
     <color name="verde_secundario_progres_bar">#A9D9C3</color>
     <color name="color_nav_bar">#1E1E1E</color>
+    <color name="color_principal_transparente">#401FCE7D</color>
+
 </resources>

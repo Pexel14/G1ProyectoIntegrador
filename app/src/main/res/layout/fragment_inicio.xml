@@ -32,10 +32,11 @@
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/yellowtail"
             android:gravity="center"
             android:text="@string/inicio_desafios"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="@dimen/tam_titulo"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -136,6 +137,7 @@
         android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/background"
         app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
         app:layout_constraintBottom_toBottomOf="parent">
 

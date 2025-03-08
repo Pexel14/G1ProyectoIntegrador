@@ -11,9 +11,10 @@
         android:id="@+id/tv_amigos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/FragmentAmigosAmigos"
+        android:textSize="@dimen/tam_texto"
         android:textStyle="bold"
-        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

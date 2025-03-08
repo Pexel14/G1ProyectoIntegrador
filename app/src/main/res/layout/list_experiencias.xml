@@ -27,17 +27,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/akaya_telivigala"
                 android:text="@string/list_experiencias_titulo_ejemplo"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="@dimen/tam_texto_pequenio"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tvCheck"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/list_experiencias_emoji_check"
-                android:textSize="18sp"
+                android:textSize="@dimen/tam_texto_pequenio"
                 android:textColor="@color/color_principal" />
         </LinearLayout>
 
@@ -56,9 +57,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:fontFamily="@font/akaya_telivigala"
             android:text="@string/list_experiencias_descripcion_ejemplo"
-            android:textSize="14sp"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="@dimen/tam_texto_pequenio" />
 
 
         <LinearLayout

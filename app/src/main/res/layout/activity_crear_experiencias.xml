@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@drawable/background"
     android:padding="@dimen/padding"
     tools:context=".experiencias.CrearExperienciasActivity">
 
@@ -21,20 +21,24 @@
         android:padding="10dp"
         android:scaleType="fitCenter"/>
 
+    <!-- EXPERIENCIAS -->
+
     <TextView
         android:id="@+id/tvInsertarExperiencias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="68dp"
+        android:fontFamily="@font/yellowtail"
         android:gravity="center"
         android:text="@string/insertar_experiencias"
-        android:textSize="@dimen/tam_titulo"
         android:textColor="@color/black"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/tam_titulo"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- EXPERIENCIAS -->
     <ScrollView
         android:id="@+id/svScrollViewCrearExperiencias"
         android:layout_width="match_parent"
@@ -60,7 +64,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/btnAniadirExperienciaCrearDesafio"/>
+                app:layout_constraintBottom_toTopOf="@id/btnAniadirExperienciaCrearDesafio"
+                android:background="@drawable/background"/>
 
             <!-- AÑADIR EXPERIENCIA -->
             <Button

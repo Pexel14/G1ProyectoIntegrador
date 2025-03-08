@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    android:background="@color/color_fondo"
+    android:background="@drawable/background"
     tools:context=".autenticacion.Login">
 
     <ImageView
@@ -66,27 +66,29 @@
         android:id="@+id/tvMasOpciones"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="@string/login_mas_opciones"
+        android:textAlignment="center"
+        android:textColor="@color/texto_desapercibido"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"
-        android:textColor="@color/texto_desapercibido"
-        android:textAlignment="center"
-        android:text="@string/login_mas_opciones"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGoogleSignIn" />
 
     <TextView
         android:id="@+id/tvLoginCorreo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="67dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/login_correo"
+        android:textColor="@color/color_principal"
         android:textSize="@dimen/tam_subtitulo"
         android:textStyle="bold"
-        android:textColor="@color/color_principal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvMasOpciones"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"/>
+        app:layout_constraintTop_toBottomOf="@id/tvMasOpciones" />
 
     <EditText
         android:id="@+id/etCorreo"
@@ -115,15 +117,16 @@
 
     <TextView
         android:id="@+id/tvLoginContrasenia"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="118dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="@dimen/separacion_pequenia_cinco"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/login_contrasenia"
+        android:textColor="@color/color_principal"
         android:textSize="@dimen/tam_subtitulo"
         android:textStyle="bold"
-        android:textColor="@color/color_principal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginCorreoError"
-        android:layout_marginTop="@dimen/separacion_pequenia_cinco"/>
+        app:layout_constraintTop_toBottomOf="@id/tvLoginCorreoError" />
 
     <EditText
         android:id="@+id/etContrasenia"
@@ -153,50 +156,55 @@
         android:id="@+id/btnInicioSesion"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:background="@drawable/rounded_corner_button"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/login_inicia_sesion"
-        android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/tam_texto"
-        android:background="@drawable/rounded_corner_button"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"
-        app:layout_constraintTop_toBottomOf="@id/tvContraseniaOlvidada"/>
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvContraseniaOlvidada"
+        tools:layout_editor_absoluteX="30dp" />
 
     <TextView
         android:id="@+id/tvContraseniaOlvidada"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/login_contrasenia_olvidada"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="@dimen/tam_texto_pequenio"
         android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginContraseniaError"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLoginContraseniaError" />
 
     <TextView
         android:id="@+id/tvNoTienesCuentaLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvRegistrateLogin"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="¿No tienes cuenta?"
+        android:textColor="@color/black"
         android:textSize="@dimen/tam_texto_pequenio"
-        android:textColor="@color/black"/>
+        app:layout_constraintBottom_toTopOf="@id/tvRegistrateLogin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvRegistrateLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/login_registrate"
-        android:textSize="@dimen/tam_texto_pequenio"
         android:textColor="@color/color_principal"
-        android:textStyle="bold"/>
+        android:textSize="@dimen/tam_texto_pequenio"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

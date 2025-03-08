@@ -32,10 +32,11 @@
             android:layout_width="match_parent"
             android:layout_height="84dp"
             android:layout_marginBottom="15dp"
+            android:fontFamily="@font/yellowtail"
             android:gravity="center"
             android:text="@string/descubrir_fragment_titulo"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="@dimen/tam_titulo"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -98,13 +99,14 @@
                 android:id="@+id/tvFiltro1Descubrir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/akaya_telivigala"
                 android:text="@string/madrid_descubrir"
+                android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir" />
 
             <HorizontalScrollView
                 android:id="@+id/hsv1"
@@ -129,13 +131,14 @@
                 android:id="@+id/tvFiltro2Descubrir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hsv1"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/akaya_telivigala"
                 android:text="@string/gastronomia_desafios"
+                android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv1" />
 
             <HorizontalScrollView
                 android:id="@+id/hsv2"
@@ -160,13 +163,14 @@
                 android:id="@+id/tvFiltro3Descubrir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/hsv2"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
+                android:fontFamily="@font/akaya_telivigala"
                 android:text="@string/cultura_descubrir"
+                android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/hsv2" />
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/navigation_listado_experiencias"
     tools:context=".experiencias.ListadoExperienciasFragment"
-    android:background="@color/white">
+    android:background="@drawable/background">
 
     <ImageView
         android:id="@+id/imgVolverAtras"
@@ -24,29 +24,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="40dp"
+        android:layout_width="419dp"
+        android:layout_height="107dp"
         android:background="@color/color_principal"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/listado_experiencias_titulo_ejemplo"
-            android:textSize="@dimen/tam_titulo"
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            android:layout_width="239dp"
+            android:layout_height="81dp"
+            android:layout_marginHorizontal="@dimen/separacion_grande_treinta"
+            android:fontFamily="@font/yellowtail"
+            android:layout_marginStart="95dp"
             android:gravity="center"
-            android:layout_marginHorizontal="@dimen/separacion_grande_treinta"/>
+            android:scaleType="fitCenter"
+            android:text="@string/listado_experiencias_titulo_ejemplo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tam_titulo"
+            android:textStyle="bold" />
     </LinearLayout>
-
 
     <LinearLayout
         android:id="@+id/progressContainer"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@drawable/background"
     android:padding="@dimen/padding"
     tools:context=".desafios.CrearDesafioActivity">
 
@@ -133,7 +133,7 @@
                 android:layout_marginTop="@dimen/separacion_pequenia_cinco"
                 android:text="@string/cultura_crear_desafio"
                 android:textColor="@color/black"
-                android:buttonTint="@color/color_principal"
+                android:buttonTint="@color/black"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -146,7 +146,7 @@
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:text="@string/arte_crear_desafio"
                 android:textColor="@color/black"
-                android:buttonTint="@color/color_principal"
+                android:buttonTint="@color/black"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -159,7 +159,7 @@
                 android:layout_marginStart="@dimen/separacion_mediana_quince"
                 android:text="@string/masDieciocho_crear_desafio"
                 android:textColor="@color/black"
-                android:buttonTint="@color/color_principal"
+                android:buttonTint="@color/black"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -171,7 +171,7 @@
                 android:layout_marginTop="@dimen/separacion_pequenia_cinco"
                 android:text="@string/gastronomia_crear_desafio"
                 android:textColor="@color/black"
-                android:buttonTint="@color/color_principal"
+                android:buttonTint="@color/black"
                 android:textSize="15sp"/>
 
             <CheckBox
@@ -184,7 +184,7 @@
                 android:layout_marginTop="@dimen/separacion_pequenia_cinco"
                 android:text="@string/naturaleza_crear_desafio"
                 android:textColor="@color/black"
-                android:buttonTint="@color/color_principal"
+                android:buttonTint="@color/black"
                 android:textSize="15sp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

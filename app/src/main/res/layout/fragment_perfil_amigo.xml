@@ -4,19 +4,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/background"
     android:padding="16dp">
 
     <ImageButton
-        android:id="@+id/ibtnAtras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/flecha_izquierda_antigua_eliminar"
-        android:background="@color/white"
-        android:layout_marginStart="@dimen/separacion_mediana_quince"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:id="@+id/btnAtrasCrearExperiencias"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:src="@drawable/flecha_izquierda"
+        android:background="@drawable/rounded_corner_button"
+        android:padding="10dp"
+        android:scaleType="fitCenter"/>
+
 
     <ImageView
         android:id="@+id/img_avatar"
@@ -33,14 +34,15 @@
         android:id="@+id/txt_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre del Amigo"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
         android:layout_marginTop="@dimen/separacion_mediana_quince"
-        app:layout_constraintTop_toBottomOf="@id/img_avatar"
+        android:fontFamily="@font/yellowtail"
+        android:text="Nombre del Amigo"
+        android:textColor="@color/black"
+        android:textSize="@dimen/tam_titulo"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/img_avatar" />
 
     <View
         android:id="@+id/view_separator"

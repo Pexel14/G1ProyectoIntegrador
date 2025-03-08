@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/padding"
-    tools:context=".perfil.AjustesFragment">
+    tools:context=".perfil.AjustesFragment"
+    android:background="@drawable/background">
 
     <ImageButton
         android:id="@+id/btnAtrasAjustes"
@@ -22,13 +23,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="@font/yellowtail"
         android:text="@string/ajustes"
         android:textColor="@color/black"
+        android:textSize="@dimen/tam_titulo"
         android:textStyle="bold"
-        android:textSize="@dimen/tam_titulo"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <Button
