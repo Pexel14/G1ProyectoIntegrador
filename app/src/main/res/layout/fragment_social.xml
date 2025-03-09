@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
@@ -33,26 +34,26 @@
         android:textSize="@dimen/tam_texto"
         app:layout_constraintTop_toBottomOf="@id/barraBusqueda"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="8dp"/>
-
-    <ImageView
-        android:id="@+id/btn_mas_amigos"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/mas"
-        app:layout_constraintTop_toTopOf="@id/tv_amigos"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="8dp" />
+        android:layout_marginTop="20dp"/>
 
     <!-- RecyclerView Social -->
 
     <!-- Sección Grupos -->
 
+    <ImageView
+        android:id="@+id/btn_mas_amigos"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/mas"
+        app:layout_constraintStart_toEndOf="@id/tv_amigos"
+        app:layout_constraintTop_toTopOf="@id/tv_amigos"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_amigos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
         android:paddingTop="8dp"
         android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -60,17 +61,38 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_amigos" />
+        app:layout_constraintTop_toBottomOf="@id/tvNoAmigos"/>
+
+
+    <TextView
+        android:id="@+id/tvNoAmigos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="Ahora mismo no tienes amigos. ¡Anímate y suma gente a tu diversión! 😄"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_amigos"
+        android:visibility="gone"/>
+
+
 
     <TextView
         android:id="@+id/tv_grupos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:fontFamily="@font/akaya_telivigala"
         android:text="@string/SocialPrincipalGrupos"
-        android:textSize="18sp"
-        android:textStyle="bold"
         android:textColor="@color/black"
+        android:textSize="@dimen/tam_texto"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/rv_amigos" />
 
@@ -78,11 +100,11 @@
         android:id="@+id/btn_mas_grupos"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/mas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_amigos" />
+        app:layout_constraintStart_toEndOf="@id/tv_grupos"
+        app:layout_constraintTop_toTopOf="@id/tv_grupos"/>
+
 
     <!-- RecyclerView Grupos -->
     <androidx.recyclerview.widget.RecyclerView
@@ -92,10 +114,30 @@
         android:scrollbars="horizontal"
         android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintEnd_toStartOf="@+id/btn_mas_grupos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHeight_default="wrap"
-        app:layout_constraintTop_toBottomOf="@id/tv_grupos"/>
+        app:layout_constraintTop_toBottomOf="@id/tvNoGrupos"/>
+
+
+    <TextView
+        android:id="@+id/tvNoGrupos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="Ahora mismo no tienes grupos. ¡Únete a uno o crea el tuyo! 🎉"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_grupos"
+        android:visibility="gone"/>
+
+
+
 
     <LinearLayout
         android:id="@+id/llAmigosGrupos"

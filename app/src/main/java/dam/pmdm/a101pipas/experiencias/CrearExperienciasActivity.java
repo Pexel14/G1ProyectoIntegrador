@@ -38,7 +38,7 @@ import dam.pmdm.a101pipas.models.Experiencia;
 
 public class CrearExperienciasActivity extends AppCompatActivity {
 
-    private List<TarjetaExperienciaFragment> listaDeFragments = new ArrayList<TarjetaExperienciaFragment>();
+    private List<TarjetaExperienciaFragment> listaDeFragments = new ArrayList<>();
     private FragmentManager fragmentManager;
 
     private ImageButton btnAtrasCrearExperiencias;
@@ -46,6 +46,7 @@ public class CrearExperienciasActivity extends AppCompatActivity {
     private LinearLayout llExperienciasCrearExperiencias;
 
     private DatabaseReference databaseReference;
+    private Desafio desafio;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,115 +59,64 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             return insets;
         });
 
+        // 🔹 Inicializar Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("desafios");
+
+        // 🔹 Obtener objeto Desafio del Intent
+        if (getIntent().hasExtra("desafio")) {
+            desafio = (Desafio) getIntent().getSerializableExtra("desafio");
+        } else {
+            Toast.makeText(this, "Error: No se ha recibido un desafío válido.", Toast.LENGTH_LONG).show();
+            finish();
+            return;
+        }
 
         fragmentManager = getSupportFragmentManager();
         llExperienciasCrearExperiencias = findViewById(R.id.llExperienciasCrearExperiencias);
 
-        // Añadimos un fragment inicial
+        // 🔹 Añadir un fragmento inicial
         agregarNuevoFragment();
 
         btnAtrasCrearExperiencias = findViewById(R.id.btnAtrasCrearExperiencias);
-        btnAtrasCrearExperiencias.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmarVolverAtras();
-            }
-        });
+        btnAtrasCrearExperiencias.setOnClickListener(view -> confirmarVolverAtras());
 
         btnAniadirExperienciaCrearDesafio = findViewById(R.id.btnAniadirExperienciaCrearDesafio);
-        btnAniadirExperienciaCrearDesafio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int ultimoFragment = listaDeFragments.size() - 1;
-                if (listaDeFragments.get(ultimoFragment).isEmpty()) {
-                    Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_rellena_todos_los_campos, Toast.LENGTH_SHORT).show();
-                } else {
-                    agregarNuevoFragment();
-                }
+        btnAniadirExperienciaCrearDesafio.setOnClickListener(view -> {
+            int ultimoFragment = listaDeFragments.size() - 1;
+            if (ultimoFragment >= 0 && listaDeFragments.get(ultimoFragment).isEmpty()) {
+                Toast.makeText(this, R.string.crear_experiencias_rellena_todos_los_campos, Toast.LENGTH_SHORT).show();
+            } else {
+                agregarNuevoFragment();
             }
         });
 
         btnCrearDesafio = findViewById(R.id.btnCrearDesafio);
-        btnCrearDesafio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (listaDeFragments.isEmpty()) {
-                    Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_debe_incluir_una_exp, Toast.LENGTH_SHORT).show();
-                } else {
-
-                    Map<String, Experiencia> mapExperiencias = new HashMap<>();
-
-                    for (TarjetaExperienciaFragment fragment : listaDeFragments) {
-                        Experiencia ex = new Experiencia(fragment.getTitulo(), fragment.getDescripcion());
-                        mapExperiencias.put(ex.getTitulo(), ex);
-                    }
-
-                    Desafio desafio = (Desafio) getIntent().getSerializableExtra("desafio");
-                    desafio.setExperiencias(mapExperiencias);
-
-                    String keyDesafio = desafio.getTitulo();
-
-//                    // Añadir ciudad
-//                    databaseReference.child(keyDesafio)
-//                            .child("ciudad")
-//                            .setValue(desafio.getCiudad());
-//
-//                    // Añadir título
-//                    databaseReference.child(keyDesafio)
-//                            .child("titulo")
-//                            .setValue(desafio.getTitulo());
-
-                    databaseReference.child(keyDesafio)
-//                            .child("experiencias")
-//                            .setValue(mapExperiencias)
-                            .setValue(desafio)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(CrearExperienciasActivity.this, MainActivity.class);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                Toast.makeText(CrearExperienciasActivity.this, R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
-
-                }
-            }
-        });
+        btnCrearDesafio.setOnClickListener(view -> guardarDesafioEnFirebase());
     }
 
+    /**
+     * 🔹 Método para confirmar si el usuario quiere salir sin guardar.
+     */
     private void confirmarVolverAtras() {
-        new AlertDialog.Builder(CrearExperienciasActivity.this)
-                .setTitle("")
+        new AlertDialog.Builder(this)
                 .setMessage(R.string.crear_experiencias_no_se_van_a_guardar_exp)
-                .setPositiveButton(R.string.crear_experiencias_si, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                    }
-                })
-                .setNegativeButton(R.string.crear_experiencias_no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                })
+                .setPositiveButton(R.string.crear_experiencias_si, (dialogInterface, i) -> finish())
+                .setNegativeButton(R.string.crear_experiencias_no, (dialogInterface, i) -> dialogInterface.dismiss())
                 .show();
     }
 
-    @SuppressLint("MissingSuperCall") // Usar el "super" del onBackPressed provoca un fallo visual
+    /**
+     * 🔹 Método para manejar el botón de retroceso del sistema.
+     */
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
         confirmarVolverAtras();
     }
 
+    /**
+     * 🔹 Método para agregar un nuevo fragmento de experiencia.
+     */
     private void agregarNuevoFragment() {
         TarjetaExperienciaFragment fragment = TarjetaExperienciaFragment.newInstance("", "");
         listaDeFragments.add(fragment);
@@ -175,5 +125,41 @@ public class CrearExperienciasActivity extends AppCompatActivity {
                 .add(R.id.llExperienciasCrearExperiencias, fragment)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**
+     * 🔹 Método para guardar el desafío en Firebase.
+     */
+    private void guardarDesafioEnFirebase() {
+        if (listaDeFragments.isEmpty()) {
+            Toast.makeText(this, R.string.crear_experiencias_debe_incluir_una_exp, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Experiencia> mapExperiencias = new HashMap<>();
+        for (TarjetaExperienciaFragment fragment : listaDeFragments) {
+            if (fragment.isEmpty()) {
+                Toast.makeText(this, "Hay experiencias sin completar.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Experiencia ex = new Experiencia(fragment.getTitulo(), fragment.getDescripcion());
+            mapExperiencias.put(ex.getTitulo(), ex);
+        }
+
+        desafio.setExperiencias(mapExperiencias);
+        String keyDesafio = desafio.getTitulo();
+
+        databaseReference.child(keyDesafio).setValue(desafio)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(this, R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

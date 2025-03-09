@@ -181,14 +181,22 @@ public class SocialFragment extends Fragment {
                 amigosList.clear();
 
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    if(amigosUser.contains(data.child("id").getValue().toString())){
+                    if (amigosUser != null && amigosUser.contains(data.child("id").getValue().toString())) {
                         String username = data.child("username").getValue(String.class);
                         String fotoPerfil = data.child("foto_perfil").getValue(String.class);
                         amigosList.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
                     }
                 }
-                if(amigosList != null){
-                   amigosAdapter.setListaSocial(amigosList);
+
+                amigosAdapter.setListaSocial(amigosList);
+
+                // CONTROLAR VISIBILIDAD
+                if (amigosList.isEmpty()) {
+                    binding.tvNoAmigos.setVisibility(View.VISIBLE);
+                    binding.rvAmigos.setVisibility(View.GONE);
+                } else {
+                    binding.tvNoAmigos.setVisibility(View.GONE);
+                    binding.rvAmigos.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -199,6 +207,8 @@ public class SocialFragment extends Fragment {
         });
     }
 
+
+
     private void cargarGrupos() {
         gruposRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -206,15 +216,23 @@ public class SocialFragment extends Fragment {
                 gruposList.clear();
 
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    if(gruposUser.contains(data.child("id").getValue().toString())){
+                    if (gruposUser != null && gruposUser.contains(data.child("id").getValue().toString())) {
                         String idGrupo = data.getKey();
                         String nombreGrupo = data.child("titulo").getValue(String.class);
                         String fotoGrupo = data.child("foto_grupo").getValue(String.class);
                         gruposList.add(new Grupo(idGrupo, nombreGrupo, fotoGrupo));
                     }
                 }
-                if(gruposList != null){
-                    gruposAdapter.setListaSocial(gruposList);
+
+                gruposAdapter.setListaSocial(gruposList);
+
+                // CONTROLAR VISIBILIDAD
+                if (gruposList.isEmpty()) {
+                    binding.tvNoGrupos.setVisibility(View.VISIBLE);
+                    binding.rvGrupos.setVisibility(View.GONE);
+                } else {
+                    binding.tvNoGrupos.setVisibility(View.GONE);
+                    binding.rvGrupos.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -224,6 +242,8 @@ public class SocialFragment extends Fragment {
             }
         });
     }
+
+
 
     private void cargarTodosAmigos() {
         amigosRef.addListenerForSingleValueEvent(new ValueEventListener() {

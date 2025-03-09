@@ -3,6 +3,7 @@ package dam.pmdm.a101pipas.models;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Experiencia {
+    private String id;
     private String titulo, descripcion, imagen, coordenadas;
 
     public Experiencia() {
@@ -13,11 +14,72 @@ public class Experiencia {
         this.descripcion = descripcion;
     }
 
-    public Experiencia(String titulo, String descripcion, String imagen, String coordenadas) {
+    public Experiencia(String id, String titulo, String descripcion, String imagen, String coordenadas) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.coordenadas = coordenadas;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        if (id != null) {
+            this.id = id;
+        } else {
+            this.id = "0"; // Valor por defecto si es null
+        }
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        if (titulo != null) {
+            this.titulo = titulo;
+        } else {
+            this.titulo = "Sin título";
+        }
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        if (descripcion != null) {
+            this.descripcion = descripcion;
+        } else {
+            this.descripcion = "Sin descripción";
+        }
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        if (imagen != null) {
+            this.imagen = imagen;
+        } else {
+            this.imagen = ""; // Imagen vacía por defecto
+        }
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        if (coordenadas != null) {
+            this.coordenadas = coordenadas;
+        } else {
+            this.coordenadas = "0,0"; // Valor por defecto
+        }
     }
 
     public LatLng getLatLng() {
@@ -31,38 +93,17 @@ public class Experiencia {
                 e.printStackTrace();
             }
         }
-        return null;
+        return new LatLng(0, 0); // Coordenadas por defecto si hay error
     }
 
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getImagen() {
-        return imagen;
-    }
-
-    public void setImagen(String imagen) {
-        this.imagen = imagen;
-    }
-
-    public String getCoordenadas() {
-        return coordenadas;
-    }
-
-    public void setCoordenadas(String coordenadas) {
-        this.coordenadas = coordenadas;
+    @Override
+    public String toString() {
+        return "Experiencia{" +
+                "id='" + id + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", imagen='" + imagen + '\'' +
+                ", coordenadas='" + coordenadas + '\'' +
+                '}';
     }
 }
