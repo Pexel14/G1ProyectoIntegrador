@@ -45,7 +45,7 @@ public class RankingGlobalFragment extends Fragment {
             adapter.actualizarRanking(listaUsuarios);
         });
 
-        binding.imgBackRanking.setOnClickListener(new View.OnClickListener() {
+        binding.btnAtrasRankingGlobal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.navigation_inicio);

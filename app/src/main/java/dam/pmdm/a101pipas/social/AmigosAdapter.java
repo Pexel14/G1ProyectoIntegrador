@@ -37,12 +37,13 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
     public void onBindViewHolder(@NonNull AmigoViewHolder holder, int position) {
         Amigos amigo = amigosList.get(position);
 
-        Picasso.get()
-                .load(amigo.getFotoPerfil())
-                .placeholder(R.drawable.perfil_por_defecto) // Imagen de carga
-                .error(R.drawable.perfil_por_defecto) // Imagen de error
-                .into(holder.imgPerfil);
-
+        if(!amigo.getFotoPerfil().isEmpty()){
+            Picasso.get()
+                    .load(amigo.getFotoPerfil())
+                    .placeholder(R.drawable.perfil_por_defecto) // Imagen de carga
+                    .error(R.drawable.perfil_por_defecto) // Imagen de error
+                    .into(holder.imgPerfil);
+        }
         holder.tvUsername.setText(amigo.getUsername());
 
         holder.itemView.setOnClickListener(view -> {

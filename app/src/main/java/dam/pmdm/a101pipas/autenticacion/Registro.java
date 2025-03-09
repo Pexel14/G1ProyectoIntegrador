@@ -114,7 +114,7 @@ public class Registro extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot usuarios : snapshot.getChildren()) {
-                    idUltimo = usuarios.child("id").getValue(String.class);
+                    idUltimo = usuarios.child("id").getValue().toString();
                 }
             }
 

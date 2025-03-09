@@ -135,7 +135,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot subNodos : snapshot.getChildren()) {
-                    if(id.equals(subNodos.child("id").getValue(String.class))){
+                    if(id.equals(subNodos.child("id").getValue().toString())){
                         encontrado = true;
                     }
                 }

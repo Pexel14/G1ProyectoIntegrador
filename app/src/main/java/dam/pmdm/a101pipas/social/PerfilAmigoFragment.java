@@ -41,7 +41,7 @@ public class PerfilAmigoFragment extends Fragment {
             Picasso.get().load(amigo.getFotoPerfil()).into(binding.imgAvatar);
         });
 
-        binding.ibtnAtras.setOnClickListener(v-> {
+        binding.btnAtrasCrearExperiencias.setOnClickListener(v-> {
             Navigation.findNavController(view).navigate(R.id.navigation_social);
         });
     }

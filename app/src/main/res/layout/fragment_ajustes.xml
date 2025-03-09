@@ -21,10 +21,11 @@
         android:scaleType="fitCenter"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/yellowtail"
         android:text="@string/ajustes"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="@dimen/tam_titulo"
         android:textStyle="bold"

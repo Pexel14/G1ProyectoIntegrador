@@ -5,8 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginVertical="20dp"
     tools:context=".ranking.GrupoFragment"
     android:background="@drawable/background">
 

@@ -218,7 +218,7 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
-        binding.btnAtrasCrearGrupo.setOnClickListener(new View.OnClickListener() {
+        binding.btnAtrasRecuperarContrasenia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.navigation_social);
