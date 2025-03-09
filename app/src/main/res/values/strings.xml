@@ -11,7 +11,7 @@
     <string name="login_contrasenia_olvidada">¿Has olvidado tu contraseña?</string>
     <string name="login_textview_registro">¿No tienes cuenta?\nRegistrate</string>
     <string name="login_hint_correo">Introduce el correo</string>
-    <string name="login_mas_opciones">----------- MÁS OPCIONES ----------</string>
+    <string name="login_mas_opciones">MÁS OPCIONES</string>
     <string name="default_web_client_id">993751655241-qoc81f9t9islii7oaedhjmb8ukus8t15.apps.googleusercontent.com</string>
     <string name="login_btn_google">INICIAR SESIÓN CON GOOGLE</string>
     <string name="login_btn_registro">Regístrate</string>

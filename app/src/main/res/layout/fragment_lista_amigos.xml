@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="16dp">
+    android:padding="@dimen/padding">
 
     <!-- Botón de regreso -->
     <ImageView
@@ -26,7 +26,6 @@
         android:id="@+id/tv_title_amigos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:fontFamily="@font/yellowtail"
         android:gravity="center"
         android:text="Amigos"
@@ -45,6 +44,8 @@
         android:background="@drawable/edit_text_border"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/akaya_telivigala"
         app:queryHint="@string/fragment_lista_amigos_hint_buscador"
         android:elevation="50dp"
         app:iconifiedByDefault="false"

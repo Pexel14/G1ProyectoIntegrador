@@ -42,49 +42,63 @@
     </RelativeLayout>
 
     <!-- Barra de búsqueda -->
-    <View
-        android:id="@+id/vCajaBusquedaDescubrir"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
+<!--    <View-->
+<!--        android:id="@+id/vCajaBusquedaDescubrir"-->
+<!--        android:layout_width="250dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/rlBarraSuperiorDescubrir"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btnAniadirDesafioInicio"-->
+<!--        android:background="@drawable/rounded_corner_box" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/etBuscarDescubrir"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"-->
+<!--        app:layout_constraintStart_toStartOf="@id/vCajaBusquedaDescubrir"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/btnBuscarDescubrir"-->
+<!--        android:hint="@string/inicio_buscar"-->
+<!--        android:background="@null"-->
+<!--        android:inputType="text|textNoSuggestions"-->
+<!--        android:textSize="20sp"/>-->
+
+<!--   <Button-->
+<!--       android:id="@+id/btnBuscarDescubrir"-->
+<!--       android:padding="15dp"-->
+<!--       android:layout_width="65dp"-->
+<!--       android:layout_height="65dp"-->
+<!--       app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"-->
+<!--       app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"-->
+<!--       app:layout_constraintEnd_toEndOf="@id/vCajaBusquedaDescubrir"-->
+<!--       android:layout_marginEnd="15dp"-->
+<!--       android:background="@color/transparent"/>-->
+
+<!--    <ImageView-->
+<!--        android:layout_width="30dp"-->
+<!--        android:layout_height="30dp"-->
+<!--        app:layout_constraintStart_toStartOf="@id/btnBuscarDescubrir"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/btnBuscarDescubrir"-->
+<!--        app:layout_constraintTop_toTopOf="@id/btnBuscarDescubrir"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/btnBuscarDescubrir"-->
+<!--        android:src="@drawable/ic_lupa"-->
+<!--        android:elevation="2dp"/>-->
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/svBuscarInicio"
+        android:layout_width="0dp"
+        android:layout_height="?actionBarSize"
+        android:inputType="text"
+        android:background="@drawable/edit_text_border"
+        android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/rlBarraSuperiorDescubrir"
+        app:queryHint="@string/fragment_social_hint_buscador"
+        android:elevation="50dp"
+        app:iconifiedByDefault="false"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAniadirDesafioInicio"
-        android:background="@drawable/rounded_corner_box" />
-
-    <EditText
-        android:id="@+id/etBuscarDescubrir"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
-        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
-        app:layout_constraintStart_toStartOf="@id/vCajaBusquedaDescubrir"
-        app:layout_constraintEnd_toStartOf="@id/btnBuscarDescubrir"
-        android:hint="@string/inicio_buscar"
-        android:background="@null"
-        android:inputType="text|textNoSuggestions"
-        android:textSize="20sp"/>
-
-   <Button
-       android:id="@+id/btnBuscarDescubrir"
-       android:padding="15dp"
-       android:layout_width="65dp"
-       android:layout_height="65dp"
-       app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
-       app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
-       app:layout_constraintEnd_toEndOf="@id/vCajaBusquedaDescubrir"
-       android:layout_marginEnd="15dp"
-       android:background="@color/transparent"/>
-
-    <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintStart_toStartOf="@id/btnBuscarDescubrir"
-        app:layout_constraintEnd_toEndOf="@id/btnBuscarDescubrir"
-        app:layout_constraintTop_toTopOf="@id/btnBuscarDescubrir"
-        app:layout_constraintBottom_toBottomOf="@id/btnBuscarDescubrir"
-        android:src="@drawable/ic_lupa"
-        android:elevation="2dp"/>
+        app:layout_constraintTop_toBottomOf="@id/rlBarraSuperiorDescubrir"/>
 
     <!-- Añadir desafío -->
     <TextView
@@ -103,9 +117,9 @@
         android:id="@+id/btnAniadirDesafioInicio"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        app:layout_constraintTop_toTopOf="@+id/vCajaBusquedaDescubrir"
-        app:layout_constraintBottom_toBottomOf="@id/vCajaBusquedaDescubrir"
-        app:layout_constraintStart_toEndOf="@+id/vCajaBusquedaDescubrir"
+        app:layout_constraintTop_toTopOf="@+id/svBuscarInicio"
+        app:layout_constraintBottom_toBottomOf="@id/svBuscarInicio"
+        app:layout_constraintStart_toEndOf="@+id/svBuscarInicio"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@drawable/rounded_corner_button"
         android:text="@string/simboloMas_inicio"

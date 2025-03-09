@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".Descubrir">
+    tools:context=".desafios.descubrir.DescubrirFragment">
 
     <!-- Barra superior -->
     <RelativeLayout
@@ -36,7 +36,8 @@
             android:gravity="center"
             android:text="Descubrir"
             android:textColor="@color/black"
-            android:textSize="32sp"
+            android:textSize="@dimen/tam_titulo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -107,12 +108,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btnBuscarDescubrir"
+                app:layout_constraintTop_toBottomOf="@id/barraBusqueda"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:text="Madrid"
+                android:fontFamily="@font/akaya_telivigala"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:textSize="@dimen/tam_texto"/>
 
             <HorizontalScrollView
                 android:id="@+id/hsv1"
@@ -142,7 +144,8 @@
                 android:layout_marginTop="15dp"
                 android:text="Gastronomía"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:fontFamily="@font/akaya_telivigala"
+                android:textSize="@dimen/tam_texto"/>
 
             <HorizontalScrollView
                 android:id="@+id/hsv2"
@@ -172,7 +175,8 @@
                 android:layout_marginTop="15dp"
                 android:text="Cultura"
                 android:textStyle="bold"
-                android:textSize="20sp"/>
+                android:fontFamily="@font/akaya_telivigala"
+                android:textSize="@dimen/tam_texto"/>
 
             <HorizontalScrollView
                 android:layout_width="match_parent"

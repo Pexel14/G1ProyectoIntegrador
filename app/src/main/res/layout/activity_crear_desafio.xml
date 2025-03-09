@@ -29,8 +29,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/crear_desafio"
-        android:textSize="35sp"
+        android:textSize="@dimen/tam_titulo"
         android:textColor="@color/black"
+        android:fontFamily="@font/akaya_telivigala"
         android:textStyle="bold"/>
 
 <!-- CUERPO -->
@@ -43,7 +44,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/separacion_grande_treinta"
             android:text="@string/nombre_del_desafio"
-            android:textSize="20sp"
+            android:textSize="@dimen/tam_subtitulo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold"
             android:textColor="@color/color_principal"/>
 
@@ -66,7 +68,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:text="@string/ciudad_crear_desafio"
-            android:textSize="20sp"
+            android:textSize="@dimen/tam_subtitulo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold"
             android:textColor="@color/color_principal"/>
 
@@ -89,7 +92,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:text="@string/descripcion_crear_desafio"
-            android:textSize="20sp"
+            android:textSize="@dimen/tam_subtitulo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold"
             android:textColor="@color/color_principal"/>
 
@@ -113,7 +117,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:text="@string/etiquetas_crear_desafio"
-            android:textSize="20sp"
+            android:textSize="@dimen/tam_subtitulo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold"
             android:textColor="@color/color_principal"/>
 
@@ -132,9 +137,10 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="@dimen/separacion_pequenia_cinco"
                 android:text="@string/cultura_crear_desafio"
+                android:fontFamily="@font/akaya_telivigala"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/tam_texto"/>
 
             <CheckBox
                 android:id="@+id/cbArteCrearDesafio"
@@ -147,7 +153,8 @@
                 android:text="@string/arte_crear_desafio"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/tam_texto"
+                android:fontFamily="@font/akaya_telivigala"/>
 
             <CheckBox
                 android:id="@+id/cbMasDieciochoCrearDesafio"
@@ -160,7 +167,8 @@
                 android:text="@string/masDieciocho_crear_desafio"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/tam_texto"
+                android:fontFamily="@font/akaya_telivigala"/>
 
             <CheckBox
                 android:id="@+id/cbGastronomiaCrearDesafio"
@@ -172,7 +180,8 @@
                 android:text="@string/gastronomia_crear_desafio"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/tam_texto"
+                android:fontFamily="@font/akaya_telivigala"/>
 
             <CheckBox
                 android:id="@+id/cbNaturalezaCrearDesafio"
@@ -185,7 +194,8 @@
                 android:text="@string/naturaleza_crear_desafio"
                 android:textColor="@color/black"
                 android:buttonTint="@color/black"
-                android:textSize="15sp"/>
+                android:textSize="@dimen/tam_texto"
+                android:fontFamily="@font/akaya_telivigala"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,6 +211,7 @@
         android:layout_marginTop="@dimen/separacion_grande_treinta"
         android:textSize="20sp"
         android:textColor="@color/white"
+        android:fontFamily="@font/akaya_telivigala"
         android:background="@drawable/rounded_corner_button"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

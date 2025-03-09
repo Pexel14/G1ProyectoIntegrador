@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/listado_experiencias_progreso"
-            android:textSize="16sp"
+            android:textSize="@dimen/tam_texto"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:gravity="center"

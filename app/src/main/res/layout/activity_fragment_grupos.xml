@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="Grupos:"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:textSize="@dimen/tam_subtitulo"
+        android:fontFamily="@font/akaya_telivigala"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

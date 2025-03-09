@@ -12,22 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/background"
-        android:gravity="center"
+        android:gravity="top"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="@dimen/padding"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="52dp"
             android:fontFamily="@font/akaya_telivigala"
             android:gravity="center"
             android:text="@string/registro_titulo_registrate"
             android:textColor="@color/black"
-            android:textSize="43sp"
+            android:textSize="@dimen/tam_titulo"
             android:textStyle="bold" />
 
 
@@ -37,7 +35,8 @@
             android:layout_marginBottom="4dp"
             android:text="@string/registro_nombre_de_usuario"
             android:textColor="@color/color_principal"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold" />
 
         <EditText
@@ -45,9 +44,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:textSize="@dimen/tam_texto"
             android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_nombre_usuario"
             android:inputType="text"
+            android:fontFamily="@font/akaya_telivigala"
             android:padding="10dp"
             android:textColor="@color/black"
             android:textColorHint="@color/texto_secundario" />
@@ -58,8 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
             android:text="@string/registro_correo"
+            android:fontFamily="@font/akaya_telivigala"
             android:textColor="@color/color_principal"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto"
             android:textStyle="bold" />
 
         <EditText
@@ -67,8 +69,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
+            android:textSize="@dimen/tam_texto"
             android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_tu_correo"
+            android:fontFamily="@font/akaya_telivigala"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textColor="@color/black"
@@ -81,14 +85,17 @@
             android:layout_marginBottom="4dp"
             android:text="@string/registro_contrasenia"
             android:textColor="@color/color_principal"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/akaya_telivigala"
             android:layout_marginBottom="12dp"
+            android:textSize="@dimen/tam_texto"
             android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_tu_contrasenia"
             android:inputType="textPassword"
@@ -103,7 +110,8 @@
             android:layout_marginBottom="4dp"
             android:text="@string/registro_repite_contrasenia"
             android:textColor="@color/color_principal"
-            android:textSize="14sp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:textSize="@dimen/tam_texto"
             android:textStyle="bold" />
 
         <EditText
@@ -113,6 +121,8 @@
             android:layout_marginBottom="8dp"
             android:background="@drawable/edit_text_border"
             android:hint="@string/registro_repite_contrasenia"
+            android:textSize="@dimen/tam_texto"
+            android:fontFamily="@font/akaya_telivigala"
             android:inputType="textPassword"
             android:padding="10dp"
             android:textColor="@color/black"
@@ -126,7 +136,7 @@
             android:layout_marginBottom="16dp"
             android:text="@string/registro_contrasenias_no_coinciden"
             android:textColor="@color/rojo"
-            android:textSize="12sp"
+            android:textSize="@dimen/tam_texto"
             android:visibility="gone" />
 
 
@@ -134,10 +144,12 @@
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/separacion_mediana_quince"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:background="@drawable/rounded_corner_button"
             android:backgroundTint="@color/color_principal"
-            android:padding="12dp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:textSize="@dimen/tam_texto"
             android:text="@string/registro_registrate"
             android:textColor="@color/white"
             android:textStyle="bold" />
@@ -153,7 +165,8 @@
             android:onClick="volverAtras"
             android:text="@string/registro_ya_tienes_cuenta"
             android:textColor="@color/black"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto"
+            android:fontFamily="@font/akaya_telivigala"
             android:textStyle="bold" />
 
 
