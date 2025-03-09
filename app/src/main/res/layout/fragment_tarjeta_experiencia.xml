@@ -24,14 +24,15 @@
             android:id="@+id/tvTituloCrearExperiencia"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:layout_marginStart="@dimen/separacion_mediana_quince"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
+            android:fontFamily="@font/akaya_telivigala"
             android:text="@string/titulo_crear_experiencia"
             android:textColor="@color/color_principal"
+            android:textSize="@dimen/tam_texto_pequenio"
             android:textStyle="bold"
-            android:textSize="15sp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/etTituloCrearExperiencia"
@@ -47,16 +48,17 @@
         <!-- DESCRIPCIÓN -->
         <TextView
             android:id="@+id/tvDescripcionCrearExperiencia"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etTituloCrearExperiencia"
-            android:layout_marginTop="@dimen/separacion_mediana_quince"
+            android:layout_width="211dp"
+            android:layout_height="23dp"
             android:layout_marginStart="@dimen/separacion_mediana_quince"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
+            android:fontFamily="@font/akaya_telivigala"
             android:text="@string/descripcion_crear_experiencia"
             android:textColor="@color/color_principal"
+            android:textSize="@dimen/tam_texto_pequenio"
             android:textStyle="bold"
-            android:textSize="15sp"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etTituloCrearExperiencia" />
 
         <EditText
             android:id="@+id/etDescripcionCrearExperiencia"

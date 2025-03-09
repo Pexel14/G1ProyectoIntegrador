@@ -46,7 +46,7 @@ public class AjustesFragment extends Fragment {
             }
         });
 
-        binding.imgBackAjustes.setOnClickListener(new View.OnClickListener() {
+        binding.btnAtrasAjustes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.navigation_perfil);

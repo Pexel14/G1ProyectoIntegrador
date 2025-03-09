@@ -2,19 +2,25 @@ package dam.pmdm.a101pipas.models;
 
 public class Grupo {
 
-    private int id;
-    private String titulo;
-    private String contrasena;
     private int creador;
     private int desafio;
-    private String fechaCreacion;
+    private String fecha_creacion;
+    private String foto_grupo;
+    private int id;
     private String miembros;
+    private String titulo;
+    private String contrasena;
 
     public Grupo() {}
 
-    public Grupo(String titulo, String contrasena) {
+    public Grupo(int creador, int desafio, String fecha_creacion, String foto_grupo, int id, String miembros, String titulo) {
+        this.creador = creador;
+        this.desafio = desafio;
+        this.fecha_creacion = fecha_creacion;
+        this.foto_grupo = foto_grupo;
+        this.id = id;
+        this.miembros = miembros;
         this.titulo = titulo;
-        this.contrasena = contrasena;
     }
 
     public int getId() {
@@ -57,12 +63,12 @@ public class Grupo {
         this.desafio = desafio;
     }
 
-    public String getFechaCreacion() {
-        return fechaCreacion;
+    public String getFecha_creacion() {
+        return fecha_creacion;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFecha_creacion(String fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
     }
 
     public String getMiembros() {

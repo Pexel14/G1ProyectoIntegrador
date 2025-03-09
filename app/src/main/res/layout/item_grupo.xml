@@ -30,12 +30,13 @@
             android:id="@+id/tvNombreGrupo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ItemGrupoNombreGrupo"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginStart="12dp"
-            android:gravity="center_vertical"/>
+            android:fontFamily="@font/akaya_telivigala"
+            android:gravity="center_vertical"
+            android:text="@string/ItemGrupoNombreGrupo"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tam_texto_pequenio"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDesafios"

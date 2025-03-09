@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,12 +11,15 @@
     <!-- Botón de regreso -->
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/flecha_izquierda"
+        android:background="@drawable/rounded_corner_button"
         android:contentDescription="@string/ListaGruposVolver"
+        android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:scaleType="fitCenter"
       />
 
     <!-- Título -->
@@ -23,14 +27,16 @@
         android:id="@+id/tv_title_grupos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ListaGruposGrupos"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_back"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/yellowtail"
         android:gravity="center"
-        android:layout_marginTop="8dp" />
+        android:text="@string/ListaGruposGrupos"
+        android:textSize="@dimen/tam_titulo"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Barra de búsqueda -->
     <androidx.appcompat.widget.SearchView

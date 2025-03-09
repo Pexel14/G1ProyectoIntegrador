@@ -5,46 +5,50 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".autenticacion.Registro">
+    tools:context=".autenticacion.Registro"
+    android:background="@color/white">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="24dp"
-        android:gravity="center"
-        android:background="@android:color/white">
+        app:layout_constraintEnd_toEndOf="parent">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="52dp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:gravity="center"
             android:text="@string/registro_titulo_registrate"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="34sp"
-            android:layout_marginBottom="52dp"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:layout_gravity="center_horizontal" />
+            android:textSize="43sp"
+            android:textStyle="bold" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/registro_nombre_de_usuario"
             android:textColor="@color/color_principal"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_nombre_usuario"
             android:inputType="text"
             android:padding="10dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/edit_text_border"
             android:textColor="@color/black"
             android:textColorHint="@color/texto_secundario" />
 
@@ -52,99 +56,106 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/registro_correo"
             android:textColor="@color/color_principal"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_tu_correo"
             android:inputType="textEmailAddress"
             android:padding="10dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/registro_contrasenia"
             android:textColor="@color/color_principal"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/edit_text_border"
             android:hint="@string/registro_escribe_tu_contrasenia"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:text="@string/registro_repite_contrasenia"
             android:textColor="@color/color_principal"
-            android:textStyle="bold"
             android:textSize="14sp"
-            android:layout_marginBottom="4dp" />
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/edit_text_border"
             android:hint="@string/registro_repite_contrasenia"
             android:inputType="textPassword"
             android:padding="10dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/edit_text_border"
-            android:textColorHint="@color/texto_secundario"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textColorHint="@color/texto_secundario" />
 
 
         <TextView
             android:id="@+id/tvPasswordError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/registro_contrasenias_no_coinciden"
             android:textColor="@color/rojo"
             android:textSize="12sp"
-            android:visibility="gone"
-            android:layout_marginBottom="16dp" />
+            android:visibility="gone" />
 
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rounded_corner_button"
+            android:backgroundTint="@color/color_principal"
+            android:padding="12dp"
             android:text="@string/registro_registrate"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:padding="12dp"
-            android:backgroundTint="@color/color_principal"
-            android:layout_marginBottom="16dp" />
+            android:textStyle="bold" />
 
 
         <TextView
             android:id="@+id/tvLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/registro_ya_tienes_cuenta"
-            android:textColor="@color/color_principal"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
+            android:gravity="center"
             android:onClick="volverAtras"
-            android:textSize="14sp" />
+            android:text="@string/registro_ya_tienes_cuenta"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
 
     </LinearLayout>
 

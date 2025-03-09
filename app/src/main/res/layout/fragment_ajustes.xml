@@ -5,20 +5,30 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="16dp"
-    android:layout_marginVertical="16dp"
-    tools:context=".perfil.AjustesFragment">
+    android:padding="@dimen/padding"
+    tools:context=".perfil.AjustesFragment"
+    android:background="@drawable/background">
 
-
-    <ImageView
-        android:id="@+id/imgBackAjustes"
-        android:layout_width="34dp"
-        android:layout_height="34dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
+    <ImageButton
+        android:id="@+id/btnAtrasAjustes"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/flecha_izquierda"
+        android:background="@drawable/rounded_corner_button"
+        android:padding="10dp"
+        android:scaleType="fitCenter"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/yellowtail"
+        android:text="@string/ajustes"
+        android:textColor="@color/black"
+        android:textSize="@dimen/tam_titulo"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +40,7 @@
         android:text="@string/ajustes_cerrar_sesion"
         android:textStyle="bold"
         android:textSize="24sp"
+        android:background="@drawable/rounded_corner_button"
         android:backgroundTint="@color/rojo"
         android:textColor="@android:color/white"
         android:padding="10dp"

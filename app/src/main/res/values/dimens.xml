@@ -4,5 +4,13 @@
 <!--    <dimen name="separacion_items_crear_desafio">15dp</dimen>-->
     <dimen name="separacion_grande_treinta">30dp</dimen>
     <dimen name="separacion_mediana_quince">15dp</dimen>
-    <dimen name="separacion_pequenia_diez">5dp</dimen>
+    <dimen name="separacion_pequenia_cinco">5dp</dimen>
+    <dimen name="tam_titulo">50dp</dimen>
+    <dimen name="padding">30dp</dimen>
+    <dimen name="marign_mediano">20dp</dimen>
+    <dimen name="marign_grande">50dp</dimen>
+    <dimen name="tam_texto">30sp</dimen>
+    <dimen name="tam_texto_pequenio">17sp</dimen>
+    <dimen name="padding_pequenio_diez">10dp</dimen>
+    <dimen name="tam_subtitulo">25sp</dimen>
 </resources>

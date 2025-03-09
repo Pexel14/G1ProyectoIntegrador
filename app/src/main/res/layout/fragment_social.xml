@@ -28,11 +28,12 @@
         android:layout_height="wrap_content"
         android:text="@string/SocialPrincipalAmigos"
         android:textStyle="bold"
-        android:textSize="18sp"
+        android:fontFamily="@font/akaya_telivigala"
         android:textColor="@color/black"
+        android:textSize="@dimen/tam_texto"
         app:layout_constraintTop_toBottomOf="@id/barraBusqueda"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="8dp"/>
 
     <ImageView
         android:id="@+id/btn_mas_amigos"
@@ -58,7 +59,6 @@
         app:layout_constraintBottom_toTopOf="@id/tv_grupos"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_default="wrap"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_amigos" />
 
@@ -78,10 +78,11 @@
         android:id="@+id/btn_mas_grupos"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/mas"
-        app:layout_constraintTop_toTopOf="@id/tv_grupos"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintTop_toTopOf="@id/tv_amigos" />
 
     <!-- RecyclerView Grupos -->
     <androidx.recyclerview.widget.RecyclerView
@@ -89,6 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="horizontal"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toStartOf="@+id/btn_mas_grupos"
         app:layout_constraintStart_toStartOf="parent"
@@ -176,22 +178,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/crear_grupo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corner_button"/>
-
     <Button
         android:id="@+id/btnGrupoDetalles"
         android:layout_width="250dp"
         android:layout_height="60dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnCrearGrupo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_corner_button"
         android:text="Detalles"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
         android:textColor="@color/white"
-        android:background="@drawable/rounded_corner_button"/>
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnCrearGrupo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,27 +11,31 @@
     <!-- Botón de regreso -->
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:src="@drawable/flecha_izquierda"
-        android:contentDescription="Volver"
+        android:background="@drawable/rounded_corner_button"
+        android:contentDescription="@string/ListaGruposVolver"
+        android:padding="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-       />
+        android:scaleType="fitCenter"
+        />
 
-    <!-- Título -->
     <TextView
         android:id="@+id/tv_title_amigos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Amigos"
-        android:textStyle="bold"
-        android:textSize="22sp"
-        app:layout_constraintStart_toEndOf="@id/btn_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/yellowtail"
         android:gravity="center"
-        android:layout_marginTop="8dp" />
+        android:text="Amigos"
+        android:textColor="@color/black"
+        android:textSize="@dimen/tam_titulo"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btn_back"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/barraBusqueda"

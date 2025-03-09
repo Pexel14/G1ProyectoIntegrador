@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentManager;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ public class CrearExperienciasActivity extends AppCompatActivity {
     private List<TarjetaExperienciaFragment> listaDeFragments = new ArrayList<TarjetaExperienciaFragment>();
     private FragmentManager fragmentManager;
 
-    private Button btnAtrasCrearExperiencias, btnAniadirExperienciaCrearDesafio, btnCrearDesafio;
+    private ImageButton btnAtrasCrearExperiencias;
+    private Button btnAniadirExperienciaCrearDesafio, btnCrearDesafio;
     private LinearLayout llExperienciasCrearExperiencias;
 
     private DatabaseReference databaseReference;

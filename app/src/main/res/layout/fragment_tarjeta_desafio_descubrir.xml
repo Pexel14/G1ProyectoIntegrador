@@ -24,14 +24,15 @@
             android:id="@+id/tvTituloTarjetaDescubrir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/tarjeta_descubrir_titulo_desafio"
             android:layout_below="@id/vColorTarjetaDescubrir"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:text="@string/tarjeta_descubrir_titulo_desafio"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tam_texto_pequenio"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgUbiDecoracion"
@@ -44,16 +45,17 @@
         <TextView
             android:id="@+id/tvUbicacionTarjetaDescubrir"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="22dp"
             android:layout_alignStart="@id/imgUbiDecoracion"
             android:layout_alignBottom="@+id/imgTarjetaDesafio"
-            android:layout_marginStart="24dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/akaya_telivigala"
             android:text="@string/tarjeta_descubrir_ubicacion"
             android:textColor="@color/texto_desapercibido"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto_pequenio"
             android:textStyle="italic" />
 
         <ImageView

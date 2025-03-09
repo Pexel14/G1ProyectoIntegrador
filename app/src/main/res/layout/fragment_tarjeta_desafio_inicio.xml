@@ -23,27 +23,29 @@
             android:id="@+id/tvEtiquetasTarjetaInicio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tarjeta_inicio_lista_de_etiquetas"
             android:layout_alignBottom="@id/tvTituloTarjetaInicio"
-            android:layout_toEndOf="@+id/tvTituloTarjetaInicio"
-            android:gravity="end"
-            android:maxLines="1"
-            android:textColor="@color/black"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="16dp"
-            android:ellipsize="end"/> <!-- Añade puntos suspensivos si el texto es demasiado largo -->
+            android:layout_toEndOf="@+id/tvTituloTarjetaInicio"
+            android:ellipsize="end"
+            android:fontFamily="@font/akaya_telivigala"
+            android:gravity="end"
+            android:maxLines="1"
+            android:text="@string/tarjeta_inicio_lista_de_etiquetas"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/tvTituloTarjetaInicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="@string/tarjeta_inicio_titulo_desafio"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"/>
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/akaya_telivigala"
+            android:text="@string/tarjeta_inicio_titulo_desafio"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tam_texto_pequenio"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgTarjetaInicio"
@@ -59,13 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/vColorTarjetaInicio"
-            android:layout_marginTop="8dp"
-            android:text="@string/tarjeta_inicio_ejemplo_descripcion"
-            android:textSize="14sp"
-            android:textStyle="bold"
             android:layout_marginStart="82dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/black"/>
+            android:fontFamily="@font/akaya_telivigala"
+            android:text="@string/tarjeta_inicio_ejemplo_descripcion"
+            android:textColor="@color/black"
+            android:textSize="@dimen/tam_texto_pequenio"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgUbiDecoracion"
@@ -78,16 +81,17 @@
         <TextView
             android:id="@+id/tvUbicacionTarjetaDescubrir"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@id/imgUbiDecoracion"
+            android:layout_height="22dp"
             android:layout_below="@+id/tvDescripcionTarjetaInicio"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp"
+            android:layout_alignStart="@id/imgUbiDecoracion"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="2dp"
+            android:fontFamily="@font/akaya_telivigala"
             android:text="@string/tarjeta_inicio_ubicacion"
             android:textColor="@color/texto_desapercibido"
-            android:textSize="14sp"
+            android:textSize="@dimen/tam_texto_pequenio"
             android:textStyle="italic" />
 
     </RelativeLayout>

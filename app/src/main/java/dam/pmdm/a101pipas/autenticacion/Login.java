@@ -51,9 +51,9 @@ public class Login extends AppCompatActivity {
 
     SignInButton btnGoogleSignIn;
     EditText etCorreo, etPassword;
-    Button btnInicioSesion, btnRegistro;
+    Button btnInicioSesion;
     DatabaseReference ref;
-    TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada;
+    TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada, tvRegistrateLogin;
     private static boolean encontrado = false;
     private static String idUltimo;
     FirebaseAuth mAuth;
@@ -189,7 +189,7 @@ public class Login extends AppCompatActivity {
 
         btnGoogleSignIn = findViewById(R.id.btnGoogleSignIn);
         btnInicioSesion = findViewById(R.id.btnInicioSesion);
-        btnRegistro = findViewById(R.id.btnRegistro);
+        tvRegistrateLogin = findViewById(R.id.tvRegistrateLogin);
         tvLoginContraseniaError = findViewById(R.id.tvLoginContraseniaError);
         tvLoginCorreoError = findViewById(R.id.tvLoginCorreoError);
         tvContraseniaOlvidada = findViewById(R.id.tvContraseniaOlvidada);
@@ -206,7 +206,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        btnRegistro.setOnClickListener(new View.OnClickListener() {
+        tvRegistrateLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Registro.class);

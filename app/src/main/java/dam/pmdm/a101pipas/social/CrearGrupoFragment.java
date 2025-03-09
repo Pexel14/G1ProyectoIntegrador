@@ -1,8 +1,12 @@
 package dam.pmdm.a101pipas.social;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,12 +34,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.databinding.FragmentCrearGrupoBinding;
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
 
@@ -44,18 +50,30 @@ public class CrearGrupoFragment extends Fragment {
     private DatabaseReference refDesafios, refGrupos, refUsuarios;
     private FirebaseDatabase firebase;
     private ValueEventListener listener;
-    private Switch swHacerPrivadoCrearGrupo;
-    private TextView tvContraseniaCrearGrupo;
-    private EditText etNombreGrupoCrearGrupo, etContraseniaCrearGrupo;
-    private Button btnCrearGrupo, btnAniadirAmigosCrearGrupo, btnAtras;
+//    private Switch swHacerPrivadoCrearGrupo;
+//    private TextView tvContraseniaCrearGrupo;
+//    private EditText etNombreGrupoCrearGrupo, etContraseniaCrearGrupo;
+//    private Button btnCrearGrupo, btnAniadirAmigosCrearGrupo, btnAtras, btnSeleccionarImagen;
     private FirebaseAuth mAuth;
     private LinearLayout llAmigosCrearGrupo;
-    private HorizontalScrollView hsvElegirDesafioCrearGrupo;
+//    private HorizontalScrollView hsvElegirDesafioCrearGrupo;
     private String miembros, amigo;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
+    private Uri imageUri;
+//    private ImageView ivImagenIconoCrearGrupo;
+    private FragmentCrearGrupoBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_crear_grupo, container, false);
+        binding = FragmentCrearGrupoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+
 
         firebase = FirebaseDatabase.getInstance();
         refDesafios = firebase.getReference("desafios");
@@ -70,32 +88,60 @@ public class CrearGrupoFragment extends Fragment {
         miembros = aniadirUsuarioActual(miembros);
         amigo = "";
 
-        tvContraseniaCrearGrupo = view.findViewById(R.id.tvContraseniaCrearGrupo);
-        etContraseniaCrearGrupo = view.findViewById(R.id.etContraseniaCrearGrupo);
-
-        etNombreGrupoCrearGrupo = view.findViewById(R.id.etNombreGrupoCrearGrupo);
-
-        swHacerPrivadoCrearGrupo = view.findViewById(R.id.swHacerPrivadoCrearGrupo);
-        swHacerPrivadoCrearGrupo.setOnClickListener(new View.OnClickListener() {
+        binding.swHacerPrivadoCrearGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (swHacerPrivadoCrearGrupo.isChecked()) {
-                    tvContraseniaCrearGrupo.setVisibility(View.VISIBLE);
-                    etContraseniaCrearGrupo.setVisibility(View.VISIBLE);
+                if (binding.swHacerPrivadoCrearGrupo.isChecked()) {
+                    binding.tvContraseniaCrearGrupo.setVisibility(View.VISIBLE);
+                    binding.etContraseniaCrearGrupo.setVisibility(View.VISIBLE);
                 } else {
-                    tvContraseniaCrearGrupo.setVisibility(View.GONE);
-                    etContraseniaCrearGrupo.setVisibility(View.GONE);
+                    binding.tvContraseniaCrearGrupo.setVisibility(View.GONE);
+                    binding.etContraseniaCrearGrupo.setVisibility(View.GONE);
                 }
             }
         });
 
-        btnCrearGrupo = view.findViewById(R.id.btnCrearGrupo);
-        btnCrearGrupo.setOnClickListener(new View.OnClickListener() {
+        binding.btnCrearGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 // Si hay algún editText, comprobar que el usuario exista
-                if (llAmigosCrearGrupo.getChildCount() != 0) {
+//                if (llAmigosCrearGrupo.getChildCount() != 0) {
+//
+//                    EditText etAmigo = (EditText) llAmigosCrearGrupo.getChildAt(llAmigosCrearGrupo.getChildCount()-1);
+//                    amigo = etAmigo.getText().toString();
+//
+//                    // Si el campo está vacío
+//                    if (amigo.isEmpty()) {
+//                        Toast.makeText(getContext(), R.string.crear_grupo_fragmen_ultimo_campo_amigo_vacio, Toast.LENGTH_SHORT).show();
+//                    }
+//
+//                    // Sino
+//                    else {
+//                        usuarioExiste(amigo, new OnUsuarioExisteListener() {
+//                            @Override
+//                            public void onResultado(boolean existe) {
+//                                // Si el usuario existe
+//                                if (existe) {
+//                                    miembros += "," + amigo;
+//                                    Log.d("CREAR_GRUPO", miembros);
+//                                }
+//                                // Sino
+//                                else {
+//                                    Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//                        });
+//                    }
+//                }
+
+                // Si los datos están incompletos
+//                if (datosIncompletos()) {
+//                    Toast.makeText(getContext(), R.string.crear_grupo_fragment_rellene_todos_los_campos, Toast.LENGTH_SHORT).show();
+//                }
+
+                // Si hay amigos introducidos, validar el último amigo (los anteriores ya han sido validados)
+                /*else*/ if (llAmigosCrearGrupo.getChildCount() != 0) {
 
                     EditText etAmigo = (EditText) llAmigosCrearGrupo.getChildAt(llAmigosCrearGrupo.getChildCount()-1);
                     amigo = etAmigo.getText().toString();
@@ -123,17 +169,15 @@ public class CrearGrupoFragment extends Fragment {
                         });
                     }
                 }
-                if (datosIncompletos()) {
-                    Toast.makeText(getContext(), R.string.crear_grupo_fragment_rellene_todos_los_campos, Toast.LENGTH_SHORT).show();
-                } else {
+
+                // Si los datos están completos y los amigos están validados
+                else {
                     crearGrupo();
                 }
             }
         });
 
-        llAmigosCrearGrupo = view.findViewById(R.id.llAmigosCrearGrupo);
-        btnAniadirAmigosCrearGrupo = view.findViewById(R.id.btnAniadirAmigosCrearGrupo);
-        btnAniadirAmigosCrearGrupo.setOnClickListener(new View.OnClickListener() {
+        binding.btnAniadirAmigosCrearGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -174,16 +218,31 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
-        btnAtras = view.findViewById(R.id.btnAtrasCrearGrupo);
-        btnAtras.setOnClickListener(new View.OnClickListener() {
+        binding.btnAtrasCrearGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Navigation.findNavController(view).navigate(R.id.navigation_social);
-        }
+            }
         });
 
+        imagePickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                        imageUri = result.getData().getData();
+                        Picasso.get().load(imageUri).into(binding.ivImagenIconoCrearGrupo);
+                    }
+                }
+        );
 
-        return view;
+        binding.btnSeleccionarImagen.setOnClickListener(v -> {
+            Intent i = new Intent();
+            i.setType("image/*");
+            i.addCategory(Intent.CATEGORY_OPENABLE);
+            i.setPackage("com.google.android.apps.photos");
+            imagePickerLauncher.launch(i);
+        });
+
 
     }
 
@@ -240,13 +299,13 @@ public class CrearGrupoFragment extends Fragment {
 
 
     private void crearGrupo() {
-        String nombre = etNombreGrupoCrearGrupo.getText().toString();
+        String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
         String key = nombre.replace(" ", "");
 
-        Grupo grupo = new Grupo(nombre, miembros);
+        Grupo grupo = new Grupo();
 
-        if (swHacerPrivadoCrearGrupo.isChecked()) {
-            String contrasenia = etContraseniaCrearGrupo.getText().toString();
+        if (binding.swHacerPrivadoCrearGrupo.isChecked()) {
+            String contrasenia = binding.etContraseniaCrearGrupo.getText().toString();
             grupo.setContrasena(contrasenia);
         }
 
@@ -363,28 +422,34 @@ public class CrearGrupoFragment extends Fragment {
         void onResult(boolean existe);
     }
 
-    private boolean datosIncompletos() {
-
-        // Si es público
-        if (!swHacerPrivadoCrearGrupo.isChecked()) {
-            if (etNombreGrupoCrearGrupo.getText().toString().isEmpty()) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        // Si es privado
-        else {
-            if (!etNombreGrupoCrearGrupo.getText().toString().isEmpty() &&
-                !etContraseniaCrearGrupo.getText().toString().isEmpty()) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-
-    }
+//    private boolean datosIncompletos() {
+//
+//        if (soloUnFragmentSeleccionado() &&
+//                binding.etNombreGrupoCrearGrupo.getText().toString().isEmpty() &&
+//                binding.ivImagenIconoCrearGrupo.getDrawable() != null)  {
+//
+//        }
+//
+////        // Si es público
+////        if (!binding.swHacerPrivadoCrearGrupo.isChecked()) {
+////            if (binding.etNombreGrupoCrearGrupo.getText().toString().isEmpty()) {
+////                return true;
+////            } else {
+////                return false;
+////            }
+////        }
+////
+////        // Si es privado
+////        else {
+////            if (!etNombreGrupoCrearGrupo.getText().toString().isEmpty() &&
+////                !etContraseniaCrearGrupo.getText().toString().isEmpty()) {
+////                return false;
+////            } else {
+////                return true;
+////            }
+////        }
+//
+//    }
 
     private void cargarFragments() {
         limpiarFragments();
