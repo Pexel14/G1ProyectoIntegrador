@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentListaGruposBinding;
+import dam.pmdm.a101pipas.models.Amigos;
 
 
 public class ListaGruposFragment extends Fragment {
@@ -56,6 +58,30 @@ public class ListaGruposFragment extends Fragment {
 
         // Botón para volver atrás
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_social));
+
+        binding.barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscar(newText);
+                return true;
+            }
+        });
+    }
+
+    private void buscar(String newText) {
+        ArrayList<Grupo> auxGrupos = new ArrayList<>();
+        for (Grupo grupo : gruposList) {
+            if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
+                auxGrupos.add(grupo);
+            }
+        }
+        binding.rvListaGrupos.setAdapter(new GruposAdapter(auxGrupos, this));
+
     }
 
     private void cargarListaGruposDesdeFirebase() {

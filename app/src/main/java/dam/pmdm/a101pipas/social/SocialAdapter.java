@@ -47,11 +47,13 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
             Amigos amigo = (Amigos) item;
             holder.tvNombre.setText(amigo.getUsername());
 
-            Picasso.get()
-                    .load(amigo.getFotoPerfil() != null ? amigo.getFotoPerfil() : "")
-                    .placeholder(R.drawable.perfil_por_defecto)
-                    .error(R.drawable.perfil_por_defecto)
-                    .into(holder.imgPerfil);
+            if(amigo.getFotoPerfil() != null && !amigo.getFotoPerfil().isEmpty()){
+                Picasso.get()
+                        .load(amigo.getFotoPerfil())
+                        .placeholder(R.drawable.perfil_por_defecto)
+                        .error(R.drawable.perfil_por_defecto)
+                        .into(holder.imgPerfil);
+            }
 
         } else if (item instanceof Grupo) {
 

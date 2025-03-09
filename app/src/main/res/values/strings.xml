@@ -160,4 +160,10 @@
     <string name="crear_grupo">Crear Grupo</string>
     <string name="amigos">Amigos :</string>
     <string name="comenzar_desafio_listado_experiencias">Comenzar desafío</string>
+    <string name="ranking_privado_titulo">Ranking en %s</string>
+    <string name="SocialPrincipalGruposBuscador">Grupos</string>
+    <string name="SocialPrincipalAmigosBuscador">Amigos</string>
+    <string name="fragment_lista_amigos_hint_buscador">Buscar amigos</string>
+    <string name="fragment_social_hint_buscador">Buscar amigos y grupos</string>
+    <string name="fragment_lista_grupos_hint_buscador">Buscar grupos</string>
 </resources>

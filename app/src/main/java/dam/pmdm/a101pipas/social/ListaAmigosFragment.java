@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -56,6 +57,29 @@ public class ListaAmigosFragment extends Fragment {
 
         // Botón de regreso
         binding.btnBack.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_social));
+
+        binding.barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscar(newText);
+                return true;
+            }
+        });
+    }
+
+    private void buscar(String newText) {
+        ArrayList<Amigos> auxAmigos = new ArrayList<>();
+        for (Amigos amigo : amigosList) {
+            if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
+                auxAmigos.add(amigo);
+            }
+        }
+        binding.rvListaAmigos.setAdapter(new AmigosAdapter(auxAmigos));
     }
 
     private void cargarListaAmigosDesdeFirebase() {

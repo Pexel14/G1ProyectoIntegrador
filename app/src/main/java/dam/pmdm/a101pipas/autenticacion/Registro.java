@@ -6,8 +6,10 @@ import android.view.View;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.ActivityRegistroBinding;
 import dam.pmdm.a101pipas.models.User;
@@ -15,14 +17,18 @@ import dam.pmdm.a101pipas.models.User;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Registro extends AppCompatActivity {
 
     private ActivityRegistroBinding binding;
     private DatabaseReference databaseReference;
     private FirebaseAuth auth;
+    private String idUltimo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +41,7 @@ public class Registro extends AppCompatActivity {
         // Inicializar Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
         auth = FirebaseAuth.getInstance();
-
+        buscarID();
         // Botón de registro
         binding.btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +69,6 @@ public class Registro extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     FirebaseUser firebaseUser = auth.getCurrentUser();
                                     if (firebaseUser != null) {
-                                        String userId = firebaseUser.getUid();
                                         guardarUsuarioEnDatabase(username, email, contrasenia);
                                     }
                                 } else {
@@ -79,7 +84,7 @@ public class Registro extends AppCompatActivity {
     private void guardarUsuarioEnDatabase(String username, String email, String contrasenia) {
 
         String id = email.split("@")[0].replace(".", "");
-        User user = new User(id, username, email, contrasenia);
+        User user = new User(idUltimo, username, email, contrasenia, "", "", "", "", 0);
 
         // Guardar en Firebase Realtime Database
         databaseReference.child(id).setValue(user).addOnCompleteListener(task -> {
@@ -90,6 +95,8 @@ public class Registro extends AppCompatActivity {
                 binding.etPassword.setText("");
                 binding.etConfirmPassword.setText("");
                 binding.etUsername.setText("");
+                Intent intent = new Intent(Registro.this, MainActivity.class);
+                startActivity(intent);
             } else {
                 Toast.makeText(Registro.this, R.string.registro_guardar_usuario_db_error, Toast.LENGTH_SHORT).show();
             }
@@ -101,4 +108,21 @@ public class Registro extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    private void buscarID(){
+        databaseReference.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot usuarios : snapshot.getChildren()) {
+                    idUltimo = usuarios.child("id").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }

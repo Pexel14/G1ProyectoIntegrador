@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
     DatabaseReference ref;
     TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada;
     private static boolean encontrado = false;
-
+    private static String idUltimo;
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -78,10 +78,10 @@ public class Login extends AppCompatActivity {
                             Log.d(TAG, "PASA POR AQUI 3");
                             if (task.isSuccessful()) {
                                 Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
-                                guardarCorreo();
                                 String usuario = mAuth.getCurrentUser().getEmail();
                                 Log.d(TAG, "Usuario: " + usuario);
                                 String id = usuario.split("@")[0].replace(".", "");
+                                guardarCorreo(id, usuario);
                                 mandarUsuarioInicio(id);
                             } else {
                                 Log.d(TAG, "Inicio de sesion FALLIDO: " + task.getException());
@@ -98,31 +98,44 @@ public class Login extends AppCompatActivity {
         }
     });
 
-    private void guardarCorreo() {
-        if (mAuth.getCurrentUser() == null) {
-            String emailCortado = mAuth.getCurrentUser().getEmail().split("@")[0];
-            if (emailCortado != null) {
-                if (emailCortado.contains(".")) {
-                    emailCortado.replaceAll(".", "");
-                    usuarioExiste(emailCortado);
-                    if(!encontrado){
-                        String correo = mAuth.getCurrentUser().getEmail();
-                        String nombre = mAuth.getCurrentUser().getDisplayName();
-                        ref.child(emailCortado).setValue(new User(emailCortado, nombre, correo, 0)).addOnCompleteListener(command -> {
-                            Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
-                        });
-                    }
+    private void guardarCorreo(String id, String correo) {
+        if (mAuth.getCurrentUser() != null) {
+            if (id != null) {
+                usuarioExiste(id);
+                if(!encontrado){
+                    String nombre = mAuth.getCurrentUser().getDisplayName();
+                    ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
+                        Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
+                    });
                 }
             }
+
         }
     }
 
-    private void usuarioExiste(String emailCortado) {
+    private void buscarID() {
+
+        ref.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot usuarios : snapshot.getChildren()) {
+                    idUltimo = usuarios.child("id").getValue().toString();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void usuarioExiste(String id) {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot subNodos : snapshot.getChildren()) {
-                    if(emailCortado.equals(subNodos.child("id").getValue(String.class))){
+                    if(id.equals(subNodos.child("id").getValue(String.class))){
                         encontrado = true;
                     }
                 }
@@ -184,7 +197,7 @@ public class Login extends AppCompatActivity {
         etPassword = findViewById(R.id.etContrasenia);
 
         ref = FirebaseDatabase.getInstance().getReference("usuarios");
-
+        buscarID();
         btnGoogleSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

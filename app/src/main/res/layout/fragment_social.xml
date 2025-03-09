@@ -8,20 +8,18 @@
     android:background="@color/color_fondo">
 
     <!-- Barra de búsqueda -->
-    <EditText
-        android:id="@+id/search_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/SocialPrincipalBuscar"
-        android:padding="12dp"
-        android:background="@android:drawable/editbox_background"
-        android:drawableStart="@android:drawable/ic_menu_search"
-        android:drawablePadding="8dp"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="15dp" />
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/barraBusqueda"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:inputType="text"
+        android:background="@drawable/edit_text_border"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        app:queryHint="@string/fragment_social_hint_buscador"
+        android:elevation="50dp"
+        app:iconifiedByDefault="false"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Sección Amigos -->
     <TextView
@@ -32,7 +30,7 @@
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@id/search_bar"
+        app:layout_constraintTop_toBottomOf="@id/barraBusqueda"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="20dp"/>
 
@@ -97,6 +95,79 @@
         app:layout_constraintHeight_default="wrap"
         app:layout_constraintTop_toBottomOf="@id/tv_grupos"/>
 
+    <LinearLayout
+        android:id="@+id/llAmigosGrupos"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@+id/barraBusqueda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/tv_amigos_buscador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/SocialPrincipalAmigosBuscador"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:visibility="gone"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/barraBusqueda"
+            app:layout_constraintBottom_toTopOf="@+id/rv_amigos_buscador"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_amigos_buscador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:paddingTop="8dp"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/tv_grupos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_amigos_buscador" />
+
+        <TextView
+            android:id="@+id/tv_grupos_buscador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:text="@string/SocialPrincipalGruposBuscador"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toTopOf="@+id/rv_grupos_buscador"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_amigos_buscador" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_grupos_buscador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            android:visibility="gone"
+            android:layout_weight="1"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toStartOf="@+id/btn_mas_grupos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHeight_default="wrap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_grupos_buscador"/>
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnCrearGrupo"
         android:layout_width="250dp"
@@ -109,6 +180,7 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corner_button"/>
+
     <Button
         android:id="@+id/btnGrupoDetalles"
         android:layout_width="250dp"
