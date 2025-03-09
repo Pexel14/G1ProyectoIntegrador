@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:padding="@dimen/separacion_mediana_quince"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:text="@string/comenzar_desafio_listado_experiencias"
             android:textColor="@color/white"
             android:background="@drawable/rounded_corner_button"
@@ -93,7 +94,7 @@
             android:progress="0"
             android:progressTint="@color/color_principal"
             android:backgroundTint="@color/light_gray"
-            android:layout_marginTop="8dp"/>
+            android:layout_marginTop="@dimen/separacion_mediana_quince"/>
     </LinearLayout>
 
 
@@ -113,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/separacion_grande_treinta"
             android:padding="8dp"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:scrollbars="vertical"/>
     </androidx.core.widget.NestedScrollView>
 
