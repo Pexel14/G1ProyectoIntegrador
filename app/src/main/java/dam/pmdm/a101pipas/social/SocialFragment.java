@@ -224,7 +224,6 @@ public class SocialFragment extends Fragment {
                     }
                 }
 
-
                 // CONTROLAR VISIBILIDAD
                 if (gruposList.isEmpty()) {
                     binding.tvNoGrupos.setVisibility(View.VISIBLE);

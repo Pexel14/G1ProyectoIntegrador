@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -37,6 +38,10 @@ public class GrupoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        binding.btnBack.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.navigation_social);
+        });
 
         viewModel = new ViewModelProvider(requireActivity()).get(GrupoViewModel.class);
         Log.d("Compartir", "TOY AQUI 3");
