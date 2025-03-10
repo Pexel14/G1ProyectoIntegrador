@@ -23,6 +23,11 @@ public class Grupo {
         this.titulo = titulo;
     }
 
+    public Grupo(String titulo, String contrasena) {
+        this.titulo = titulo;
+        this.contrasena = contrasena;
+    }
+
     public int getId() {
         return id;
     }
