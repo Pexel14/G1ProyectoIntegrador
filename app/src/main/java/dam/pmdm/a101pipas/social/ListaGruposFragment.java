@@ -76,7 +76,7 @@ public class ListaGruposFragment extends Fragment {
     private void buscar(String newText) {
         ArrayList<Grupo> auxGrupos = new ArrayList<>();
         for (Grupo grupo : gruposList) {
-            if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
+            if(grupo.getTitulo().toLowerCase().startsWith(newText.toLowerCase())){
                 auxGrupos.add(grupo);
             }
         }

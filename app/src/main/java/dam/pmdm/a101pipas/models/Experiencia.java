@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Experiencia {
     private String titulo, descripcion, imagen, coordenadas, direccion;
+    private String id; // Lo pongo para evitar errores en ExperienciasListAdapter
 
     public Experiencia() {
     }
@@ -66,6 +67,14 @@ public class Experiencia {
         } else {
             this.coordenadas = "0,0"; // Valor por defecto
         }
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public LatLng getLatLng() {

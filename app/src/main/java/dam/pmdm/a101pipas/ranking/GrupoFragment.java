@@ -58,9 +58,9 @@ public class GrupoFragment extends Fragment {
                                 .append(getString(R.string.grupo_fragment_mensaje_invitacion_3))
                                 .append("\n");
 
-                        if (grupo.getContrasena() != null) {
+                        if (grupo.getContraseña() != null) {
                             message.append(getString(R.string.grupo_fragment_mensaje_invitacion_4))
-                                    .append(grupo.getContrasena())
+                                    .append(grupo.getContraseña())
                                     .append("\n");
                         }
 

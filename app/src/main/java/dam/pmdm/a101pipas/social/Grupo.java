@@ -48,6 +48,7 @@ public class Grupo {
 //    private int numero_integrantes; -> Vale con hacer un count en miembros
     private String titulo;
     private String contraseña;
+    private String id;
 
     public Grupo() {
     }
@@ -72,6 +73,13 @@ public class Grupo {
         this.miembros = miembros;
         this.titulo = titulo;
         this.contraseña = contraseña;
+    }
+
+    // Para social
+    public Grupo(String idGrupo, String nombreGrupo, String fotoGrupo) {
+        this.id = idGrupo;
+        this.titulo = nombreGrupo;
+        this.foto_grupo = fotoGrupo;
     }
 
     public int getCreador() {
@@ -128,5 +136,9 @@ public class Grupo {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public String getId() {
+        return id;
     }
 }

@@ -58,10 +58,10 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
         } else if (item instanceof Grupo) {
 
             Grupo grupo = (Grupo) item;
-            holder.tvNombre.setText(grupo.getNombreGrupo());
+            holder.tvNombre.setText(grupo.getTitulo());
 
             Picasso.get()
-                    .load(grupo.getFotoGrupo() != null ? grupo.getFotoGrupo() : "")
+                    .load(grupo.getFoto_grupo() != null ? grupo.getFoto_grupo() : "")
                     .placeholder(R.drawable.perfil_por_defecto)
                     .error(R.drawable.perfil_por_defecto)
                     .into(holder.imgPerfil);
@@ -74,7 +74,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 //                intent.putExtra("nombreGrupo", grupo.getNombreGrupo());
 //                intent.putExtra("fotoGrupo", grupo.getFotoGrupo());
 //                v.getContext().startActivity(intent);
-                grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
+                grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getId()));
                 Navigation.findNavController(v).navigate(R.id.navigation_grupo);
             });
         }

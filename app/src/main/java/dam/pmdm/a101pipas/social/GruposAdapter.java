@@ -42,20 +42,20 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GrupoViewH
         Grupo grupo = gruposList.get(position);
 
         // Cargar imagen con Picasso (si no hay imagen, usar una por defecto)
-        if (grupo.getFotoGrupo() == null || grupo.getFotoGrupo().isEmpty()) {
+        if (grupo.getFoto_grupo() == null || grupo.getFoto_grupo().isEmpty()) {
             holder.imgGrupo.setImageResource(R.drawable.perfil_por_defecto);
         } else {
-            Picasso.get().load(grupo.getFotoGrupo()).placeholder(R.drawable.perfil_por_defecto).into(holder.imgGrupo);
+            Picasso.get().load(grupo.getFoto_grupo()).placeholder(R.drawable.perfil_por_defecto).into(holder.imgGrupo);
         }
 
         // Asignar datos
-        holder.tvNombreGrupo.setText(grupo.getNombreGrupo());
+        holder.tvNombreGrupo.setText(grupo.getTitulo());
 
         GrupoViewModel grupoViewModel = new ViewModelProvider(fragment.requireActivity()).get(GrupoViewModel.class);
 
         // Evento de clic para abrir la pantalla de detalles
         holder.itemView.setOnClickListener(v -> {
-            grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
+            grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getId()));
             Navigation.findNavController(v).navigate(R.id.navigation_grupo);
 //            Intent intent = new Intent(v.getContext(), GroupDetail.class);
 //            intent.putExtra("groupId", grupo.getIdGrupo()); // Pasar solo el ID del grupo

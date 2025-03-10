@@ -48,8 +48,15 @@ public class Grupo {
     //    private int numero_integrantes; -> Vale con hacer un count en miembros
     private String titulo;
     private String contraseña;
+    private String id;
 
     public Grupo() {
+    }
+
+    // Para GrupoViewModel
+    public Grupo(String titulo, String contrasena) {
+        this.titulo = titulo;
+        this.contraseña = contrasena;
     }
 
     // Para grupos públicos
@@ -128,5 +135,13 @@ public class Grupo {
 
     public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
