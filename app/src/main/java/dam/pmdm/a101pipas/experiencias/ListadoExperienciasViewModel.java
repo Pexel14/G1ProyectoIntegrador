@@ -66,7 +66,13 @@ public class ListadoExperienciasViewModel extends ViewModel {
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                            Experiencia experiencia = snapshot2.getValue(Experiencia.class);
+                                            Experiencia experiencia = new Experiencia(
+                                                    snapshot2.child("id").getValue().toString(),
+                                                    snapshot2.child("titulo").getValue(String.class),
+                                                    snapshot2.child("descripcion").getValue(String.class),
+                                                    snapshot2.child("imagen").getValue(String.class),
+                                                    snapshot2.child("coordenadas").getValue(String.class)
+                                            );
                                             if (experiencia != null) {
                                                 listaExperiencias.add(experiencia);
                                             }

@@ -123,6 +123,8 @@ public class SocialFragment extends Fragment {
                     binding.rvGruposBuscador.setVisibility(View.VISIBLE);
                     binding.tvGruposBuscador.setVisibility(View.VISIBLE);
                     binding.tvAmigosBuscador.setVisibility(View.VISIBLE);
+                    binding.tvNoGrupos.setVisibility(View.GONE);
+                    binding.tvNoAmigos.setVisibility(View.GONE);
                     binding.rvGrupos.setVisibility(View.GONE);
                     binding.rvAmigos.setVisibility(View.GONE);
                     binding.btnMasAmigos.setVisibility(View.GONE);
@@ -191,10 +193,10 @@ public class SocialFragment extends Fragment {
 
                 // CONTROLAR VISIBILIDAD
                 if (amigosList.isEmpty()) {
-                    amigosAdapter.setListaSocial(amigosList);
                     binding.tvNoAmigos.setVisibility(View.VISIBLE);
                     binding.rvAmigos.setVisibility(View.GONE);
                 } else {
+                    amigosAdapter.setListaSocial(amigosList);
                     binding.tvNoAmigos.setVisibility(View.GONE);
                     binding.rvAmigos.setVisibility(View.VISIBLE);
                 }
@@ -225,10 +227,10 @@ public class SocialFragment extends Fragment {
 
                 // CONTROLAR VISIBILIDAD
                 if (gruposList.isEmpty()) {
-                    gruposAdapter.setListaSocial(gruposList);
                     binding.tvNoGrupos.setVisibility(View.VISIBLE);
                     binding.rvGrupos.setVisibility(View.GONE);
                 } else {
+                    gruposAdapter.setListaSocial(gruposList);
                     binding.tvNoGrupos.setVisibility(View.GONE);
                     binding.rvGrupos.setVisibility(View.VISIBLE);
                 }
