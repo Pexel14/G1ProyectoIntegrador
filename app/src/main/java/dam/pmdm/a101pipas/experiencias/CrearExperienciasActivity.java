@@ -2,7 +2,6 @@ package dam.pmdm.a101pipas.experiencias;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,7 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.FragmentManager;
 
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -29,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
@@ -45,7 +43,7 @@ public class CrearExperienciasActivity extends AppCompatActivity {
     private Button btnAniadirExperienciaCrearDesafio, btnCrearDesafio;
     private LinearLayout llExperienciasCrearExperiencias;
 
-    private DatabaseReference databaseReference;
+    private DatabaseReference refDesafios, refExperiencias;
     private Desafio desafio;
 
     @Override
@@ -60,7 +58,8 @@ public class CrearExperienciasActivity extends AppCompatActivity {
         });
 
         // 🔹 Inicializar Firebase
-        databaseReference = FirebaseDatabase.getInstance().getReference("desafios");
+        refDesafios = FirebaseDatabase.getInstance().getReference("desafios");
+        refExperiencias = FirebaseDatabase.getInstance().getReference("experiencias");
 
         // 🔹 Obtener objeto Desafio del Intent
         if (getIntent().hasExtra("desafio")) {
@@ -136,20 +135,36 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             return;
         }
 
-        Map<String, Experiencia> mapExperiencias = new HashMap<>();
+        List<Experiencia> listaExperiencias = new ArrayList<>();
         for (TarjetaExperienciaFragment fragment : listaDeFragments) {
             if (fragment.isEmpty()) {
                 Toast.makeText(this, "Hay experiencias sin completar.", Toast.LENGTH_SHORT).show();
                 return;
             }
             Experiencia ex = new Experiencia(fragment.getTitulo(), fragment.getDescripcion());
-            mapExperiencias.put(ex.getTitulo(), ex);
+            listaExperiencias.add(ex);
         }
 
-        desafio.setExperiencias(mapExperiencias);
-        String keyDesafio = desafio.getTitulo();
+        final String[] experiencias = {""};
 
-        databaseReference.child(keyDesafio).setValue(desafio)
+        for (Experiencia ex : listaExperiencias) {
+            String key = refExperiencias.push().getKey(); // Se supone que genera un id
+
+            refExperiencias.child(key).setValue(ex).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        experiencias[0] += key;
+                        Log.d("crear_experiencias", "experiencia creada");
+                    }
+                }
+            });
+        }
+
+        desafio.setExperiencias(experiencias[0]);
+        String keyDesafio = refDesafios.push().getKey(); // Se supone que genera una key
+
+        refDesafios.child(keyDesafio).setValue(desafio)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();

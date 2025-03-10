@@ -3,8 +3,7 @@ package dam.pmdm.a101pipas.models;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Experiencia {
-    private String id;
-    private String titulo, descripcion, imagen, coordenadas;
+    private String titulo, descripcion, imagen, coordenadas, direccion;
 
     public Experiencia() {
     }
@@ -14,24 +13,11 @@ public class Experiencia {
         this.descripcion = descripcion;
     }
 
-    public Experiencia(String id, String titulo, String descripcion, String imagen, String coordenadas) {
-        this.id = id;
+    public Experiencia(String titulo, String descripcion, String imagen, String coordenadas) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.coordenadas = coordenadas;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        if (id != null) {
-            this.id = id;
-        } else {
-            this.id = "0"; // Valor por defecto si es null
-        }
     }
 
     public String getTitulo() {
@@ -99,7 +85,6 @@ public class Experiencia {
     @Override
     public String toString() {
         return "Experiencia{" +
-                "id='" + id + '\'' +
                 ", titulo='" + titulo + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", imagen='" + imagen + '\'' +

@@ -86,7 +86,9 @@ public class CrearDesafioActivity extends AppCompatActivity {
                         experiencias = experiencias.substring(0, experiencias.length() - 1);
                     }
 
-                    Desafio desafio = new Desafio(titulo, ciudad, descripcion, experiencias);
+                    int id = Integer.parseInt(databaseReference.push().getKey()); // Se supone que genera una key nueva
+
+                    Desafio desafio = new Desafio(titulo, ciudad, descripcion, experiencias, id);
 
                     Intent i = new Intent(CrearDesafioActivity.this, CrearExperienciasActivity.class);
                     i.putExtra("desafio", desafio);
