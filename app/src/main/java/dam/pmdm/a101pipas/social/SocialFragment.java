@@ -187,6 +187,7 @@ public class SocialFragment extends Fragment {
                         amigosList.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
                     }
                 }
+
                 if(amigosList != null){
                    amigosAdapter.setListaSocial(amigosList);
                 }

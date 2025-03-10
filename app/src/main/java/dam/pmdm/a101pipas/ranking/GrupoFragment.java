@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentGrupoBinding;
@@ -20,6 +23,7 @@ import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 public class GrupoFragment extends Fragment {
 
     private GrupoViewModel viewModel;
+    private GrupoAdapter adapter;
 
     private FragmentGrupoBinding binding;
 
@@ -35,6 +39,7 @@ public class GrupoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         viewModel = new ViewModelProvider(requireActivity()).get(GrupoViewModel.class);
+        Log.d("Compartir", "TOY AQUI 3");
 
         viewModel.getGrupo().observe(getViewLifecycleOwner(), grupo -> {
             Log.d("Compartir","TOY AQUI 2");
@@ -68,7 +73,19 @@ public class GrupoFragment extends Fragment {
                         startActivity(Intent.createChooser(shareIntent, getString(R.string.grupo_fragment_compartir_a_traves)));
                     }
                 });
+
+            } else {
+                Log.d("Compartir", "GRUPO: " + grupo);
             }
+
+            adapter = new GrupoAdapter(new ArrayList<>());
+            binding.rvRanking.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+            binding.rvRanking.setAdapter(adapter);
+            binding.tvRankingTitulo.setText(String.format(getString(R.string.ranking_privado_titulo), grupo.getTitulo()));
+            viewModel.getMiembrosLiveData().observe(getViewLifecycleOwner(), listaMiembros ->{
+                Log.d("Compartir", "ENTRA A LOS GRUPOS: " + listaMiembros.toString());
+                adapter.actualizarRanking(listaMiembros);
+            });
         });
 
     }

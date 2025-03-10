@@ -1,5 +1,6 @@
 package dam.pmdm.a101pipas.ranking;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,25 +11,36 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Grupo;
+import dam.pmdm.a101pipas.models.User;
 
 public class GrupoViewModel extends ViewModel {
 
     private MutableLiveData<Grupo> grupoLiveData;
+    private MutableLiveData<ArrayList<User>> miembrosLiveData;
+
     private int idGrupo;
 
     public GrupoViewModel() {
         grupoLiveData = new MutableLiveData<>();
+        miembrosLiveData = new MutableLiveData<>();
     }
 
     public LiveData<Grupo> getGrupo() {
         return grupoLiveData;
     }
 
+    public MutableLiveData<ArrayList<User>> getMiembrosLiveData() {
+        return miembrosLiveData;
+    }
+
     public void setIdGrupo(int id) {
         this.idGrupo = id;
         cargarGrupo();
+        cargarMiembros();
     }
 
     // Método para cargar los datos del grupo desde Firebase usando el ID
@@ -42,9 +54,8 @@ public class GrupoViewModel extends ViewModel {
                 if (dataSnapshot.exists()) {
                     String titulo = dataSnapshot.child("titulo").getValue(String.class);
                     String contrasena = dataSnapshot.child("contraseña").getValue(String.class);
-
-//                    Grupo grupo = new Grupo(titulo, contrasena);
-//                    grupoLiveData.setValue(grupo);
+                    Grupo grupo = new Grupo(titulo, contrasena);
+                    grupoLiveData.setValue(grupo);
                 }
             }
 
@@ -54,4 +65,43 @@ public class GrupoViewModel extends ViewModel {
             }
         });
     }
+
+    private void cargarMiembros(){
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usuarios");
+
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<User> listaUsuarios = new ArrayList<>();
+                String grupos;
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    grupos = data.child("grupos").getValue().toString();
+                    if(grupos != null && !grupos.isEmpty()){
+                        if(grupos.contains(String.valueOf(idGrupo))){
+                            listaUsuarios.add(new User(
+                                    data.child("id").getValue().toString(),
+                                    data.child("username").getValue(String.class),
+                                    data.child("email").getValue(String.class),
+                                    data.child("contrasenia").getValue(String.class),
+                                    data.child("foto_perfil").getValue(String.class),
+                                    data.child("grupos").getValue().toString(),
+                                    "",
+                                    data.child("desafios").getValue().toString(),
+                                    data.child("experiencias_completadas").getValue(Integer.class)
+
+                            ));
+                        }
+                    }
+                }
+                miembrosLiveData.setValue(listaUsuarios);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
 }

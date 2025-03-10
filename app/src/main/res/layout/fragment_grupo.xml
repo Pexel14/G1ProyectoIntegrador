@@ -13,7 +13,102 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_compartir_grupo"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/imgBackRanking"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/flecha_izquierda"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="12dp"/>
+
+    <TextView
+        android:id="@+id/tvRankingTitulo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/ranking_privado_titulo"
+        android:textSize="37sp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/color_principal"
+        app:drawableStartCompat="@drawable/global"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:drawablePadding="-2dp"
+        android:layout_marginTop="70dp"/>
+
+    <LinearLayout
+        android:id="@+id/llRankingBarraLista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginHorizontal="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/tvRankingTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/tvRankingTop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAlignment="center"
+            android:src="@drawable/estrellaranking"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/clRankingContenido"
+            app:layout_constraintBottom_toBottomOf="@id/clRankingContenido"
+            app:layout_constraintEnd_toStartOf="@+id/tvRankingUsuario"/>
+
+        <TextView
+            android:id="@+id/tvRankingUsuario"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ranking_barra_usuario"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/tvRankingTop"
+            app:layout_constraintTop_toTopOf="@+id/clRankingContenido"
+            app:layout_constraintBottom_toBottomOf="@id/clRankingContenido"
+            app:layout_constraintEnd_toStartOf="@+id/tvRankingCompletados"/>
+
+        <TextView
+            android:id="@+id/tvRankingCompletados"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/ranking_barra_completadas"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/tvRankingUsuario"
+            app:layout_constraintTop_toTopOf="@+id/clRankingContenido"
+            app:layout_constraintBottom_toBottomOf="@id/clRankingContenido"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvRanking"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_goneMarginTop="20dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginBottom="100dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
