@@ -1,7 +1,6 @@
 package dam.pmdm.a101pipas.desafios.descubrir;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +20,8 @@ import dam.pmdm.a101pipas.social.CrearGrupoFragment;
 
 public class TarjetaDesafioDescubrirFragment extends Fragment {
 
+    private static String key;
+
     private FragmentTarjetaDesafioDescubrirBinding binding;
     private boolean seleccionado = false;
     public static TarjetaDesafioDescubrirFragment newInstance(String titulo, String ubicacion, String key) {
@@ -29,6 +30,7 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
         args.putString("titulo", titulo);
         args.putString("ubicacion", ubicacion);
         args.putString("key", key);
+        TarjetaDesafioDescubrirFragment.key = key;
         fragment.setArguments(args);
         return fragment;
     }
@@ -92,6 +94,10 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
     public void cambiarColor(int color) {
         binding.vColorTarjetaDescubrir.setBackgroundColor(getResources().getColor(color));
+    }
+
+    public String getKey() {
+        return key;
     }
 
 }

@@ -17,13 +17,8 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -36,7 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import dam.pmdm.a101pipas.MainActivity;
@@ -44,6 +41,7 @@ import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentCrearGrupoBinding;
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
+import dam.pmdm.a101pipas.models.User;
 
 public class CrearGrupoFragment extends Fragment {
 
@@ -57,7 +55,7 @@ public class CrearGrupoFragment extends Fragment {
     private FirebaseAuth mAuth;
     private LinearLayout llAmigosCrearGrupo;
 //    private HorizontalScrollView hsvElegirDesafioCrearGrupo;
-    private String miembros, amigo;
+    private String nombres_miembros, amigo;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri imageUri;
 //    private ImageView ivImagenIconoCrearGrupo;
@@ -85,7 +83,7 @@ public class CrearGrupoFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
-        miembros = aniadirUsuarioActual(miembros);
+        nombres_miembros = aniadirUsuarioActual(nombres_miembros);
         amigo = "";
 
         binding.swHacerPrivadoCrearGrupo.setOnClickListener(new View.OnClickListener() {
@@ -158,8 +156,8 @@ public class CrearGrupoFragment extends Fragment {
                             public void onResultado(boolean existe) {
                                 // Si el usuario existe
                                 if (existe) {
-                                    miembros += "," + amigo;
-                                    Log.d("CREAR_GRUPO", miembros);
+                                    nombres_miembros += "," + amigo;
+                                    Log.d("CREAR_GRUPO", nombres_miembros);
                                 }
                                 // Sino
                                 else {
@@ -299,23 +297,44 @@ public class CrearGrupoFragment extends Fragment {
 
 
     private void crearGrupo() {
-        String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
-        String key = nombre.replace(" ", "");
 
-        Grupo grupo = new Grupo();
+        int creador = obtenerIDCreador();
+
+        String desafio = "";
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (fragment instanceof TarjetaDesafioDescubrirFragment) {
+                if(((TarjetaDesafioDescubrirFragment) fragment).isSeleccionado()) {
+                    desafio = ((TarjetaDesafioDescubrirFragment) fragment).getKey();
+                }
+            }
+        }
+
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha_creacion = sdf.format(Calendar.getInstance().getTime());
+
+        String foto_grupo = null; // De momento no puedes seleccionar una imagen
+
+        final String[] miembros = {obtenerIDMiembros(nombres_miembros)};
+
+        String titulo = binding.etNombreGrupoCrearGrupo.getText().toString();
+
+        Grupo grupo = new Grupo(creador, desafio, fecha_creacion, foto_grupo, miembros[0], titulo);
 
         if (binding.swHacerPrivadoCrearGrupo.isChecked()) {
             String contrasenia = binding.etContraseniaCrearGrupo.getText().toString();
-            grupo.setContrasena(contrasenia);
+            grupo.setContraseña(contrasenia);
         }
+
+        String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
+        String key = refGrupos.push().getKey(); // Se supone que genera la nueva key
 
         usuarioExiste(amigo, new OnUsuarioExisteListener() {
             @Override
             public void onResultado(boolean existe) {
                 // Si el usuario existe
                 if (existe) {
-//                    miembros += "," + amigo;
-                    grupoYaExiste(key, new GrupoExistenteCallback() {
+                    miembros[0] += obtenerIDMiembros(amigo);
+                    grupoYaExiste(nombre, new GrupoExistenteCallback() {
                         @Override
                         public void onResult(boolean existe) {
                             if (existe) {
@@ -323,10 +342,10 @@ public class CrearGrupoFragment extends Fragment {
                             } else {
                                 if (soloUnFragmentSeleccionado()) {
                                     // Si no se han añadido amigos
-                                    if (!miembros.contains(",")) {
+                                    if (!miembros[0].contains(",")) {
                                         Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
                                     } else {
-                                        grupo.setMiembros(miembros);
+                                        grupo.setMiembros(miembros[0]);
                                         refGrupos.child(key).setValue(grupo).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
@@ -353,6 +372,62 @@ public class CrearGrupoFragment extends Fragment {
             }
         });
 
+
+    }
+
+    private String obtenerIDMiembros(String nombresMiembros) {
+
+        String[] aNombresMiembros = nombresMiembros.split(",");
+
+        final String[] miembros = {""};
+
+        refUsuarios.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot usuario : snapshot.getChildren()) {
+                        User u = usuario.getValue(User.class);
+                        for (int i=0; i<aNombresMiembros.length; i++) {
+                            if (aNombresMiembros[i].equals(u.getUsername())) {
+                                miembros[0] += u.getid() + ",";
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        if (miembros[0].equals(",")) {
+            miembros[0] = miembros[0].substring(0, miembros[0].length() - 1);
+        }
+
+        return miembros[0];
+    }
+
+    private int obtenerIDCreador() {
+        String sId = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".", "");
+        final int[] id = {-1};
+
+        refUsuarios.child(sId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    id[0] = Integer.parseInt(snapshot.getValue(User.class).getid());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return id[0];
 
     }
 
@@ -402,12 +477,16 @@ public class CrearGrupoFragment extends Fragment {
         }
     }
 
-    private void grupoYaExiste(String key, final GrupoExistenteCallback callback) {
+    private void grupoYaExiste(String nombre, final GrupoExistenteCallback callback) {
         refGrupos.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean existe = snapshot.hasChild(key); // Si el grupo ya existe en Firebase
-                callback.onResult(existe); // Llamamos al callback para enviar el resultado
+                for (DataSnapshot dsGrupo : snapshot.getChildren()) {
+                    Grupo grupo = dsGrupo.getValue(Grupo.class);
+                    if (grupo.getTitulo().equals(nombre)) {
+                        callback.onResult(true);
+                    }
+                }
             }
 
             @Override
