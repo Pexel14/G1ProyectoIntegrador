@@ -17,13 +17,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.models.Desafio;
 
 public class InicioViewModel extends ViewModel {
 
-    private final MutableLiveData<List<TarjetaDesafioInicioFragment>> desafiosLiveData = new MutableLiveData<>();
+    private final MutableLiveData<List<Desafio>> desafiosLiveData = new MutableLiveData<>();
     private ValueEventListener listenerUsuario, listenerDesafios;
 
-    public LiveData<List<TarjetaDesafioInicioFragment>> getDesafiosLiveData() {
+    public LiveData<List<Desafio>> getDesafiosLiveData() {
         return desafiosLiveData;
     }
 
@@ -53,18 +54,18 @@ public class InicioViewModel extends ViewModel {
         listenerDesafios = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<TarjetaDesafioInicioFragment> fragmentos = new ArrayList<>();
+                List<Desafio> fragmentos = new ArrayList<>();
 
                 for (DataSnapshot desafio : snapshot.getChildren()) {
                     String desafioId = desafio.child("id").getValue().toString();
 
                     if (Arrays.asList(desafiosId).contains(desafioId)) {
                         String titulo = desafio.child("titulo").getValue(String.class);
-                        String[] etiquetas = desafio.child("etiquetas").getValue(String.class).split(",");
+                        String etiquetas = desafio.child("etiquetas").getValue(String.class);
                         String descripcion = desafio.child("descripcion").getValue(String.class);
                         String ciudad = desafio.child("ciudad").getValue(String.class);
 
-                        fragmentos.add(TarjetaDesafioInicioFragment.newInstance(titulo, etiquetas, descripcion, ciudad, desafio.getKey()));
+                        fragmentos.add(new Desafio(titulo, ciudad, descripcion, etiquetas, desafioId));
                     }
                 }
 

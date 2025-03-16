@@ -23,8 +23,7 @@ import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ListadoExperienciasViewModel extends ViewModel {
-
-    private static int total = 0;
+    private static int totalExperiencias = 0;
 
     private Long idReal;
 
@@ -39,22 +38,21 @@ public class ListadoExperienciasViewModel extends ViewModel {
     private final MutableLiveData<Integer> progreso = new MutableLiveData<>();
     public LiveData<Integer> getProgreso() { return progreso; }
 
-    private final MutableLiveData<String> tituloDesafio = new MutableLiveData<>();
-    public LiveData<String> getTituloDesafio() { return tituloDesafio; }
+    private String tituloDesafio;
+    public String getTituloDesafio() { return tituloDesafio; }
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    public void setIdDesafio(String id) {
-        desafioId.setValue(id);
-        cargarExperiencias(id);
-        cargarTituloDesafio(id);
+    public void setIdDesafio(String id, String titulo) {
+        idReal = Long.parseLong(id);
+        cargarExperiencias(titulo);
+        tituloDesafio = titulo;
     }
 
     public void cargarExperiencias(String idDesafio) {
         if (idDesafio == null) return;
-
+        totalExperiencias = 0;
         List<Experiencia> listaExperiencias = new ArrayList<>();
-        final int[] totalExperiencias = {0};
 
         database.child("desafios").child(idDesafio).child("experiencias")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
@@ -76,8 +74,8 @@ public class ListadoExperienciasViewModel extends ViewModel {
                                             if (experiencia != null) {
                                                 listaExperiencias.add(experiencia);
                                             }
-                                            totalExperiencias[0]++;
-                                            if (totalExperiencias[0] == exp.length) {
+                                            totalExperiencias++;
+                                            if (totalExperiencias == exp.length) {
                                                 experiencias.setValue(listaExperiencias);
                                             }
                                         }
@@ -99,27 +97,7 @@ public class ListadoExperienciasViewModel extends ViewModel {
                 });
     }
 
-    public void cargarTituloDesafio(String idDesafio) {
-        if (idDesafio == null) return;
-
-        database.child("desafios").child(idDesafio).child("titulo")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        tituloDesafio.setValue(snapshot.getValue(String.class));
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Log.e("Firebase", "Error al obtener título del desafío: " + error.getMessage());
-                    }
-                });
-    }
-
     public void desafioEmpezado(final OnResultListener listener) {
-
-        obtenerIdReal();
-
         String user = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".", "");
 
         database.child("usuarios").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -127,13 +105,10 @@ public class ListadoExperienciasViewModel extends ViewModel {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 boolean empezado = false;
                 if (snapshot.exists()) {
-                    String[] desafios = snapshot.child("desafios").getValue(String.class).split(",");
+                    String desafios = snapshot.child("desafios").getValue(String.class);
 
-                    for (String desafio : desafios) {
-                        if (desafio.equals(String.valueOf(idReal))) {
-                            empezado = true;
-                            break; // Salir del bucle si se encuentra el desafío
-                        }
+                    if (desafios.contains(String.valueOf(idReal))) {
+                        empezado = true;
                     }
                 }
                 listener.onResult(empezado); // Pasar el resultado al listener
@@ -148,20 +123,20 @@ public class ListadoExperienciasViewModel extends ViewModel {
     }
 
     private void obtenerIdReal() {
-        database.child("desafios").child(String.valueOf(desafioId.getValue())).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    idReal = (Long) snapshot.child("id").getValue();
-                    Log.d("VIEW_MODEL", "ID DEL DESAFIO : " + idReal);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+//        database.child("desafios").child(String.valueOf(desafioId.getValue())).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.exists()) {
+//                    idReal = (Long) snapshot.child("id").getValue();
+//                    Log.d("VIEW_MODEL", "ID DEL DESAFIO : " + idReal);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
     }
 
     public void aniadirDesafioAUsuario(OnResultListener listener) {

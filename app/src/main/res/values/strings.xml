@@ -174,4 +174,9 @@
     <string name="guardar_cambios">Guardar cambios</string>
     <string name="ha_ocurrido_un_error_al_actualizar_el_perfil">Ha ocurrido un error al actualizar el perfil</string>
     <string name="selecciona_una_imagen">Selecciona una imagen</string>
+    <string name="arte_descubrir">Arte</string>
+    <string name="ocio_descubrir">Ocio</string>
+    <string name="desafio_mensaje_no_desafios">No se han encontrado desafíos</string>
+    <string name="inicio_mensaje_barra_busqueda">Busca tus desafíos</string>
+    <string name="descubrir_mensaje_barra_busqueda">Descubre desafíos</string>
 </resources>
