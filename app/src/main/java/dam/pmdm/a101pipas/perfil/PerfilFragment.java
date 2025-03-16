@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,7 @@ import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentGeolocalizacionBinding;
 import dam.pmdm.a101pipas.databinding.FragmentPerfilBinding;
 import dam.pmdm.a101pipas.models.Desafio;
+import dam.pmdm.a101pipas.models.User;
 
 public class PerfilFragment extends Fragment {
 
@@ -179,14 +181,24 @@ public class PerfilFragment extends Fragment {
 
     private void personalizarNick() {
         // Añadir el usuario actual a 'miembros'
+        String id = "";
         if (mAuth.getCurrentUser() != null) {
             String usuario = mAuth.getCurrentUser().getEmail();
             if (usuario != null) {
-                String id = usuario.split("@")[0].replace(".", "");
-                binding.txtNick.setText(id);
+                id = usuario.split("@")[0].replace(".", "");
                 binding.txtNombre.setText("@" + id);
             }
         }
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usuarios").child(id);
+        databaseReference.get().addOnSuccessListener(dataSnapshot -> {
+            if (dataSnapshot.exists()) {
+                User userProfile = dataSnapshot.getValue(User.class);
+                if (userProfile != null) {
+                    binding.txtNick.setText(userProfile.getUsername());
+                }
+            }
+        });
     }
 
     private void obtenerDesafios() {
