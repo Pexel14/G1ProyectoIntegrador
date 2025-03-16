@@ -28,7 +28,7 @@ public class Registro extends AppCompatActivity {
     private ActivityRegistroBinding binding;
     private DatabaseReference databaseReference;
     private FirebaseAuth auth;
-    private String idUltimo;
+    private String idUltimo = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class Registro extends AppCompatActivity {
     }
 
     private void guardarUsuarioEnDatabase(String username, String email, String contrasenia) {
-
+        idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
         String id = email.split("@")[0].replace(".", "");
         User user = new User(idUltimo, username, email, contrasenia, "", "", "", "", 0);
 
@@ -113,10 +113,15 @@ public class Registro extends AppCompatActivity {
         databaseReference.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String idAux = "";
                 for (DataSnapshot usuarios : snapshot.getChildren()) {
-                    idUltimo = usuarios.child("id").getValue().toString();
+
+                    idAux = usuarios.child("id").getValue().toString();
+
+                    if(Integer.parseInt(idAux) > Integer.parseInt(idUltimo)){
+                        idUltimo = idAux;
+                    }
                 }
-                idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
             }
 
             @Override

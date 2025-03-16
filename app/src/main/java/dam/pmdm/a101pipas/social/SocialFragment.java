@@ -50,7 +50,7 @@ public class SocialFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
-        String user = mAuth.getCurrentUser().getEmail().split("@")[0].replace(",","");
+        String user = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".","");
 
         // Referencias en Firebase
         amigosRef = FirebaseDatabase.getInstance().getReference("usuarios");

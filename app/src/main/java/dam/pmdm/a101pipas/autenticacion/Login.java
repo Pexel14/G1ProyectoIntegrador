@@ -30,6 +30,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -54,8 +55,7 @@ public class Login extends AppCompatActivity {
     Button btnInicioSesion;
     DatabaseReference ref;
     TextView tvLoginCorreoError, tvLoginContraseniaError, tvContraseniaOlvidada, tvRegistrateLogin;
-    private static boolean encontrado = false;
-    private static String idUltimo;
+    private static String idUltimo = "0";
     FirebaseAuth mAuth;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -77,12 +77,20 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             Log.d(TAG, "PASA POR AQUI 3");
                             if (task.isSuccessful()) {
-                                Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
                                 String usuario = mAuth.getCurrentUser().getEmail();
-                                Log.d(TAG, "Usuario: " + usuario);
                                 String id = usuario.split("@")[0].replace(".", "");
-                                guardarCorreo(id, usuario);
-                                mandarUsuarioInicio(id);
+                                usuarioExiste(id).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Boolean> task) {
+                                        if(task.isSuccessful()){
+                                            Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
+                                            Log.d(TAG, "Usuario: " + usuario);
+                                        } else {
+                                            guardarCorreo(id, usuario);
+                                        }
+                                        mandarUsuarioInicio(id);
+                                    }
+                                });
                             } else {
                                 Log.d(TAG, "Inicio de sesion FALLIDO: " + task.getException());
                                 Toast.makeText(Login.this, R.string.login_google_fallido, Toast.LENGTH_SHORT).show();
@@ -101,13 +109,11 @@ public class Login extends AppCompatActivity {
     private void guardarCorreo(String id, String correo) {
         if (mAuth.getCurrentUser() != null) {
             if (id != null) {
-                usuarioExiste(id);
-                if(!encontrado){
-                    String nombre = mAuth.getCurrentUser().getDisplayName();
-                    ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
-                        Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
-                    });
-                }
+                idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
+                String nombre = mAuth.getCurrentUser().getDisplayName();
+                ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
+                    Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
+                });
             }
 
         }
@@ -118,26 +124,12 @@ public class Login extends AppCompatActivity {
         ref.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String idAux = "";
                 for (DataSnapshot usuarios : snapshot.getChildren()) {
-                    idUltimo = usuarios.child("id").getValue().toString();
-                }
-                idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
-            }
+                    idAux = usuarios.child("id").getValue().toString();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void usuarioExiste(String id) {
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot subNodos : snapshot.getChildren()) {
-                    if(id.equals(subNodos.child("id").getValue().toString())){
-                        encontrado = true;
+                    if(Integer.parseInt(idAux) > Integer.parseInt(idUltimo)){
+                        idUltimo = idAux;
                     }
                 }
             }
@@ -147,6 +139,27 @@ public class Login extends AppCompatActivity {
 
             }
         });
+    }
+
+    private Task<Boolean> usuarioExiste(String id) {
+        TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot subNodos : snapshot.getChildren()) {
+                    if(id.equals(subNodos.child("username").getValue().toString())){
+                        taskCompletionSource.setResult(true);
+                    }
+                }
+                taskCompletionSource.setResult(false);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                taskCompletionSource.setResult(false);
+            }
+        });
+        return taskCompletionSource.getTask();
     }
 
     @Override
