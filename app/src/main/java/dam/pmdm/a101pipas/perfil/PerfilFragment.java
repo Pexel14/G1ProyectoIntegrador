@@ -96,6 +96,11 @@ public class PerfilFragment extends Fragment {
             }
         });
 
+        binding.btnEditar.setOnClickListener(v ->  {
+            EditarPerfilFragment editBottomSheet = new EditarPerfilFragment();
+            editBottomSheet.show(getParentFragmentManager(), editBottomSheet.getTag());
+        });
+
         // Obtenemos los datos de Firebase RealtimeDatabase
         ref = FirebaseDatabase.getInstance().getReference("desafios");
 

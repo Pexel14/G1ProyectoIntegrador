@@ -171,4 +171,7 @@
     <string name="ajustes">Ajustes</string>
     <string name="recuperar_contraseia">Recuperar contraseña</string>
     <string name="login_registrate"><u>Registrate</u></string>
+    <string name="guardar_cambios">Guardar cambios</string>
+    <string name="ha_ocurrido_un_error_al_actualizar_el_perfil">Ha ocurrido un error al actualizar el perfil</string>
+    <string name="selecciona_una_imagen">Selecciona una imagen</string>
 </resources>

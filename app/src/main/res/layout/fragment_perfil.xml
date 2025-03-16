@@ -180,4 +180,15 @@
         android:gravity="center"
         android:visibility="gone"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnEditar"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        app:srcCompat="@drawable/ic_editar"
+        android:backgroundTint="@color/color_principal"
+        android:layout_margin="8dp"
+        android:elevation="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".perfil.EditarPerfilFragment"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/img_avatar"
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_perfil"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/separacion_mediana_quince"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="@string/registro_nombre_de_usuario"
+        android:textColor="@color/color_principal"
+        android:textSize="@dimen/tam_subtitulo"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/img_avatar"/>
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/tam_texto"
+        android:textColor="@color/black"
+        android:textColorHint="@color/texto_secundario"
+        android:padding="@dimen/padding_pequenio_diez"
+        android:hint="@string/registro_escribe_nombre_usuario"
+        android:background="@drawable/borde_edit_text"
+        android:fontFamily="@font/akaya_telivigala"
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername"/>
+
+    <Button
+        android:id="@+id/btnGuardarCambios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_button"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="@string/guardar_cambios"
+        android:textColor="@color/white"
+        android:textSize="@dimen/tam_texto"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/etUsername"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
