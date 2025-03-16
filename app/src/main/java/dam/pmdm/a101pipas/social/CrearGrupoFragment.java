@@ -10,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,24 +46,18 @@ import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentCrearGrupoBinding;
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
+import dam.pmdm.a101pipas.models.User;
 
 public class CrearGrupoFragment extends Fragment {
 
-    private DatabaseReference refDesafios, refGrupos, refUsuarios;
-    private FirebaseDatabase firebase;
-    private ValueEventListener listener;
-//    private Switch swHacerPrivadoCrearGrupo;
-//    private TextView tvContraseniaCrearGrupo;
-//    private EditText etNombreGrupoCrearGrupo, etContraseniaCrearGrupo;
-//    private Button btnCrearGrupo, btnAniadirAmigosCrearGrupo, btnAtras, btnSeleccionarImagen;
     private FirebaseAuth mAuth;
-    private LinearLayout llAmigosCrearGrupo;
-//    private HorizontalScrollView hsvElegirDesafioCrearGrupo;
     private String miembros, amigo;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri imageUri;
-//    private ImageView ivImagenIconoCrearGrupo;
     private FragmentCrearGrupoBinding binding;
+    private CrearGrupoViewModel viewModel;
+    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("grupos");
+    private String idUltimo = "0";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,15 +69,26 @@ public class CrearGrupoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+//        firebase = FirebaseDatabase.getInstance();
+//        refDesafios = firebase.getReference("desafios");
+//        refGrupos = firebase.getReference("grupos");
+//        refUsuarios = firebase.getReference("usuarios");
 
+        viewModel = new ViewModelProvider(requireActivity()).get(CrearGrupoViewModel.class);
 
-        firebase = FirebaseDatabase.getInstance();
-        refDesafios = firebase.getReference("desafios");
-        refGrupos = firebase.getReference("grupos");
-        refUsuarios = firebase.getReference("usuarios");
 
         limpiarFragments();
-        cargarFragments();
+
+        viewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), desafios -> {
+                for (TarjetaDesafioDescubrirFragment desafio : desafios) {
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.contenedorFragmentsCrearGrupo, desafio)
+                            .commit();
+                }
+        });
+
+        viewModel.cargarFragments();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -141,9 +148,9 @@ public class CrearGrupoFragment extends Fragment {
 //                }
 
                 // Si hay amigos introducidos, validar el último amigo (los anteriores ya han sido validados)
-                /*else*/ if (llAmigosCrearGrupo.getChildCount() != 0) {
+                /*else*/ if (binding.llAmigosCrearGrupo.getChildCount() != 0) {
 
-                    EditText etAmigo = (EditText) llAmigosCrearGrupo.getChildAt(llAmigosCrearGrupo.getChildCount()-1);
+                    EditText etAmigo = (EditText) binding.llAmigosCrearGrupo.getChildAt(binding.llAmigosCrearGrupo.getChildCount()-1);
                     amigo = etAmigo.getText().toString();
 
                     // Si el campo está vacío
@@ -153,20 +160,16 @@ public class CrearGrupoFragment extends Fragment {
 
                     // Sino
                     else {
-                        usuarioExiste(amigo, new OnUsuarioExisteListener() {
-                            @Override
-                            public void onResultado(boolean existe) {
-                                // Si el usuario existe
-                                if (existe) {
-                                    miembros += "," + amigo;
-                                    Log.d("CREAR_GRUPO", miembros);
-                                }
-                                // Sino
-                                else {
-                                    Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
-                                }
+                        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
+                            if (existe) {
+                                miembros += "," + amigo;
+                                crearGrupo();
+                            } else {
+                                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        viewModel.getUsuarioExiste(amigo);
                     }
                 }
 
@@ -182,9 +185,9 @@ public class CrearGrupoFragment extends Fragment {
             public void onClick(View view) {
 
                 // Si hay algún editText, comprobar que el usuario exista
-                if (llAmigosCrearGrupo.getChildCount() != 0) {
+                if (binding.llAmigosCrearGrupo.getChildCount() != 0) {
 
-                    EditText etAmigo = (EditText) llAmigosCrearGrupo.getChildAt(llAmigosCrearGrupo.getChildCount()-1);
+                    EditText etAmigo = (EditText) binding.llAmigosCrearGrupo.getChildAt(binding.llAmigosCrearGrupo.getChildCount()-1);
                     amigo = etAmigo.getText().toString();
 
                     // Si el campo está vacío
@@ -194,19 +197,15 @@ public class CrearGrupoFragment extends Fragment {
 
                     // Sino
                     else {
-                        usuarioExiste(amigo, new OnUsuarioExisteListener() {
-                            @Override
-                            public void onResultado(boolean existe) {
-                                // Si el usuario existe
-                                if (existe) {
-                                    agregarEditText();
-                                }
-                                // Sino
-                                else {
-                                    Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
-                                }
+                        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
+                            if (existe) {
+                                miembros += "," + amigo;
+                            } else {
+                                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
                             }
                         });
+
+                        viewModel.getUsuarioExiste(amigo);
                     }
                 }
 
@@ -250,20 +249,20 @@ public class CrearGrupoFragment extends Fragment {
         void onResultado(boolean existe);
     }
 
-    public void usuarioExiste(String amigo, final OnUsuarioExisteListener listener) {
-        refUsuarios.child(amigo).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                listener.onResultado(snapshot.exists());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error al comunicarse con la BBDD", Toast.LENGTH_SHORT).show();
-                listener.onResultado(false); // En caso de error, asumimos que no existe
-            }
-        });
-    }
+//    public void usuarioExiste(String amigo, final OnUsuarioExisteListener listener) {
+//        refUsuarios.child(amigo).addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                listener.onResultado(snapshot.exists());
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getContext(), "Error al comunicarse con la BBDD", Toast.LENGTH_SHORT).show();
+//                listener.onResultado(false); // En caso de error, asumimos que no existe
+//            }
+//        });
+//    }
 
     private void agregarEditText() {
 
@@ -293,14 +292,22 @@ public class CrearGrupoFragment extends Fragment {
         nuevoEditText.setBackground(getContext().getResources().getDrawable(R.drawable.edit_text_border));
 
         // Agregar el EditText al LinearLayout
-        llAmigosCrearGrupo.addView(nuevoEditText);
+        binding.llAmigosCrearGrupo.addView(nuevoEditText);
 
     }
 
 
     private void crearGrupo() {
         String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
-        String key = nombre.replace(" ", "");
+        final String[] key = {""};
+        obtenerUltimaKey().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (task.isSuccessful()) {
+                    key[0] = String.valueOf(Integer.parseInt(idUltimo) + 1);
+                }
+            }
+        });
 
         Grupo grupo = new Grupo();
 
@@ -309,50 +316,76 @@ public class CrearGrupoFragment extends Fragment {
             grupo.setContrasena(contrasenia);
         }
 
-        usuarioExiste(amigo, new OnUsuarioExisteListener() {
-            @Override
-            public void onResultado(boolean existe) {
-                // Si el usuario existe
-                if (existe) {
-//                    miembros += "," + amigo;
-                    grupoYaExiste(key, new GrupoExistenteCallback() {
-                        @Override
-                        public void onResult(boolean existe) {
-                            if (existe) {
-                                Toast.makeText(getContext(), "El nombre '" + nombre + "' ya está cogido", Toast.LENGTH_SHORT).show();
+        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
+            // Si el usuario existe
+            if (existe) {
+                viewModel.getGrupoExisteLiveData().observe(getViewLifecycleOwner(), grupoExiste -> {
+                    if (grupoExiste) {
+                        Toast.makeText(getContext(), "El nombre '" + nombre + "' ya está cogido", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Key: " + key[0], Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (soloUnFragmentSeleccionado()) {
+                            // Si no se han añadido amigos
+                            if (!miembros.contains(",")) {
+                                Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
                             } else {
-                                if (soloUnFragmentSeleccionado()) {
-                                    // Si no se han añadido amigos
-                                    if (!miembros.contains(",")) {
-                                        Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
+                                grupo.setMiembros(miembros);
+
+                                viewModel.getCrearGrupoLiveData().observe(getViewLifecycleOwner(), grupoCreado -> {
+                                    if (grupoCreado) {
+                                        Toast.makeText(getContext(), "Grupo creado con éxito", Toast.LENGTH_SHORT).show();
+                                        Intent i = new Intent(getContext(), MainActivity.class);
+                                        startActivity(i);
                                     } else {
-                                        grupo.setMiembros(miembros);
-                                        refGrupos.child(key).setValue(grupo).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Intent i = new Intent(getContext(), MainActivity.class);
-                                                    startActivity(i);
-                                                } else {
-                                                    Toast.makeText(getContext(), "Error al crear el grupo", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
+                                        Toast.makeText(getContext(), "Error al crear el grupo", Toast.LENGTH_SHORT).show();
                                     }
-                                } else {
-                                    Toast.makeText(getContext(), "Seleccione exactamente un desafío", Toast.LENGTH_SHORT).show();
-                                }
+                                });
+
+                                viewModel.crearGrupo(key[0], grupo);
                             }
+                        } else {
+                            Toast.makeText(getContext(), "Seleccione exactamente un desafío", Toast.LENGTH_SHORT).show();
                         }
-                    });
-                }
-                // Sino
-                else {
-                    Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
-                }
+                    }
+                });
+
+                viewModel.getGrupoExiste(key[0]);
+            }
+            // Sino
+            else {
+                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
             }
         });
 
+        viewModel.getUsuarioExiste(amigo);
+
+    }
+
+    private Task<String> obtenerUltimaKey() {
+        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
+
+        ref.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String idAux = "";
+                for (DataSnapshot usuarios : snapshot.getChildren()) {
+
+                    idAux = usuarios.child("id").getValue().toString();
+
+                    if(Integer.parseInt(idAux) > Integer.parseInt(idUltimo)){
+                        idUltimo = idAux;
+                    }
+                }
+                taskCompletionSource.setResult(idAux);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                taskCompletionSource.setResult("Error");
+            }
+        });
+
+        return taskCompletionSource.getTask();
 
     }
 
@@ -400,96 +433,6 @@ public class CrearGrupoFragment extends Fragment {
         } else {
             return false;
         }
-    }
-
-    private void grupoYaExiste(String key, final GrupoExistenteCallback callback) {
-        refGrupos.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean existe = snapshot.hasChild(key); // Si el grupo ya existe en Firebase
-                callback.onResult(existe); // Llamamos al callback para enviar el resultado
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Error al leer los datos", Toast.LENGTH_SHORT).show();
-                callback.onResult(false); // En caso de error, consideramos que no existe
-            }
-        });
-    }
-
-    public interface GrupoExistenteCallback {
-        void onResult(boolean existe);
-    }
-
-//    private boolean datosIncompletos() {
-//
-//        if (soloUnFragmentSeleccionado() &&
-//                binding.etNombreGrupoCrearGrupo.getText().toString().isEmpty() &&
-//                binding.ivImagenIconoCrearGrupo.getDrawable() != null)  {
-//
-//        }
-//
-////        // Si es público
-////        if (!binding.swHacerPrivadoCrearGrupo.isChecked()) {
-////            if (binding.etNombreGrupoCrearGrupo.getText().toString().isEmpty()) {
-////                return true;
-////            } else {
-////                return false;
-////            }
-////        }
-////
-////        // Si es privado
-////        else {
-////            if (!etNombreGrupoCrearGrupo.getText().toString().isEmpty() &&
-////                !etContraseniaCrearGrupo.getText().toString().isEmpty()) {
-////                return false;
-////            } else {
-////                return true;
-////            }
-////        }
-//
-//    }
-
-    private void cargarFragments() {
-        limpiarFragments();
-
-        listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                limpiarFragments();
-
-                if (snapshot.exists()) {
-                    for (DataSnapshot grupo : snapshot.getChildren()) {
-
-                        String key = grupo.getKey().toString();
-                        String titulo = grupo.child("titulo").getValue(String.class);
-                        String ciudad = grupo.child("ciudad").getValue(String.class);
-
-                        Log.d("FirebaseData", "Key: " + key + ", Titulo: " + titulo + ", Ciudad: " + ciudad);
-
-                        TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, key);
-
-                        getChildFragmentManager()
-                                .beginTransaction()
-                                .add(R.id.contenedorFragmentsCrearGrupo, fragment)
-                                .commit();
-
-                    }
-                } else {
-                    Toast.makeText(getContext(), "No existen desafíos", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", getString(R.string.descubrir_fragment_error_consulta) + error.getMessage());
-            }
-        };
-
-        refDesafios.addValueEventListener(listener);
     }
 
     private void limpiarFragments() {
