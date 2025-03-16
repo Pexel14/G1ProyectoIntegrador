@@ -15,9 +15,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import dam.pmdm.a101pipas.models.Desafio;
+
 public class DescubrirViewModel extends ViewModel {
 
-    private final MutableLiveData<List<TarjetaDesafioDescubrirFragment>> fragmentosList;
+    private final MutableLiveData<List<Desafio>> fragmentosList;
     private final DatabaseReference ref;
 
     public DescubrirViewModel() {
@@ -25,25 +27,24 @@ public class DescubrirViewModel extends ViewModel {
         ref = FirebaseDatabase.getInstance().getReference("desafios");
     }
 
-    public LiveData<List<TarjetaDesafioDescubrirFragment>> getFragmentosList() {
+    public LiveData<List<Desafio>> getFragmentosList() {
         return fragmentosList;
     }
 
-    public void cargarFragmentos(String filtro1Text) {
+    public void cargarFragmentos() {
         ref.addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<TarjetaDesafioDescubrirFragment> fragmentos = new ArrayList<>();
+                List<Desafio> fragmentos = new ArrayList<>();
 
                 for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {
                     String titulo = nodeSnapshot.child("titulo").getValue(String.class);
                     String ciudad = nodeSnapshot.child("ciudad").getValue(String.class);
-                    String key = nodeSnapshot.getKey();
+                    String etiquetas = nodeSnapshot.child("etiquetas").getValue(String.class);
+                    String key = nodeSnapshot.child("id").getValue().toString();
 
-                    if (ciudad != null && (ciudad.equals(filtro1Text) )) {
-                        fragmentos.add(TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, key));
-                    }
+                    fragmentos.add(new Desafio(titulo, ciudad, "", etiquetas, key));
 
                 }
 

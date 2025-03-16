@@ -7,20 +7,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentDescubrirBinding;
+import dam.pmdm.a101pipas.models.Desafio;
 
 public class DescubrirFragment extends Fragment {
 
     private FragmentDescubrirBinding binding;
 
+    private DescubrirAdapter adapterFiltro1, adapterFiltro2, adapterFiltro3, adapterFiltro4, adapterTodos;
     private DescubrirViewModel descubrirViewModel;
+
+    private List<Desafio> listaTodosDesafios, listaDesafios1, listaDesafios2, listaDesafios3, listaDesafios4;
 
     @Nullable
     @Override
@@ -33,140 +39,117 @@ public class DescubrirFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        listaTodosDesafios = new ArrayList<>();
+        listaDesafios1 = new ArrayList<>();
+        listaDesafios2 = new ArrayList<>();
+        listaDesafios3 = new ArrayList<>();
+        listaDesafios4 = new ArrayList<>();
+
+        adapterTodos = new DescubrirAdapter(listaTodosDesafios, this);
+        adapterFiltro1 = new DescubrirAdapter(listaDesafios1, this);
+        adapterFiltro2 = new DescubrirAdapter(listaDesafios2, this);
+        adapterFiltro3 = new DescubrirAdapter(listaDesafios3, this);
+        adapterFiltro4 = new DescubrirAdapter(listaDesafios4, this);
+
+        binding.rvDescubrirTodos.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        binding.rvDescubrir1.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.rvDescubrir2.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.rvDescubrir3.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+        binding.rvDescubrir4.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+
+        binding.rvDescubrirTodos.setAdapter(adapterTodos);
+        binding.rvDescubrir1.setAdapter(adapterFiltro1);
+        binding.rvDescubrir2.setAdapter(adapterFiltro2);
+        binding.rvDescubrir3.setAdapter(adapterFiltro3);
+        binding.rvDescubrir4.setAdapter(adapterFiltro4);
+
         descubrirViewModel = new ViewModelProvider(requireActivity()).get(DescubrirViewModel.class);
 
-        descubrirViewModel.getFragmentosList().observe(getViewLifecycleOwner(), new Observer<List<TarjetaDesafioDescubrirFragment>>() {
+        descubrirViewModel.getFragmentosList().observe(getViewLifecycleOwner(), this::cargarDesafios);
+        descubrirViewModel.cargarFragmentos();
+
+        binding.barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onChanged(List<TarjetaDesafioDescubrirFragment> fragmentos) {
-                // Limpia los fragmentos previos
-                limpiarFragmentos();
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-                // Agregar los nuevos fragmentos al contenedor según las condiciones
-                for (TarjetaDesafioDescubrirFragment fragment : fragmentos) {
-                    if (fragment.getArguments() != null) {
-                        String ciudad = fragment.getArguments().getString("ubicacion");
-                        String[] etiquetas = fragment.getArguments().getStringArray("etiquetas");
-
-                        // Filtrar por ciudad
-                        if (ciudad != null && ciudad.equals(binding.tvFiltro1Descubrir.getText().toString())) {
-                            getChildFragmentManager().beginTransaction()
-                                    .add(R.id.contenedorFragmentsDescubrir, fragment)
-                                    .commit();
-                        }
-
-                        // Filtrar por etiquetas (por ejemplo, "Gastronomía")
-                        else if (etiquetas != null && containsEtiqueta(etiquetas, "Gastronomía")) {
-                            getChildFragmentManager().beginTransaction()
-                                    .add(R.id.contenedorFragmentsDescubrir2, fragment)
-                                    .commit();
-                        }
-
-                        // Filtrar por etiquetas (por ejemplo, "Cultura")
-                        else if (etiquetas != null && containsEtiqueta(etiquetas, "Cultura")) {
-                            getChildFragmentManager().beginTransaction()
-                                    .add(R.id.contenedorFragmentsDescubrir3, fragment)
-                                    .commit();
-                        }
-                    }
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscar(newText);
+                if(!newText.isEmpty()){
+                    binding.rvDescubrir1.setVisibility(View.GONE);
+                    binding.rvDescubrir2.setVisibility(View.GONE);
+                    binding.rvDescubrir3.setVisibility(View.GONE);
+                    binding.rvDescubrir4.setVisibility(View.GONE);
+                    binding.tvFiltro1Descubrir.setVisibility(View.GONE);
+                    binding.tvFiltro2Descubrir.setVisibility(View.GONE);
+                    binding.tvFiltro3Descubrir.setVisibility(View.GONE);
+                    binding.tvFiltro4Descubrir.setVisibility(View.GONE);
+                    binding.rvDescubrirTodos.setVisibility(View.VISIBLE);
+                } else {
+                    binding.rvDescubrir1.setVisibility(View.VISIBLE);
+                    binding.rvDescubrir2.setVisibility(View.VISIBLE);
+                    binding.rvDescubrir3.setVisibility(View.VISIBLE);
+                    binding.rvDescubrir4.setVisibility(View.VISIBLE);
+                    binding.tvFiltro1Descubrir.setVisibility(View.VISIBLE);
+                    binding.tvFiltro2Descubrir.setVisibility(View.VISIBLE);
+                    binding.tvFiltro3Descubrir.setVisibility(View.VISIBLE);
+                    binding.tvFiltro4Descubrir.setVisibility(View.VISIBLE);
+                    binding.rvDescubrirTodos.setVisibility(View.GONE);
                 }
+                return true;
             }
         });
 
-        String filtro1Text = binding.tvFiltro1Descubrir.getText().toString();
-        descubrirViewModel.cargarFragmentos(filtro1Text);
-
     }
 
-    private boolean containsEtiqueta(String[] etiquetas, String etiqueta) {
-        for (String e : etiquetas) {
-            if (e.equalsIgnoreCase(etiqueta)) {
-                return true;
+    private void buscar(String newText) {
+        ArrayList<Desafio> auxDesafios = new ArrayList<>();
+
+        for (Desafio desafio : listaTodosDesafios){
+            if(desafio.getTitulo().toLowerCase().contains(newText.toLowerCase())){
+                auxDesafios.add(desafio);
             }
         }
-        return false;
+
+        binding.rvDescubrirTodos.setAdapter(new DescubrirAdapter(auxDesafios, this));
+
     }
 
-    // Método para limpiar los fragmentos previos de la vista
-    private void limpiarFragmentos() {
-        for (Fragment fragment : getChildFragmentManager().getFragments()) {
-            if (fragment instanceof TarjetaDesafioDescubrirFragment) {
-                getChildFragmentManager().beginTransaction().remove(fragment).commit();
+    private void cargarDesafios(List<Desafio> desafios) {
+        listaDesafios1.clear();
+        listaDesafios2.clear();
+        listaDesafios3.clear();
+        listaDesafios4.clear();
+        listaTodosDesafios.clear();
+        if(!desafios.isEmpty()){
+            for(Desafio desafio : desafios){
+                listaTodosDesafios.add(desafio);
+                if(desafio.getEtiquetas().contains(binding.tvFiltro1Descubrir.getText().toString())){
+                    listaDesafios1.add(desafio);
+                }
+
+                 if(desafio.getEtiquetas().contains(binding.tvFiltro2Descubrir.getText().toString())){
+                    listaDesafios2.add(desafio);
+                }
+
+                 if(desafio.getEtiquetas().contains(binding.tvFiltro3Descubrir.getText().toString())){
+                    listaDesafios3.add(desafio);
+                }
+
+                 if(desafio.getEtiquetas().contains(binding.tvFiltro4Descubrir.getText().toString())){
+                    listaDesafios4.add(desafio);
+                }
             }
+
+            binding.rvDescubrir1.setAdapter(new DescubrirAdapter(listaDesafios1, this));
+            binding.rvDescubrir2.setAdapter(new DescubrirAdapter(listaDesafios2, this));
+            binding.rvDescubrir3.setAdapter(new DescubrirAdapter(listaDesafios3, this));
+            binding.rvDescubrir4.setAdapter(new DescubrirAdapter(listaDesafios4, this));
+
         }
+
     }
+
 }
-    // De momento éste método son pruebas manuales
-    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
-//    private void cargarFragmentos() {
-//
-//        listener = new ValueEventListener() {
-//
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                limpiarFragmentos();
-//
-//                Log.d("Firebase", "Listener registrado");
-//
-//                if (snapshot.exists()) { // 'snapshot!=null' siempre es 'true'
-//
-//                    for (DataSnapshot nodeSnapshot : snapshot.getChildren()) {
-//                        String nodeName = nodeSnapshot.getKey();  // Obtén el nombre del nodo (nodo1, nodo2)
-//                        Log.d("Firebase", "Nodo: " + nodeName);
-//
-//                        String titulo = nodeSnapshot.child("titulo").getValue(String.class);
-//                        String sEtiquetas = nodeSnapshot.child("etiquetas").getValue(String.class);
-//                        String[] etiquetas = sEtiquetas.split(",");
-//                        String descripcion = nodeSnapshot.child("descripcion").getValue(String.class);
-//                        String ciudad = nodeSnapshot.child("ciudad").getValue(String.class);
-//
-//                        // Los fragments los creo dentro de los if's porque un fragment no se puede poner en dos contenedores, asi que si un desafío cumple
-//                        // dos condiciones, crea dos idénticos y asigna cada uno a su filtro
-//                        if (ciudad.equals(filtro1.getText())) {
-//                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
-//
-//                            getChildFragmentManager()
-//                                    .beginTransaction()
-//                                    .add(R.id.contenedorFragmentsDescubrir, fragment)
-//                                    .commit();
-//                        }
-//
-//                        if (sEtiquetas.contains("Gastronomía")) {
-//                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
-//
-//                            getChildFragmentManager()
-//                                    .beginTransaction()
-//                                    .add(R.id.contenedorFragmentsDescubrir2, fragment)
-//                                    .commit();
-//                        }
-//
-//                        if (sEtiquetas.contains("Cultura")) {
-//                            TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, nodeSnapshot.getKey());
-//
-//                            getChildFragmentManager()
-//                                    .beginTransaction()
-//                                    .add(R.id.contenedorFragmentsDescubrir3, fragment)
-//                                    .commit();
-//                        }
-//
-//                    }
-//
-//                } else {
-//                    Toast.makeText(getContext(), R.string.descubrir_fragmentos_desafio_no_existe, Toast.LENGTH_SHORT).show();
-//                }
-//
-//                // Aseguramos que las transacciones de fragments se procesen antes de actualizar el mensaje
-//                getChildFragmentManager().executePendingTransactions();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("Firebase", getString(R.string.descubrir_fragment_error_consulta) + error.getMessage());
-//            }
-//
-//        };
-//
-//        ref.addValueEventListener(listener); // Antes estábamos intentando meter el listener mientras lo creábamos
-//
-//    }

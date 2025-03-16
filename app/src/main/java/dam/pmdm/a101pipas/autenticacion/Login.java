@@ -83,12 +83,14 @@ public class Login extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Boolean> task) {
                                         if(task.isSuccessful()){
-                                            Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
-                                            Log.d(TAG, "Usuario: " + usuario);
-                                        } else {
-                                            guardarCorreo(id, usuario);
+                                            if(task.getResult()){
+                                                Log.d(TAG, "Usuario: " + usuario);
+                                                Log.d(TAG, "Inicio de sesion COMPLETADO " + mAuth.getCurrentUser().getDisplayName() + " - " + mAuth.getCurrentUser().getDisplayName());
+                                            } else {
+                                                guardarCorreo(id, usuario);
+                                            }
+                                            mandarUsuarioInicio(id);
                                         }
-                                        mandarUsuarioInicio(id);
                                     }
                                 });
                             } else {

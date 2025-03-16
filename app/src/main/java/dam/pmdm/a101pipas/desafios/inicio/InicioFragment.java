@@ -11,19 +11,24 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentInicioBinding;
 import dam.pmdm.a101pipas.desafios.CrearDesafioActivity;
+import dam.pmdm.a101pipas.models.Desafio;
 
 public class InicioFragment extends Fragment {
 
@@ -33,8 +38,10 @@ public class InicioFragment extends Fragment {
     private ValueEventListener listener;
 
     private FragmentInicioBinding binding;
-
+    private InicioAdapter adapter;
     private InicioViewModel inicioViewModel;
+
+    private List<Desafio> listaDesafios;
 
     private String usuario;
 
@@ -59,8 +66,13 @@ public class InicioFragment extends Fragment {
         refDesafiosUsuario = firebase.getReference("usuarios").child(usuario).child("desafios"); // Apunta a los desafíos del usuario
         refDesafios = firebase.getReference("desafios");
 
-        inicioViewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), this::cargarDesafios);
+        listaDesafios = new ArrayList<>();
+        adapter = new InicioAdapter(listaDesafios, this);
 
+        binding.rvDesafiosInicio.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.rvDesafiosInicio.setAdapter(adapter);
+
+        inicioViewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), this::cargarDesafios);
         inicioViewModel.cargarFragmentosDesafiosDesdeFirebase(refDesafiosUsuario, refDesafios);
 
         binding.btnAniadirDesafioInicio.setOnClickListener(new View.OnClickListener() {
@@ -71,96 +83,58 @@ public class InicioFragment extends Fragment {
             }
         });
 
+        binding.svBuscarInicio.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                buscar(newText);
+                return true;
+            }
+        });
+
     }
 
-    private void cargarDesafios(List<TarjetaDesafioInicioFragment> fragmentos) {
-        limpiarFragmentos();
+    private void buscar(String newText) {
+        if(!newText.isEmpty()){
+            ArrayList<Desafio> auxDesafio = new ArrayList<>();
 
-        if (fragmentos.isEmpty()) {
-            mostrarMensajeCeroDesafios();
-        } else {
-            for (TarjetaDesafioInicioFragment fragment : fragmentos) {
-                getChildFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.contenedorFragmentsInicio, fragment)
-                        .commit();
+            for (Desafio desafio : listaDesafios) {
+                if(desafio.getTitulo().toLowerCase().contains(newText.toLowerCase())){
+                    auxDesafio.add(desafio);
+                }
             }
+
+            binding.rvDesafiosInicio.setAdapter(new InicioAdapter(auxDesafio, this));
+
+            if(auxDesafio.isEmpty()){
+                mostrarMensajeCeroDesafios(false);
+            } else {
+                mostrarMensajeCeroDesafios(true);
+            }
+        } else {
+            adapter.setListaDesafios(listaDesafios);
+            binding.rvDesafiosInicio.setAdapter(adapter);
         }
     }
 
-    // Tras crear el fragment, basado en la condición del desafío usar un .setBackground para poner el color correspondiente
-//    private void cargarFragmentos() {
-//        listener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                limpiarFragmentos();
-//
-//                if (snapshot.exists()) {
-//                    String[] desafiosID = snapshot.getValue().toString().split(",");
-//                    cargarDesafiosPorId(desafiosID);
-//                } else {
-//                    Toast.makeText(getContext(), R.string.inicio_fragment_no_desafios_iniciados, Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("Firebase", getString(R.string.inicio_fragment_error_consulta) + error.getMessage());
-//            }
-//        };
-//
-//        refDesafiosUsuario.addValueEventListener(listener);
-//    }
-
-//    private void cargarDesafiosPorId(String[] desafiosId) {
-//        listener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot desafio : snapshot.getChildren()) {
-//                    for (int i=0; i<desafiosId.length; i++) {
-//                        String desafioId = desafio.child("id").getValue().toString();
-//                        if (desafioId.equals(desafiosId[i])) { // Si el campo 'id' del desafío está en la lista de desafíos del usuario
-//                            Log.d("Firebase", usuario + getString(R.string.inicio_fragment_log_desafio_1) + desafiosId[i] + getString(R.string.inicio_fragment_log_desafio_2) + desafio.child("titulo").getValue() + getString(R.string.inicio_fragment_coma));
-//                            String titulo = desafio.child("titulo").getValue(String.class);
-//                            String[] etiquetas = desafio.child("etiquetas").getValue(String.class).split(",");
-//                            String descripcion = desafio.child("descripcion").getValue(String.class);
-//                            String ciudad = desafio.child("ciudad").getValue(String.class);
-//
-//                            TarjetaDesafioInicioFragment fragment = TarjetaDesafioInicioFragment.newInstance(titulo, etiquetas, descripcion, ciudad, desafio.getKey());
-//                            getChildFragmentManager()
-//                                    .beginTransaction()
-//                                    .add(R.id.contenedorFragmentsInicio, fragment)
-//                                    .commit();
-//                        }
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.e("Firebase", R.string.inicio_fragment_error_consulta + error.getMessage());
-//            }
-//
-//        };
-//        refDesafios.addValueEventListener(listener);
-//    }
-
-    private void mostrarMensajeCeroDesafios() {
-        // Si no hay fragments, muestra un mensaje
-        TextView tvMensajeCeroFragments;
-        tvMensajeCeroFragments = binding.tvMensajeCeroFragmentsInicio;
-        if (getChildFragmentManager().getFragments().isEmpty()) {
-            tvMensajeCeroFragments.setVisibility(View.VISIBLE);
+    private void cargarDesafios(List<Desafio> fragmentos) {
+        if(!fragmentos.isEmpty()){
+            listaDesafios = fragmentos;
+            adapter.setListaDesafios(listaDesafios);
         } else {
-            tvMensajeCeroFragments.setVisibility(View.GONE);
+            mostrarMensajeCeroDesafios(false);
         }
     }
 
-    private void limpiarFragmentos() {
-        for (Fragment fragment : getChildFragmentManager().getFragments()) {
-            if (fragment instanceof TarjetaDesafioInicioFragment) {
-                getChildFragmentManager().beginTransaction().remove(fragment).commit();
-            }
+    private void mostrarMensajeCeroDesafios(boolean hay) {
+        if (!hay) {
+            binding.tvMensajeCeroFragmentsInicio.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvMensajeCeroFragmentsInicio.setVisibility(View.GONE);
         }
     }
 

@@ -70,7 +70,7 @@ public class TarjetaDesafioDescubrirFragment extends Fragment {
 
         if (getParentFragment() instanceof DescubrirFragment) {
             view.setOnClickListener(v -> {
-                listadoExperienciasViewModel.setIdDesafio(key);
+                listadoExperienciasViewModel.setIdDesafio(key, titulo);
                 Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
             });
         } else if (getParentFragment() instanceof CrearGrupoFragment) {

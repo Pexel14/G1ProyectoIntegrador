@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class ListadoExperienciasFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
         geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
 
-        binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         // Inicializar lista y adaptador
         experienciaList = new ArrayList<>();
@@ -66,8 +67,9 @@ public class ListadoExperienciasFragment extends Fragment {
                 adapter.setExperiencias(experiencias);
             }
         });
+
         viewModel.getProgreso().observe(getViewLifecycleOwner(), this::actualizarProgreso);
-        viewModel.getTituloDesafio().observe(getViewLifecycleOwner(), this::actualizarTitulo);
+        actualizarTitulo(viewModel.getTituloDesafio());
 
         binding.imgVolverAtras.setOnClickListener(new View.OnClickListener() {
             @Override

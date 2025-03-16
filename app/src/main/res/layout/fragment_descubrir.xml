@@ -22,6 +22,7 @@
             android:id="@+id/vCajaSuperiorDescubrir"
             android:layout_width="match_parent"
             android:layout_height="84dp"
+            android:elevation="20dp"
             android:background="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +32,7 @@
             android:id="@+id/tvDesafiosDescubrir"
             android:layout_width="match_parent"
             android:layout_height="84dp"
+            android:elevation="30dp"
             android:layout_marginBottom="15dp"
             android:fontFamily="@font/yellowtail"
             android:gravity="center"
@@ -54,11 +56,18 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/barraBusqueda"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="?actionBarSize"
+        android:inputType="text"
         android:background="@drawable/edit_text_border"
         android:layout_marginHorizontal="20dp"
-        app:layout_constraintTop_toBottomOf="@id/rlBarraSuperiorDescubrir" />
+        android:layout_marginTop="20dp"
+        app:queryHint="@string/descubrir_mensaje_barra_busqueda"
+        android:elevation="50dp"
+        app:iconifiedByDefault="false"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rlBarraSuperiorDescubrir"/>
 
 <!--    <EditText-->
 <!--        android:id="@+id/etBuscarDescubrir"-->
@@ -112,29 +121,17 @@
                 android:layout_marginTop="15dp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/akaya_telivigala"
-                android:text="@string/madrid_descubrir"
+                android:text="@string/arte_descubrir"
                 android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barraBusqueda" />
 
-            <HorizontalScrollView
-                android:id="@+id/hsv1"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDescubrir1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@+id/tvFiltro1Descubrir"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <LinearLayout
-                    android:id="@+id/contenedorFragmentsDescubrir"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
-
-            </HorizontalScrollView>
+                android:orientation="horizontal" />
 
             <!-- Segundo filtro -->
             <TextView
@@ -151,23 +148,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/hsv1" />
 
-            <HorizontalScrollView
-                android:id="@+id/hsv2"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDescubrir2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scrollbars="none"
-                app:layout_constraintTop_toBottomOf="@+id/tvFiltro2Descubrir"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <LinearLayout
-                    android:id="@+id/contenedorFragmentsDescubrir2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
-
-            </HorizontalScrollView>
+                android:orientation="horizontal" />
 
             <!-- Tercer filtro -->
             <TextView
@@ -184,24 +169,60 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/hsv2" />
 
-            <HorizontalScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDescubrir3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:scrollbars="none"
-                app:layout_constraintTop_toBottomOf="@+id/tvFiltro3Descubrir"
+                android:orientation="horizontal" />
+
+            <!-- Cuarto filtro -->
+            <TextView
+                android:id="@+id/tvFiltro4Descubrir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/akaya_telivigala"
+                android:text="@string/ocio_descubrir"
+                android:textSize="@dimen/tam_texto_pequenio"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/hsv2" />
 
-                <LinearLayout
-                    android:id="@+id/contenedorFragmentsDescubrir3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvDescubrir4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
 
-            </HorizontalScrollView>
         </LinearLayout>
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/tvSinDesafios"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/desafio_mensaje_no_desafios"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:visibility="gone"/>
+    
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvDescubrirTodos"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barraBusqueda"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
