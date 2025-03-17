@@ -39,6 +39,8 @@ public class DescubrirFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.rvDescubrirTodos.setVisibility(View.GONE);
+        
         listaTodosDesafios = new ArrayList<>();
         listaDesafios1 = new ArrayList<>();
         listaDesafios2 = new ArrayList<>();

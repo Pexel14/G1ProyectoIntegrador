@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
 import dam.pmdm.a101pipas.models.Desafio;
 
@@ -47,6 +48,7 @@ public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioView
 
         holder.itemView.setOnClickListener(v -> {
             listadoExperienciasViewModel.setIdDesafio(desafio.getId(), desafio.getTitulo());
+            ListadoExperienciasFragment.setVolverAtras(0);
             Navigation.findNavController(v).navigate(R.id.navigation_listado_experiencias);
         });
 

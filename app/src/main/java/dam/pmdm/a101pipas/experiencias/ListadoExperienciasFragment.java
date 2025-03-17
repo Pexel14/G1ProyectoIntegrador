@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +27,12 @@ public class ListadoExperienciasFragment extends Fragment {
 
     private GeolocalizacionViewModel geolocalizacionViewModel;
     private ListadoExperienciasViewModel viewModel;
+
+    private static int volverAtras;
+
+    public static void setVolverAtras(int volverAtras) {
+        ListadoExperienciasFragment.volverAtras = volverAtras;
+    }
 
     private ExperienciasListAdapter adapter;
     private List<Experiencia> experienciaList;
@@ -74,7 +81,13 @@ public class ListadoExperienciasFragment extends Fragment {
         binding.imgVolverAtras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.navigation_inicio);
+
+                if(volverAtras == 0){
+                    Navigation.findNavController(view).navigate(R.id.navigation_inicio);
+                } else if(volverAtras == 1){
+                    Navigation.findNavController(view).navigate(R.id.navigation_descubrir);
+                }
+
             }
         });
 
