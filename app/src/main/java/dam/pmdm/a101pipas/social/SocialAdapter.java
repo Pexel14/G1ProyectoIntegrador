@@ -1,6 +1,5 @@
 package dam.pmdm.a101pipas.social;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,13 +54,13 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .into(holder.imgPerfil);
             }
 
-        } else if (item instanceof Grupo) {
+        } else if (item instanceof dam.pmdm.a101pipas.models.Grupo) {
 
-            Grupo grupo = (Grupo) item;
-            holder.tvNombre.setText(grupo.getNombreGrupo());
+            dam.pmdm.a101pipas.models.Grupo grupo = (dam.pmdm.a101pipas.models.Grupo) item;
+            holder.tvNombre.setText(grupo.getTitulo());
 
             Picasso.get()
-                    .load(grupo.getFotoGrupo() != null ? grupo.getFotoGrupo() : "")
+                    .load(grupo.getFoto_grupo() != null ? grupo.getFoto_grupo() : "")
                     .placeholder(R.drawable.perfil_por_defecto)
                     .error(R.drawable.perfil_por_defecto)
                     .into(holder.imgPerfil);
@@ -74,7 +73,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 //                intent.putExtra("nombreGrupo", grupo.getNombreGrupo());
 //                intent.putExtra("fotoGrupo", grupo.getFotoGrupo());
 //                v.getContext().startActivity(intent);
-                grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
+                grupoViewModel.setIdGrupo(grupo.getId());
                 Navigation.findNavController(v).navigate(R.id.navigation_grupo);
             });
         }

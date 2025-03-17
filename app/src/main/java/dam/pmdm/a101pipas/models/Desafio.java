@@ -6,7 +6,11 @@ import java.util.Map;
 public class Desafio implements Serializable {
     private String titulo, ciudad, descripcion, etiquetas;
     private int porcentajeProgreso;
-    private Map<String, Experiencia> experiencias;
+//    private Map<String, Experiencia> experiencias;
+    private String experiencias;
+    private Long id;
+
+    public Desafio() {}
 
     // Constructor para el Perfil
     public Desafio(String titulo, int porcentajeProgreso) {
@@ -23,7 +27,7 @@ public class Desafio implements Serializable {
     }
 
     // Constructor para Crear Experiencias
-    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> experiencias) {
+    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String experiencias) {
         this.titulo = titulo;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
@@ -31,11 +35,11 @@ public class Desafio implements Serializable {
         this.experiencias = experiencias;
     }
 
-    public Map<String, Experiencia> getExperiencias() {
+    public String getExperiencias() {
         return experiencias;
     }
 
-    public void setExperiencias(Map<String, Experiencia> experiencias) {
+    public void setExperiencias(String experiencias) {
         this.experiencias = experiencias;
     }
 
@@ -59,4 +63,11 @@ public class Desafio implements Serializable {
         return porcentajeProgreso;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

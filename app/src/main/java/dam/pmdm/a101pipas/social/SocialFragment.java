@@ -215,12 +215,14 @@ public class SocialFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 gruposList.clear();
 
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    if(gruposUser.contains(data.child("id").getValue().toString())){
-                        String idGrupo = data.getKey();
-                        String nombreGrupo = data.child("titulo").getValue(String.class);
-                        String fotoGrupo = data.child("foto_grupo").getValue(String.class);
-                        gruposList.add(new Grupo(idGrupo, nombreGrupo, fotoGrupo));
+                if (gruposUser != null) {
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        if(gruposUser.contains(data.child("id").getValue().toString())){
+                            String idGrupo = data.getKey();
+                            String nombreGrupo = data.child("titulo").getValue(String.class);
+                            String fotoGrupo = data.child("foto_grupo").getValue(String.class);
+                            gruposList.add(new Grupo(idGrupo, nombreGrupo, fotoGrupo));
+                        }
                     }
                 }
 

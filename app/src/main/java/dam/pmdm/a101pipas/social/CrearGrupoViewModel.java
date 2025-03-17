@@ -41,41 +41,23 @@ public class CrearGrupoViewModel extends ViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    usuarioExisteMutableLiveData.postValue(true);
+                    usuarioExisteMutableLiveData.setValue(true);
                 } else {
-                    usuarioExisteMutableLiveData.postValue(false);
+                    usuarioExisteMutableLiveData.setValue(false);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("CrearGrupoViewModel", "Error al obtener si un usuario existe");
+                usuarioExisteMutableLiveData.setValue(null); // Limpiar el LiveData
             }
         });
 
     }
 
-    // Obtener si existe un grupo
-    private MutableLiveData<Boolean> grupoExisteMutableLiveData = new MutableLiveData<>();
-
-    public LiveData<Boolean> getGrupoExisteLiveData() {return grupoExisteMutableLiveData;}
-
-    public void getGrupoExiste(String key) {
-        refGrupos.child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    grupoExisteMutableLiveData.postValue(true);
-                } else {
-                    grupoExisteMutableLiveData.postValue(false);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("CrearGrupoViewModel", "Error al obtener si un desafío existe");
-            }
-        });
+    public void limpiarUsuarioExisteLiveData() {
+        usuarioExisteMutableLiveData.setValue(null);
     }
 
     // Crear un grupo
@@ -88,9 +70,9 @@ public class CrearGrupoViewModel extends ViewModel {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    grupoCreadoLiveData.postValue(true);
+                    grupoCreadoLiveData.setValue(true);
                 } else {
-                    grupoCreadoLiveData.postValue(false);
+                    grupoCreadoLiveData.setValue(false);
                 }
             }
         });
@@ -155,5 +137,4 @@ public class CrearGrupoViewModel extends ViewModel {
         });
 
     }
-
 }

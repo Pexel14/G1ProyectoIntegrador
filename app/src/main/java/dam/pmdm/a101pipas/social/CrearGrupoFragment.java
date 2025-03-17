@@ -14,17 +14,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,19 +37,22 @@ import dam.pmdm.a101pipas.MainActivity;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentCrearGrupoBinding;
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
+import dam.pmdm.a101pipas.models.Desafio;
 import dam.pmdm.a101pipas.models.Grupo;
-import dam.pmdm.a101pipas.models.User;
 
 public class CrearGrupoFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private String miembros, amigo;
+    private String miembros;
+    private String amigo;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri imageUri;
     private FragmentCrearGrupoBinding binding;
     private CrearGrupoViewModel viewModel;
-    private DatabaseReference ref = FirebaseDatabase.getInstance().getReference("grupos");
+    private DatabaseReference refDesafios = FirebaseDatabase.getInstance().getReference("desafios");
+    private DatabaseReference refGrupos = FirebaseDatabase.getInstance().getReference("grupos");
     private String idUltimo = "0";
+    private String idDesafio = "0";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,15 +64,7 @@ public class CrearGrupoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        firebase = FirebaseDatabase.getInstance();
-//        refDesafios = firebase.getReference("desafios");
-//        refGrupos = firebase.getReference("grupos");
-//        refUsuarios = firebase.getReference("usuarios");
-
         viewModel = new ViewModelProvider(requireActivity()).get(CrearGrupoViewModel.class);
-
-
-        limpiarFragments();
 
         viewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), desafios -> {
                 for (TarjetaDesafioDescubrirFragment desafio : desafios) {
@@ -109,109 +96,131 @@ public class CrearGrupoFragment extends Fragment {
         });
 
         binding.btnCrearGrupo.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
-                // Si hay algún editText, comprobar que el usuario exista
-//                if (llAmigosCrearGrupo.getChildCount() != 0) {
-//
-//                    EditText etAmigo = (EditText) llAmigosCrearGrupo.getChildAt(llAmigosCrearGrupo.getChildCount()-1);
-//                    amigo = etAmigo.getText().toString();
-//
-//                    // Si el campo está vacío
-//                    if (amigo.isEmpty()) {
-//                        Toast.makeText(getContext(), R.string.crear_grupo_fragmen_ultimo_campo_amigo_vacio, Toast.LENGTH_SHORT).show();
-//                    }
-//
-//                    // Sino
-//                    else {
-//                        usuarioExiste(amigo, new OnUsuarioExisteListener() {
-//                            @Override
-//                            public void onResultado(boolean existe) {
-//                                // Si el usuario existe
-//                                if (existe) {
-//                                    miembros += "," + amigo;
-//                                    Log.d("CREAR_GRUPO", miembros);
-//                                }
-//                                // Sino
-//                                else {
-//                                    Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
+                Log.d("CrearGrupoFragment", "Se pulsa el botón 'Crear Grupo'");
 
-                // Si los datos están incompletos
-//                if (datosIncompletos()) {
-//                    Toast.makeText(getContext(), R.string.crear_grupo_fragment_rellene_todos_los_campos, Toast.LENGTH_SHORT).show();
-//                }
+                Grupo grupo = new Grupo();
 
-                // Si hay amigos introducidos, validar el último amigo (los anteriores ya han sido validados)
-                /*else*/ if (binding.llAmigosCrearGrupo.getChildCount() != 0) {
+                String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
+                grupo.setTitulo(nombre);
 
-                    EditText etAmigo = (EditText) binding.llAmigosCrearGrupo.getChildAt(binding.llAmigosCrearGrupo.getChildCount()-1);
-                    amigo = etAmigo.getText().toString();
+                final String[] key = {""};
+                obtenerUltimaKey().addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
 
-                    // Si el campo está vacío
-                    if (amigo.isEmpty()) {
-                        Toast.makeText(getContext(), R.string.crear_grupo_fragmen_ultimo_campo_amigo_vacio, Toast.LENGTH_SHORT).show();
-                    }
+                            Log.d("CrearGrupoFragment", "Se obtiene la última key de 'Grupos'");
 
-                    // Sino
-                    else {
-                        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
-                            if (existe) {
-                                miembros += "," + amigo;
-                                crearGrupo();
-                            } else {
-                                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
+                            key[0] = String.valueOf(Integer.parseInt(idUltimo) + 1);
+                            Log.d("CrearGrupoFragment", "id obtenida (debería ser 1) : " + String.valueOf(key[0]));
+                            grupo.setId(Integer.parseInt(key[0]));
+
+                            if (binding.swHacerPrivadoCrearGrupo.isChecked()) {
+                                String contrasenia = binding.etContraseniaCrearGrupo.getText().toString();
+                                grupo.setContrasena(contrasenia);
                             }
-                        });
 
-                        viewModel.getUsuarioExiste(amigo);
+                            if (soloUnFragmentSeleccionado()) {
+
+                                Log.d("CrearGrupoFragment", "Se sabe que sólo hay un fragmento seleccionado");
+
+                                obtenerIdDesafio().addOnCompleteListener(new OnCompleteListener<String>() {
+
+                                    @Override
+                                    public void onComplete(@NonNull Task<String> task) {
+
+                                        Log.d("CrearGrupoFragment", "Se obtiene el id del desafío");
+
+                                        grupo.setDesafio(Integer.parseInt(idDesafio));
+
+                                        // Si no se han añadido amigos
+                                        if (!miembros.contains(",")) {
+                                            Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
+                                        }
+                                        else {
+                                            grupo.setMiembros(miembros);
+                                            grupo.setFoto_grupo("");
+
+                                            viewModel.getCrearGrupoLiveData().observe(getViewLifecycleOwner(), grupoCreado -> {
+                                                if (grupoCreado) {
+
+                                                    Log.d("CrearGrupoFragment", "Se crea el grupo");
+
+                                                    Toast.makeText(getContext(), "Grupo creado con éxito", Toast.LENGTH_SHORT).show();
+                                                    Intent i = new Intent(getContext(), MainActivity.class);
+                                                    startActivity(i);
+                                                } else {
+                                                    Toast.makeText(getContext(), "Error al crear el grupo", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+
+                                            Log.d("CrearGrupoFragment", "Se va a crear el grupo");
+                                            Log.d("CrearGrupoFragment", "ID: " + grupo.getId());
+                                            Log.d("CrearGrupoFragment", "Titulo: " + grupo.getTitulo());
+                                            Log.d("CrearGrupoFragment", "Miembros: " + grupo.getMiembros());
+
+                                            viewModel.crearGrupo(key[0], grupo);
+                                        }
+
+                                    }
+                                });
+
+                            } else {
+                                Toast.makeText(getContext(), "Seleccione exactamente un desafío", Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
                     }
-                }
+                });
 
-                // Si los datos están completos y los amigos están validados
-                else {
-                    crearGrupo();
-                }
+
+
             }
+
         });
 
         binding.btnAniadirAmigosCrearGrupo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                // Si hay algún editText, comprobar que el usuario exista
-                if (binding.llAmigosCrearGrupo.getChildCount() != 0) {
+                String ami = binding.etAmigoCrearGrupo.getText().toString();
+                boolean yaEstaIncluido = false;
+                String[] listaMiembros = miembros.split(",");
 
-                    EditText etAmigo = (EditText) binding.llAmigosCrearGrupo.getChildAt(binding.llAmigosCrearGrupo.getChildCount()-1);
-                    amigo = etAmigo.getText().toString();
-
-                    // Si el campo está vacío
-                    if (amigo.isEmpty()) {
-                        Toast.makeText(getContext(), "El último campo de amigo está vacío", Toast.LENGTH_SHORT).show();
-                    }
-
-                    // Sino
-                    else {
-                        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
-                            if (existe) {
-                                miembros += "," + amigo;
-                            } else {
-                                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                        viewModel.getUsuarioExiste(amigo);
+                for (int i=0; i<listaMiembros.length; i++) {
+                    if (listaMiembros[i].equals(ami)) {
+                        yaEstaIncluido = true;
                     }
                 }
 
-                // Si no hay nada, crea un editText directamente
-                else {
-                    agregarEditText();
+                if (ami.isEmpty()) {
+                    Toast.makeText(getContext(), "Introduce un amigo", Toast.LENGTH_SHORT).show();
+                } else if (yaEstaIncluido) {
+                    Toast.makeText(getContext(), ami + " ya está incluido", Toast.LENGTH_SHORT).show();
+                } else {
+                    viewModel.getUsuarioExisteLiveData().removeObservers(getViewLifecycleOwner());
+                    viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
+                        if (existe != null) {
+                            if (existe) {
+                                miembros += "," + ami;
+                                String miembrosFormateado = miembros.replace(",", "\n");
+                                binding.tvListaAmigosCrearGrupo.setText(miembrosFormateado);
+                                binding.etAmigoCrearGrupo.setText("");
+                            } else {
+                                Toast.makeText(getContext(), "El usuario '" + ami + "' no existe", Toast.LENGTH_SHORT).show();
+                            }
+
+                            viewModel.limpiarUsuarioExisteLiveData();
+
+                        }
+                    });
+
+                    viewModel.getUsuarioExiste(ami);
+                    Log.d("CrearGrupoFragment", "Al viewModel se le pasa: " + ami);
                 }
 
             }
@@ -242,138 +251,65 @@ public class CrearGrupoFragment extends Fragment {
             imagePickerLauncher.launch(i);
         });
 
-
     }
 
-    public interface OnUsuarioExisteListener {
-        void onResultado(boolean existe);
-    }
+    private Task<String> obtenerIdDesafio() {
+        TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
 
-//    public void usuarioExiste(String amigo, final OnUsuarioExisteListener listener) {
-//        refUsuarios.child(amigo).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                listener.onResultado(snapshot.exists());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(getContext(), "Error al comunicarse con la BBDD", Toast.LENGTH_SHORT).show();
-//                listener.onResultado(false); // En caso de error, asumimos que no existe
-//            }
-//        });
-//    }
+        String nomDesafio = "";
 
-    private void agregarEditText() {
-
-        EditText nuevoEditText = new EditText(getContext());
-
-        // Convertir dp a píxeles
-        int marginTopInPx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics()
-        );
-        int marginHorPx = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP, 15, getResources().getDisplayMetrics()
-        );
-
-        // Crear LayoutParams con MATCH_PARENT y WRAP_CONTENT
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
-        // Establecer el margen superior
-        params.setMargins(marginHorPx, marginTopInPx, marginHorPx, 0);
-
-        // Aplicar los LayoutParams al EditText
-        nuevoEditText.setLayoutParams(params);
-
-        // Establecer fondo personalizado
-        nuevoEditText.setBackground(getContext().getResources().getDrawable(R.drawable.edit_text_border));
-
-        // Agregar el EditText al LinearLayout
-        binding.llAmigosCrearGrupo.addView(nuevoEditText);
-
-    }
-
-
-    private void crearGrupo() {
-        String nombre = binding.etNombreGrupoCrearGrupo.getText().toString();
-        final String[] key = {""};
-        obtenerUltimaKey().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (task.isSuccessful()) {
-                    key[0] = String.valueOf(Integer.parseInt(idUltimo) + 1);
+        for (Fragment fragment : getChildFragmentManager().getFragments()) {
+            if (fragment instanceof TarjetaDesafioDescubrirFragment) {
+                if (((TarjetaDesafioDescubrirFragment) fragment).isSeleccionado()) {
+                    TarjetaDesafioDescubrirFragment fra = (TarjetaDesafioDescubrirFragment) fragment;
+                    nomDesafio = fra.getArguments().getString("titulo");
                 }
             }
-        });
-
-        Grupo grupo = new Grupo();
-
-        if (binding.swHacerPrivadoCrearGrupo.isChecked()) {
-            String contrasenia = binding.etContraseniaCrearGrupo.getText().toString();
-            grupo.setContrasena(contrasenia);
         }
 
-        viewModel.getUsuarioExisteLiveData().observe(getViewLifecycleOwner(), existe -> {
-            // Si el usuario existe
-            if (existe) {
-                viewModel.getGrupoExisteLiveData().observe(getViewLifecycleOwner(), grupoExiste -> {
-                    if (grupoExiste) {
-                        Toast.makeText(getContext(), "El nombre '" + nombre + "' ya está cogido", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(getContext(), "Key: " + key[0], Toast.LENGTH_SHORT).show();
-                    } else {
-                        if (soloUnFragmentSeleccionado()) {
-                            // Si no se han añadido amigos
-                            if (!miembros.contains(",")) {
-                                Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
-                            } else {
-                                grupo.setMiembros(miembros);
-
-                                viewModel.getCrearGrupoLiveData().observe(getViewLifecycleOwner(), grupoCreado -> {
-                                    if (grupoCreado) {
-                                        Toast.makeText(getContext(), "Grupo creado con éxito", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(getContext(), MainActivity.class);
-                                        startActivity(i);
-                                    } else {
-                                        Toast.makeText(getContext(), "Error al crear el grupo", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-
-                                viewModel.crearGrupo(key[0], grupo);
-                            }
-                        } else {
-                            Toast.makeText(getContext(), "Seleccione exactamente un desafío", Toast.LENGTH_SHORT).show();
-                        }
+        String finalNomDesafio = nomDesafio;
+        refDesafios.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String idDesafioAux = "";
+                for (DataSnapshot dsDesafios : snapshot.getChildren()) {
+                    Desafio desafio = dsDesafios.getValue(Desafio.class);
+                    if (desafio.getTitulo().equals(finalNomDesafio)) {
+                        idDesafioAux = String.valueOf(desafio.getId());
+                        idDesafio = idDesafioAux;
                     }
-                });
+                }
 
-                viewModel.getGrupoExiste(key[0]);
+                taskCompletionSource.setResult(idDesafioAux);
             }
-            // Sino
-            else {
-                Toast.makeText(getContext(), "El usuario '" + amigo + "' no existe", Toast.LENGTH_SHORT).show();
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                taskCompletionSource.setResult("Error");
             }
         });
 
-        viewModel.getUsuarioExiste(amigo);
+        return taskCompletionSource.getTask();
 
     }
 
     private Task<String> obtenerUltimaKey() {
         TaskCompletionSource<String> taskCompletionSource = new TaskCompletionSource<>();
 
-        ref.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
+        refGrupos.orderByChild("id").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String idAux = "";
                 for (DataSnapshot usuarios : snapshot.getChildren()) {
 
-                    idAux = usuarios.child("id").getValue().toString();
+                    if (usuarios.child("id").exists()) {
 
-                    if(Integer.parseInt(idAux) > Integer.parseInt(idUltimo)){
-                        idUltimo = idAux;
+                        idAux = usuarios.child("id").getValue().toString();
+
+                        if (Integer.parseInt(idAux) > Integer.parseInt(idUltimo)) {
+                            idUltimo = idAux;
+                        }
+
                     }
                 }
                 taskCompletionSource.setResult(idAux);
@@ -401,9 +337,6 @@ public class CrearGrupoFragment extends Fragment {
             String usuario = mAuth.getCurrentUser().getEmail();
             if (usuario != null) {
                 String id = usuario.split("@")[0].replace(".", "");
-                if (!miembros.isEmpty()) {
-                    miembros += ",";
-                }
                 miembros += id;
             }
         }
@@ -432,14 +365,6 @@ public class CrearGrupoFragment extends Fragment {
             return true;
         } else {
             return false;
-        }
-    }
-
-    private void limpiarFragments() {
-        for (Fragment fragment : getChildFragmentManager().getFragments()) {
-            if (fragment instanceof TarjetaDesafioDescubrirFragment) {
-                getChildFragmentManager().beginTransaction().remove(fragment).commit();
-            }
         }
     }
 

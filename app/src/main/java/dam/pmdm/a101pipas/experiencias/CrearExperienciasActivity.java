@@ -136,17 +136,17 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             return;
         }
 
-        Map<String, Experiencia> mapExperiencias = new HashMap<>();
+        String experiencias = "";
         for (TarjetaExperienciaFragment fragment : listaDeFragments) {
             if (fragment.isEmpty()) {
                 Toast.makeText(this, "Hay experiencias sin completar.", Toast.LENGTH_SHORT).show();
                 return;
             }
             Experiencia ex = new Experiencia(fragment.getTitulo(), fragment.getDescripcion());
-            mapExperiencias.put(ex.getTitulo(), ex);
+//            mapExperiencias.put(ex.getTitulo(), ex);
         }
 
-        desafio.setExperiencias(mapExperiencias);
+//        desafio.setExperiencias(mapExperiencias);
         String keyDesafio = desafio.getTitulo();
 
         databaseReference.child(keyDesafio).setValue(desafio)
