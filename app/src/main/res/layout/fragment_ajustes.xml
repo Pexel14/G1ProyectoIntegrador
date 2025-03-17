@@ -33,21 +33,246 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/btnAtrasAjustes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"/>
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/icon_faq"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_faq"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/divider"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/content_faq"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/ajustes_cerrar_sesion"
-        android:textStyle="bold"
-        android:textSize="@dimen/tam_subtitulo"
-        android:background="@drawable/rounded_corner_button"
-        android:backgroundTint="@color/rojo"
-        android:textColor="@android:color/white"
-        android:fontFamily="@font/akaya_telivigala"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/icon_faq"
+        app:layout_constraintBottom_toBottomOf="@id/icon_faq"
+        app:layout_constraintStart_toEndOf="@id/icon_faq"
+        app:layout_constraintEnd_toStartOf="@id/arrow_faq"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            android:id="@+id/title_faq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/preguntas_frecuentes"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/summary_faq"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/consulta_las_preguntas_m_s_frecuentes_sobre_101"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/arrow_faq"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_settings_arrow"
+        app:layout_constraintTop_toTopOf="@id/icon_faq"
+        app:layout_constraintBottom_toBottomOf="@id/icon_faq"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/icon_faq"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:id="@+id/icon_request_admin"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_ajustes_contacto"
+        app:layout_constraintTop_toBottomOf="@id/divider1"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/content_request_admin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/icon_request_admin"
+        app:layout_constraintBottom_toBottomOf="@id/icon_request_admin"
+        app:layout_constraintStart_toEndOf="@id/icon_request_admin"
+        app:layout_constraintEnd_toStartOf="@id/arrow_request_admin"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            android:id="@+id/title_request_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ponerse_en_contacto"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/summary_request_admin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/env_a_un_correo_para_ponerte_en_contacto_con_nosotros"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/arrow_request_admin"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_settings_arrow"
+        app:layout_constraintTop_toTopOf="@id/icon_request_admin"
+        app:layout_constraintBottom_toBottomOf="@id/icon_request_admin"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/icon_request_admin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:id="@+id/icon_report"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_report"
+        app:layout_constraintTop_toBottomOf="@id/divider2"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/content_report"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/icon_report"
+        app:layout_constraintBottom_toBottomOf="@id/icon_report"
+        app:layout_constraintStart_toEndOf="@id/icon_report"
+        app:layout_constraintEnd_toStartOf="@id/arrow_report"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            android:id="@+id/title_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mandar_reporte"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/summary_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/m_ndanos_un_reporte_de_forma_sencilla_y_r_pida"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/arrow_report"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_settings_arrow"
+        app:layout_constraintTop_toTopOf="@id/icon_report"
+        app:layout_constraintBottom_toBottomOf="@id/icon_report"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/icon_report"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <ImageView
+        android:id="@+id/icon_logout"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_cerrar_sesion"
+        app:layout_constraintTop_toBottomOf="@id/divider3"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/content_logout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="@id/icon_logout"
+        app:layout_constraintBottom_toBottomOf="@id/icon_logout"
+        app:layout_constraintStart_toEndOf="@id/icon_logout"
+        app:layout_constraintEnd_toStartOf="@id/arrow_logout"
+        android:layout_marginStart="8dp">
+
+        <TextView
+            android:id="@+id/title_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ajustes_cerrar_sesion"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/summary_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cierra_sesi_n_de_la_cuenta_actual"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/arrow_logout"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_settings_arrow"
+        app:layout_constraintTop_toTopOf="@id/icon_logout"
+        app:layout_constraintBottom_toBottomOf="@id/icon_logout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintTop_toBottomOf="@id/icon_logout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
