@@ -113,6 +113,7 @@ public class PerfilFragment extends Fragment {
                 List<Desafio> desafiosFiltrados = new ArrayList<>(); // Lista para mostrar solo los filtrados dependiendo del botón pulsado
                 String title;
                 Desafio desafio;
+                int completedChallengesCount = 0;
 
                 for (DataSnapshot data : snapshot.getChildren()) {
                     title = data.child("titulo").getValue(String.class);
@@ -122,6 +123,11 @@ public class PerfilFragment extends Fragment {
 
                     desafio = new Desafio(title, num);
                     desafioList.add(desafio); // Se guarda en la lista completa
+
+                    // Verificar si el desafío está completado
+                    if (num == 100) {
+                        completedChallengesCount++; // Incrementar el contador si está completado
+                    }
 
                     // Filtrar según el botón seleccionado
                     if (binding.tbtnDesafiosEmpezados.isChecked() && num != 100) {
@@ -133,6 +139,14 @@ public class PerfilFragment extends Fragment {
 
                 // Actualizar el adaptador con la lista filtrada
                 adapter.actualizarLista(desafiosFiltrados);
+
+                if (completedChallengesCount >= 3) {
+                    binding.ivPrimeraInsignea.setImageResource(R.drawable.estrella); // Cambiar a estrella si hay 3 o más
+                } else if (completedChallengesCount == 2) {
+                    binding.ivPrimeraInsignea.setImageResource(R.drawable.piruleta); // Cambiar a piruleta si hay 2
+                } else if (completedChallengesCount == 1) {
+                    binding.ivPrimeraInsignea.setImageResource(R.drawable.carafeliz); // Cambiar a cara feliz si hay 1 desafío completado
+                }
 
                 // Dependiendo del botón pulsado, se muestra una cosa u otra
                 if (desafiosFiltrados.isEmpty()) {
@@ -195,7 +209,7 @@ public class PerfilFragment extends Fragment {
             if (dataSnapshot.exists()) {
                 User userProfile = dataSnapshot.getValue(User.class);
                 if (userProfile != null) {
-                    binding.txtNick.setText(userProfile.getUsername());
+                    binding.tvNick.setText(userProfile.getUsername());
                 }
             }
         });

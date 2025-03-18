@@ -33,27 +33,21 @@
                 android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold" />
 
-            <FrameLayout
-                android:layout_width="48dp"
-                android:layout_height="42dp">
+            <ImageView
+                android:id="@+id/ivCompletado"
+                android:layout_width="72dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/circulo" />
 
-                <ImageView
-                    android:id="@+id/ivCompletado"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/circulo"/>
+            <TextView
+                android:id="@+id/tvCheck"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/list_experiencias_emoji_check"
+                android:textColor="@color/color_principal"
+                android:textSize="@dimen/tam_texto_pequenio" />
 
-                <TextView
-                    android:id="@+id/tvCheck"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="@string/list_experiencias_emoji_check"
-                    android:textColor="@color/color_principal"
-                    android:textSize="@dimen/tam_texto_pequenio"
-                    android:visibility="gone"/>
-
-            </FrameLayout>
 
         </LinearLayout>
 
