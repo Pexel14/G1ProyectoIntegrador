@@ -13,4 +13,5 @@
     <dimen name="tam_texto_pequenio">17sp</dimen>
     <dimen name="padding_pequenio_diez">10dp</dimen>
     <dimen name="tam_subtitulo">25sp</dimen>
+    <dimen name="radio_por_defecto">20dp</dimen>
 </resources>

@@ -8,10 +8,9 @@
     android:layout_marginBottom="@dimen/separacion_mediana_quince"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/radio_por_defecto"
+    android:background="@color/white"
     tools:context=".experiencias.TarjetaExperienciaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
