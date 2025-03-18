@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     android:padding="@dimen/padding"
-    tools:context=".social.GroupDetail">
+    tools:context=".social.GrupoDetailFragment">
+
 
     <!-- Botón de volver atrás -->
     <ImageButton
@@ -54,7 +53,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/color_principal"
         android:fontFamily="@font/akaya_telivigala"
-        android:text="Unirse"
+        android:text="@string/fragment_detail_grupo_unirse"
         android:textSize="@dimen/tam_texto_pequenio"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,6 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/borde_verde">
+
                     <TextView
                         android:id="@+id/tvCreador"
                         android:layout_width="wrap_content"
@@ -141,7 +141,7 @@
                         android:fontFamily="@font/akaya_telivigala"
                         android:gravity="center"
                         android:padding="12dp"
-                        android:text="AAAA"
+                        android:text="@string/fechaCreacion"
                         android:textColor="@color/black"
                         android:textSize="@dimen/tam_texto" />
                 </LinearLayout>

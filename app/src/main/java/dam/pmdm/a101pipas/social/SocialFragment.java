@@ -187,13 +187,17 @@ public class SocialFragment extends Fragment {
 
         for (Amigos amigo : todosAmigos) {
             if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
-                auxAmigos.add(amigo);
+                if(amigosUser.contains(amigo.getUsername())){
+                    auxAmigos.add(amigo);
+                }
             }
         }
 
         for (Grupo grupo : todosGrupos) {
             if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
-                auxGrupo.add(grupo);
+                if(gruposUser.contains(grupo.getNombreGrupo())){
+                    auxGrupo.add(grupo);
+                }
             }
         }
 
@@ -212,9 +216,10 @@ public class SocialFragment extends Fragment {
                     if(!amigosUser.isEmpty()){
                         for (DataSnapshot data : snapshot.getChildren()) {
                             if(amigosUser.contains(data.child("id").getValue().toString())){
+                                String id = data.getKey();
                                 String username = data.child("username").getValue(String.class);
                                 String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                                amigosList.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
+                                amigosList.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : ""));
                             }
                         }
                     }
@@ -282,9 +287,10 @@ public class SocialFragment extends Fragment {
                 todosAmigos.clear();
 
                 for (DataSnapshot data : snapshot.getChildren()) {
+                    String id = data.getKey();
                     String username = data.child("username").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                    todosAmigos.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
+                    todosAmigos.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : ""));
                 }
             }
 

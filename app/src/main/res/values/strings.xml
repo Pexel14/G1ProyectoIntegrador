@@ -215,4 +215,13 @@
     <string name="social_mensaje_sin_amigos">Ahora mismo no tienes amigos. ¡Anímate y suma gente a tu diversión! 😄</string>
     <string name="social_buscador_sin_grupos">No se han encontrado grupos</string>
     <string name="social_buscador_sin_amigos">No se han encontrado amigos</string>
+    <string name="fragment_detail_grupo_unirse">Unirse</string>
+    <string name="grupo_detail_fragment_aventureros">" Aventureros"</string>
+    <string name="grupo_detail_fragment_unirse_exitoso">¡Te has unido al grupo!</string>
+    <string name="rellenar_contrasenia_titulo">Introduce la contraseña del grupo</string>
+    <string name="rellenar_contrasenia_edit_text">Introduce la contaseña</string>
+    <string name="rellenar_contrasenia_entrar">Unirse</string>
+    <string name="rellenar_contrasenia_fragment_contrasenia_incorrecta">Contraseña incorrecta, prueba de nuevo</string>
+    <string name="fragment_lista_grupos_mensaje_vacio">No se han encontrado grupos</string>
+    <string name="fragment_lista_amigos_mensaje_vacio">No se han encontrado usuarios</string>
 </resources>

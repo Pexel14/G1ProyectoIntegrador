@@ -26,6 +26,7 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
 
     private List<?> listaSocial; // Lista que maneja amigos y grupos
     private Fragment fragment;
+
     public SocialAdapter(List<?> listaSocial, Fragment fragment) {
         this.listaSocial = listaSocial;
         this.fragment = fragment;
@@ -54,6 +55,10 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .error(R.drawable.perfil_por_defecto)
                         .into(holder.imgPerfil);
             }
+
+            holder.itemView.setOnClickListener(v -> {
+                Navigation.findNavController(v).navigate(R.id.navigation_perfil_amigo);
+            });
 
         } else if (item instanceof Grupo) {
 

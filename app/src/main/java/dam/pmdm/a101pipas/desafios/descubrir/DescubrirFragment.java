@@ -117,6 +117,12 @@ public class DescubrirFragment extends Fragment {
             }
         }
 
+        if(auxDesafios.isEmpty()){
+            binding.tvSinDesafios.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvSinDesafios.setVisibility(View.GONE);
+        }
+
         binding.rvDescubrirTodos.setAdapter(new DescubrirAdapter(auxDesafios, this));
 
     }

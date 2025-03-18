@@ -96,4 +96,16 @@
         android:label="Ajustes"
         tools:layout="@layout/fragment_ajustes" />
 
+    <fragment
+        android:id="@+id/navigation_grupo_detail"
+        android:name="dam.pmdm.a101pipas.social.GrupoDetailFragment"
+        android:label="fragment_grupo_detail"
+        tools:layout="@layout/fragment_grupo_detail" />
+
+    <fragment
+        android:id="@+id/rellenarContraseniaFragment"
+        android:name="dam.pmdm.a101pipas.social.RellenarContraseniaFragment"
+        android:label="fragment_rellenar_contrasenia"
+        tools:layout="@layout/fragment_rellenar_contrasenia" />
+
 </navigation>

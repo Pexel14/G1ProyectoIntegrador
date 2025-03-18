@@ -78,6 +78,10 @@ public class User {
         return grupos;
     }
 
+    public void setGrupos(String grupos) {
+        this.grupos = grupos;
+    }
+
     public int getExperiencias_completadas() {
         return experiencias_completadas;
     }

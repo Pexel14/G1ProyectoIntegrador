@@ -3,12 +3,14 @@ package dam.pmdm.a101pipas.models;
 public class Amigos {
     private String username;
     private String fotoPerfil;
+    private String id;
 
     public Amigos() {
 
     }
 
-    public Amigos(String username, String fotoPerfil) {
+    public Amigos(String id, String username, String fotoPerfil) {
+        this.id = id;
         this.username = username;
         this.fotoPerfil = fotoPerfil;
     }
@@ -27,6 +29,10 @@ public class Amigos {
 
     public void setFotoPerfil(String fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

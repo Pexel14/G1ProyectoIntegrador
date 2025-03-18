@@ -51,12 +51,10 @@ public class GruposAdapter extends RecyclerView.Adapter<GruposAdapter.GrupoViewH
         // Asignar datos
         holder.tvNombreGrupo.setText(grupo.getNombreGrupo());
 
-        GrupoViewModel grupoViewModel = new ViewModelProvider(fragment.requireActivity()).get(GrupoViewModel.class);
-
         // Evento de clic para abrir la pantalla de detalles
         holder.itemView.setOnClickListener(v -> {
-            grupoViewModel.setIdGrupo(Integer.parseInt(grupo.getIdGrupo()));
-            Navigation.findNavController(v).navigate(R.id.navigation_grupo);
+            GrupoDetailFragment.setGrupoID(grupo.getIdGrupo());
+            Navigation.findNavController(v).navigate(R.id.navigation_grupo_detail);
 //            Intent intent = new Intent(v.getContext(), GroupDetail.class);
 //            intent.putExtra("groupId", grupo.getIdGrupo()); // Pasar solo el ID del grupo
 //            v.getContext().startActivity(intent);

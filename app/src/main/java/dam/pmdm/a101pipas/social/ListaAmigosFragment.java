@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,13 +25,18 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentListaAmigosBinding;
+import dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment;
 import dam.pmdm.a101pipas.models.Amigos;
 
 public class ListaAmigosFragment extends Fragment {
 
+    private static String amigos;
+
     private AmigosAdapter amigosAdapter;
     private List<Amigos> amigosList;
     private DatabaseReference dbRef;
+
+    private FirebaseAuth mAuth;
 
     private FragmentListaAmigosBinding binding;
 
@@ -45,6 +51,8 @@ public class ListaAmigosFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mAuth = FirebaseAuth.getInstance();
+
         dbRef = FirebaseDatabase.getInstance().getReference("usuarios"); // Cambiamos Firestore por Realtime Database
 
         amigosList = new ArrayList<>();
@@ -53,6 +61,7 @@ public class ListaAmigosFragment extends Fragment {
         binding.rvListaAmigos.setAdapter(amigosAdapter);
 
         // Cargar amigos desde Firebase Realtime Database
+        getAmigosUsuario();
         cargarListaAmigosDesdeFirebase();
 
         // Botón de regreso
@@ -67,7 +76,28 @@ public class ListaAmigosFragment extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 buscar(newText);
+
+                if(amigosList.isEmpty()){
+                    binding.tvMensajeAmigosVacio.setVisibility(View.VISIBLE);
+                }
+
                 return true;
+            }
+        });
+    }
+
+    private void getAmigosUsuario() {
+        String id = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".","");
+        dbRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                amigos = snapshot.child("amigos").getValue(String.class);
+                amigos += "," + snapshot.child("id").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }
@@ -76,9 +106,18 @@ public class ListaAmigosFragment extends Fragment {
         ArrayList<Amigos> auxAmigos = new ArrayList<>();
         for (Amigos amigo : amigosList) {
             if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
-                auxAmigos.add(amigo);
+                if(!amigos.contains(amigo.getId())){
+                    auxAmigos.add(amigo);
+                }
             }
         }
+
+        if(auxAmigos.isEmpty()){
+            binding.tvMensajeAmigosVacio.setVisibility(View.VISIBLE);
+        } else {
+            binding.tvMensajeAmigosVacio.setVisibility(View.GONE);
+        }
+
         binding.rvListaAmigos.setAdapter(new AmigosAdapter(auxAmigos));
     }
 
@@ -91,10 +130,21 @@ public class ListaAmigosFragment extends Fragment {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String username = data.child("username").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-
+                    String codigo = data.child("id").getValue().toString();
+                    String id = data.getKey();
                     if (username != null && fotoPerfil != null) {
-                        amigosList.add(new Amigos(username, fotoPerfil));
+                        if(amigos != null){
+                            if(!amigos.contains(codigo)){
+                                amigosList.add(new Amigos(id, username, fotoPerfil));
+                            }
+                        }
                     }
+                }
+
+                if(amigosList.isEmpty()){
+                    binding.tvMensajeAmigosVacio.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvMensajeAmigosVacio.setVisibility(View.GONE);
                 }
 
                 amigosAdapter.setAmigosList(amigosList); // Actualizar adaptador con la lista de amigos

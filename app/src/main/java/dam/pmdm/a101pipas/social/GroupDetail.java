@@ -49,11 +49,9 @@ public class GroupDetail extends AppCompatActivity {
         }
 
         // Referencia a la base de datos en Firebase
-        dbRef = FirebaseDatabase.getInstance().getReference("grupos").child(groupId);
+
 
         // Cargar datos del grupo desde Firebase
-        cargarDatosGrupo();
-
         // Botón de regreso
         btnBack.setOnClickListener(v -> finish());
 
@@ -63,43 +61,5 @@ public class GroupDetail extends AppCompatActivity {
         });
     }
 
-    private void cargarDatosGrupo() {
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
-                    Toast.makeText(GroupDetail.this, R.string.group_detail_grupo_no_encontrado, Toast.LENGTH_SHORT).show();
-                    finish();
-                    return;
-                }
 
-                // Obtener los valores desde Firebase
-                String nombreGrupo = snapshot.child("titulo").getValue(String.class);
-                String fotoGrupo = snapshot.child("foto_grupo").getValue(String.class);
-                Long creador = Long.parseLong(snapshot.child("creador").getValue().toString());
-                String fechaCreacion = snapshot.child("fecha_creacion").getValue(String.class);
-                Long numeroIntegrantes = snapshot.child("numero_integrantes").getValue(Long.class);
-                Long desafio = Long.parseLong(snapshot.child("desafio").getValue().toString());
-
-                // Asignar valores a las vistas (evitar valores null)
-                tvNombreGrupo.setText(nombreGrupo != null ? nombreGrupo : "Sin título");
-                tvCreador.setText(creador != null ? "Creador: " + creador : "Creador desconocido");
-                tvFechaCreacion.setText(fechaCreacion != null ? "Creado el: " + fechaCreacion : "Fecha no disponible");
-                tvAventureros.setText(numeroIntegrantes != null ? numeroIntegrantes + " Aventureros" : "0 Aventureros");
-                tvDesafio.setText(desafio != null ? "Desafío: " + desafio : "Desafío no disponible");
-
-                // Cargar imagen con Picasso, si la imagen no existe, usa una por defecto
-                if (fotoGrupo != null && !fotoGrupo.isEmpty()) {
-                    Picasso.get().load(fotoGrupo).placeholder(R.drawable.perfil_por_defecto).into(imgGrupo);
-                } else {
-                    imgGrupo.setImageResource(R.drawable.perfil_por_defecto);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(GroupDetail.this, "Error al obtener datos: " + error.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
 }
