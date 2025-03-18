@@ -21,6 +21,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
+import dam.pmdm.a101pipas.models.User;
 
 public class CrearGrupoViewModel extends ViewModel {
 
@@ -136,5 +137,33 @@ public class CrearGrupoViewModel extends ViewModel {
             }
         });
 
+    }
+
+    // Obtener el ID del usuario actual
+    private MutableLiveData<String> idUsuarioLiveData = new MutableLiveData<>();
+
+    public LiveData<String> getIdUsuarioLiveData() {return idUsuarioLiveData;}
+
+    public void getIdUsuario(String usuario) {
+        refUsuarios.child(usuario).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    User user = snapshot.getValue(User.class);
+                    if (user != null && user.getid() != null) {
+                        idUsuarioLiveData.postValue(user.getid());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void limpiarIdUsuarioLiveData() {
+        idUsuarioLiveData.setValue(null);
     }
 }

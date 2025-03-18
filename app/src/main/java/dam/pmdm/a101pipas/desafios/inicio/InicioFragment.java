@@ -23,7 +23,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentInicioBinding;
-import dam.pmdm.a101pipas.desafios.CrearDesafioActivity;
+import dam.pmdm.a101pipas.desafios.CrearDesafioFragment;
 
 public class InicioFragment extends Fragment {
 
@@ -66,8 +66,7 @@ public class InicioFragment extends Fragment {
         binding.btnAniadirDesafioInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), CrearDesafioActivity.class);
-                startActivity(i);
+                Navigation.findNavController(view).navigate(R.id.crear_desafio);
             }
         });
 

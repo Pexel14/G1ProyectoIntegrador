@@ -43,7 +43,7 @@ import dam.pmdm.a101pipas.models.Grupo;
 public class CrearGrupoFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private String miembros;
+    private String miembros, miembrosId;
     private String amigo;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
     private Uri imageUri;
@@ -79,7 +79,10 @@ public class CrearGrupoFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
-        miembros = aniadirUsuarioActual(miembros);
+        miembrosId = "";
+        miembros = "";
+        aniadirIdUsuario(""); // Si no le pasamos nada, obtiene el usuario actual
+//        miembros = aniadirUsuarioActual(miembros);
         amigo = "";
 
         binding.swHacerPrivadoCrearGrupo.setOnClickListener(new View.OnClickListener() {
@@ -138,11 +141,11 @@ public class CrearGrupoFragment extends Fragment {
                                         grupo.setDesafio(Integer.parseInt(idDesafio));
 
                                         // Si no se han añadido amigos
-                                        if (!miembros.contains(",")) {
+                                        if (!miembrosId.contains(",")) {
                                             Toast.makeText(getContext(), "Debes añadir al menos un amigo", Toast.LENGTH_SHORT).show();
                                         }
                                         else {
-                                            grupo.setMiembros(miembros);
+                                            grupo.setMiembros(miembrosId);
                                             grupo.setFoto_grupo("");
 
                                             viewModel.getCrearGrupoLiveData().observe(getViewLifecycleOwner(), grupoCreado -> {
@@ -210,6 +213,7 @@ public class CrearGrupoFragment extends Fragment {
                                 String miembrosFormateado = miembros.replace(",", "\n");
                                 binding.tvListaAmigosCrearGrupo.setText(miembrosFormateado);
                                 binding.etAmigoCrearGrupo.setText("");
+                                aniadirIdUsuario(ami);
                             } else {
                                 Toast.makeText(getContext(), "El usuario '" + ami + "' no existe", Toast.LENGTH_SHORT).show();
                             }
@@ -323,6 +327,28 @@ public class CrearGrupoFragment extends Fragment {
 
         return taskCompletionSource.getTask();
 
+    }
+
+    private void aniadirIdUsuario(String usuario) {
+
+        if (usuario.isEmpty()) {
+            usuario = mAuth.getCurrentUser().getEmail();
+            if (usuario != null) {
+                usuario = usuario.split("@")[0].replace(".", "");
+            }
+        }
+
+        viewModel.getIdUsuarioLiveData().observe(getViewLifecycleOwner(), id -> {
+            if (!miembrosId.isEmpty()) {
+                miembrosId += ",";
+            }
+
+            miembrosId += id;
+
+            viewModel.limpiarIdUsuarioLiveData();
+        });
+
+        viewModel.getIdUsuario(usuario);
     }
 
     private String aniadirUsuarioActual(String miembros) {

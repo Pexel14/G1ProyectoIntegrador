@@ -62,31 +62,31 @@ public class ListadoExperienciasViewModel extends ViewModel {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String[] exp = snapshot.getValue(String.class).split(",");
                         for (String idExp : exp) {
-                            database.child("experiencias").child(idExp)
-                                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                            Experiencia experiencia = new Experiencia(
-                                                    snapshot2.child("id").getValue().toString(),
-                                                    snapshot2.child("titulo").getValue(String.class),
-                                                    snapshot2.child("descripcion").getValue(String.class),
-                                                    snapshot2.child("imagen").getValue(String.class),
-                                                    snapshot2.child("coordenadas").getValue(String.class)
-                                            );
-                                            if (experiencia != null) {
-                                                listaExperiencias.add(experiencia);
-                                            }
-                                            totalExperiencias[0]++;
-                                            if (totalExperiencias[0] == exp.length) {
-                                                experiencias.setValue(listaExperiencias);
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-                                            Log.e("Firebase", "Error al obtener experiencia: " + error.getMessage());
-                                        }
-                                    });
+//                            database.child("experiencias").child(idExp)
+//                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot snapshot2) {
+//                                            Experiencia experiencia = new Experiencia(
+//                                                    snapshot2.child("id").getValue().toString(),
+//                                                    snapshot2.child("titulo").getValue(String.class),
+//                                                    snapshot2.child("descripcion").getValue(String.class),
+//                                                    snapshot2.child("imagen").getValue(String.class),
+//                                                    snapshot2.child("coordenadas").getValue(String.class)
+//                                            );
+//                                            if (experiencia != null) {
+//                                                listaExperiencias.add(experiencia);
+//                                            }
+//                                            totalExperiencias[0]++;
+//                                            if (totalExperiencias[0] == exp.length) {
+//                                                experiencias.setValue(listaExperiencias);
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError error) {
+//                                            Log.e("Firebase", "Error al obtener experiencia: " + error.getMessage());
+//                                        }
+//                                    });
                         }
 
                         experiencias.setValue(listaExperiencias);

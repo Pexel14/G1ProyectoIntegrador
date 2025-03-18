@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     android:padding="@dimen/padding"
-    tools:context=".desafios.CrearDesafioActivity">
+    tools:context=".desafios.CrearDesafioFragment">
 
     <!-- DECORACIÓN SUPERIOR -->
     <ImageButton
