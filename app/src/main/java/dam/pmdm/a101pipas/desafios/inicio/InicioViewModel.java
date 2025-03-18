@@ -57,7 +57,16 @@ public class InicioViewModel extends ViewModel {
                 List<Desafio> fragmentos = new ArrayList<>();
 
                 for (DataSnapshot desafio : snapshot.getChildren()) {
-                    String desafioId = desafio.child("id").getValue().toString();
+                    String desafioId = ""; 
+
+                    DataSnapshot idSnapshot = desafio.child("id");
+
+                    if (idSnapshot.exists() && idSnapshot.getValue() != null) {
+                        desafioId = idSnapshot.getValue().toString();
+                        Log.d("Firebase", "ID del desafío: " + desafioId);
+                    } else {
+                        Log.e("Firebase", "El campo 'id' no existe o es null");
+                    }
 
                     if (Arrays.asList(desafiosId).contains(desafioId)) {
                         String titulo = desafio.child("titulo").getValue(String.class);

@@ -5,13 +5,24 @@ import com.google.android.gms.maps.model.LatLng;
 public class Experiencia {
     private String id;
     private String titulo, descripcion, imagen, coordenadas;
+    private boolean completada;
 
     public Experiencia() {
+        // Constructor vacío
     }
 
     public Experiencia(String titulo, String descripcion) {
         this.titulo = titulo;
         this.descripcion = descripcion;
+    }
+
+    public Experiencia(String id, String titulo, String descripcion, String imagen, String coordenadas, boolean completada) {
+        this.id = id;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.imagen = imagen;
+        this.coordenadas = coordenadas;
+        this.completada = completada; // Se debe asignar el estado de completada correctamente
     }
 
     public Experiencia(String id, String titulo, String descripcion, String imagen, String coordenadas) {
@@ -20,6 +31,7 @@ public class Experiencia {
         this.descripcion = descripcion;
         this.imagen = imagen;
         this.coordenadas = coordenadas;
+        this.completada = false; // Valor por defecto
     }
 
     public String getId() {
@@ -82,6 +94,14 @@ public class Experiencia {
         }
     }
 
+    public boolean isCompletada() { // Método corregido
+        return completada;
+    }
+
+    public void setCompletada(boolean completada) {
+        this.completada = completada;
+    }
+
     public LatLng getLatLng() {
         if (coordenadas != null && coordenadas.contains(",")) {
             String[] parts = coordenadas.split(",");
@@ -104,6 +124,7 @@ public class Experiencia {
                 ", descripcion='" + descripcion + '\'' +
                 ", imagen='" + imagen + '\'' +
                 ", coordenadas='" + coordenadas + '\'' +
+                ", completada=" + completada + // Añadido para mostrar el estado de completada en el toString
                 '}';
     }
 }

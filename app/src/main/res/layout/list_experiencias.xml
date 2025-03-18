@@ -33,21 +33,6 @@
                 android:textSize="@dimen/tam_texto_pequenio"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/ivCompletado"
-                android:layout_width="72dp"
-                android:layout_height="match_parent"
-                android:src="@drawable/circulo" />
-
-            <TextView
-                android:id="@+id/tvCheck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="@string/list_experiencias_emoji_check"
-                android:textColor="@color/color_principal"
-                android:textSize="@dimen/tam_texto_pequenio" />
-
 
         </LinearLayout>
 
@@ -94,6 +79,12 @@
                 android:textColor="@color/color_principal"
                 android:layout_gravity="end" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/tvCheck"
+            android:layout_width="72dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/circulo" />
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
