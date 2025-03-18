@@ -84,7 +84,7 @@ public class Registro extends AppCompatActivity {
     private void guardarUsuarioEnDatabase(String username, String email, String contrasenia) {
         idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
         String id = email.split("@")[0].replace(".", "");
-        User user = new User(idUltimo, username, email, contrasenia, "", "", "", "", 0);
+        User user = new User(idUltimo, username, email, contrasenia, "", "", "", 0);
 
         // Guardar en Firebase Realtime Database
         databaseReference.child(id).setValue(user).addOnCompleteListener(task -> {

@@ -86,7 +86,6 @@ public class GrupoViewModel extends ViewModel {
                                     data.child("foto_perfil").getValue(String.class),
                                     data.child("grupos").getValue().toString(),
                                     "",
-                                    data.child("desafios").getValue().toString(),
                                     data.child("experiencias_completadas").getValue(Integer.class)
 
                             ));

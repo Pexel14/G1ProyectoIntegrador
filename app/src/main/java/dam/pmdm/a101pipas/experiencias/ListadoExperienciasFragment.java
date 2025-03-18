@@ -99,10 +99,12 @@ public class ListadoExperienciasFragment extends Fragment {
 //        });
 
         binding.btnMeterseADesafio.setOnClickListener(v -> {
-            viewModel.aniadirDesafioAUsuario(resultado -> {
-                if (resultado) {
-                    // Actualiza la UI si el desafío fue agregado correctamente
-                    desafioEmpezado();
+            viewModel.comenzarDesafioEnUsuario(new ListadoExperienciasViewModel.OnResultListener() {
+                @Override
+                public void onResult(boolean success) {
+                    if (success) {
+                        desafioEmpezado();
+                    }
                 }
             });
         });

@@ -146,7 +146,7 @@ public class CrearExperienciasActivity extends AppCompatActivity {
             mapExperiencias.put(ex.getTitulo(), ex);
         }
 
-        desafio.setExperiencias(mapExperiencias);
+        //desafio.setExperiencias(mapExperiencias);
         String keyDesafio = desafio.getTitulo();
 
         databaseReference.child(keyDesafio).setValue(desafio)

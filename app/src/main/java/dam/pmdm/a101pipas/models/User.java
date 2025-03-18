@@ -1,5 +1,7 @@
 package dam.pmdm.a101pipas.models;
 
+import java.util.Map;
+
 public class User {
     private String id;
     private String username;
@@ -7,11 +9,11 @@ public class User {
     private String contrasenia;
     private String foto_perfil;
     private String amigos;
-    private String desafios;
+    private Map<String, DesafioUsuario> desafios;
     private String grupos;
     private int experiencias_completadas;
 
-    public User(String id, String username, String email, String contrasenia, String foto_perfil, String grupos, String amigos, String desafios, int experiencias_completadas) {
+    public User(String id, String username, String email, String contrasenia, String foto_perfil, String grupos, String amigos, int experiencias_completadas) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -19,18 +21,16 @@ public class User {
         this.foto_perfil = foto_perfil;
         this.grupos = grupos;
         this.amigos = amigos;
-        this.desafios = desafios;
         this.experiencias_completadas = experiencias_completadas;
     }
 
-    public User(String id, String username, String email, int experiencias_completadas, String foto_perfil, String amigos, String desafios, String grupos) {
+    public User(String id, String username, String email, int experiencias_completadas, String foto_perfil, String amigos, String grupos) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.foto_perfil = foto_perfil;
         this.grupos = grupos;
         this.amigos = amigos;
-        this.desafios = desafios;
         this.experiencias_completadas = experiencias_completadas;
     }
 
@@ -66,9 +66,7 @@ public class User {
         return amigos;
     }
 
-    public String getDesafios() {
-        return desafios;
-    }
+    public Map<String, DesafioUsuario> getDesafios() {return desafios;}
 
     public String getFoto_perfil() {
         return foto_perfil;
