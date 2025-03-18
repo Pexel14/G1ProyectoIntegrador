@@ -3,6 +3,7 @@ package dam.pmdm.a101pipas.desafios.descubrir;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import java.util.List;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 import dam.pmdm.a101pipas.models.Desafio;
 
 public class DescubrirAdapter extends RecyclerView.Adapter<DescubrirAdapter.DescubrirViewHolder> {
@@ -42,6 +44,13 @@ public class DescubrirAdapter extends RecyclerView.Adapter<DescubrirAdapter.Desc
         holder.tvTitulo.setText(desafio.getTitulo());
         holder.tvCiudad.setText(desafio.getCiudad());
 
+        GeolocalizacionViewModel geolocalizacionViewModel = new ViewModelProvider(fragment.requireActivity()).get(GeolocalizacionViewModel.class);
+
+        holder.ivMaps.setOnClickListener(v -> {
+            geolocalizacionViewModel.setDesafioId(desafio.getTitulo());
+            Navigation.findNavController(v).navigate(R.id.navigation_geolocalizacion);
+        });
+
         ListadoExperienciasViewModel listadoExperienciasViewModel = new ViewModelProvider(fragment.requireActivity()).get(ListadoExperienciasViewModel.class);
 
         holder.itemView.setOnClickListener(v -> {
@@ -60,11 +69,13 @@ public class DescubrirAdapter extends RecyclerView.Adapter<DescubrirAdapter.Desc
     static class DescubrirViewHolder extends RecyclerView.ViewHolder{
 
         TextView tvCiudad, tvTitulo;
+        ImageView ivMaps;
 
         public DescubrirViewHolder(@NonNull View itemView) {
             super(itemView);
             tvCiudad = itemView.findViewById(R.id.tvUbicacionTarjetaDescubrir);
             tvTitulo = itemView.findViewById(R.id.tvTituloTarjetaDescubrir);
+            ivMaps = itemView.findViewById(R.id.imgTarjetaDesafio);
         }
     }
 

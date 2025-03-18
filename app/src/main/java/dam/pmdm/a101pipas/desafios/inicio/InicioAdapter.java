@@ -3,6 +3,7 @@ package dam.pmdm.a101pipas.desafios.inicio;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import java.util.List;
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasFragment;
 import dam.pmdm.a101pipas.experiencias.ListadoExperienciasViewModel;
+import dam.pmdm.a101pipas.geolocalizacion.GeolocalizacionViewModel;
 import dam.pmdm.a101pipas.models.Desafio;
 
 public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioViewHolder> {
@@ -44,6 +46,13 @@ public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioView
         holder.tvCiudad.setText(desafio.getCiudad());
         holder.tvDesafio.setText(desafio.getTitulo());
 
+        GeolocalizacionViewModel geolocalizacionViewModel = new ViewModelProvider(fragment.requireActivity()).get(GeolocalizacionViewModel.class);
+
+        holder.ivMaps.setOnClickListener(v -> {
+            geolocalizacionViewModel.setDesafioId(desafio.getTitulo());
+            Navigation.findNavController(v).navigate(R.id.navigation_geolocalizacion);
+        });
+
         ListadoExperienciasViewModel listadoExperienciasViewModel = new ViewModelProvider(fragment.requireActivity()).get(ListadoExperienciasViewModel.class);
 
         holder.itemView.setOnClickListener(v -> {
@@ -66,6 +75,7 @@ public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioView
 
     public static class InicioViewHolder extends RecyclerView.ViewHolder{
         TextView tvCiudad, tvDesafio, tvEtiuqetas, tvDescripcion;
+        ImageView ivMaps;
 
         public InicioViewHolder(@NonNull View itemView){
             super(itemView);
@@ -73,6 +83,7 @@ public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioView
             tvDesafio = itemView.findViewById(R.id.tvTituloTarjetaInicio);
             tvEtiuqetas = itemView.findViewById(R.id.tvEtiquetasTarjetaInicio);
             tvDescripcion = itemView.findViewById(R.id.tvDescripcionTarjetaInicio);
+            ivMaps = itemView.findViewById(R.id.imgTarjetaInicio);
         }
 
     }

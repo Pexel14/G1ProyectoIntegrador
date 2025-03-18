@@ -82,7 +82,15 @@ public class GeolocalizacionViewModel extends ViewModel {
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot2) {
-                                            Experiencia exp = snapshot2.getValue(Experiencia.class);
+
+//                                            String id, String titulo, String descripcion, String imagen, String coordenadas
+                                            Experiencia exp = new Experiencia(
+                                                    snapshot2.child("id").getValue().toString(),
+                                                    snapshot2.child("titulo").getValue().toString(),
+                                                    snapshot2.child("descripcion").getValue().toString(),
+                                                    snapshot2.child("imagen").getValue().toString(),
+                                                    snapshot2.child("coordenadas").getValue().toString()
+                                            );
                                             if (exp != null) {
                                                 listaExperiencias.add(exp);
                                             }
