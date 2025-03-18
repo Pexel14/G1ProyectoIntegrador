@@ -80,6 +80,7 @@ public class ListaGruposFragment extends Fragment {
                 auxGrupos.add(grupo);
             }
         }
+
         binding.rvListaGrupos.setAdapter(new GruposAdapter(auxGrupos, this));
 
     }

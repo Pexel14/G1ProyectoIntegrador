@@ -179,11 +179,6 @@
     <string name="desafio_mensaje_no_desafios">No se han encontrado desafíos</string>
     <string name="inicio_mensaje_barra_busqueda">Busca tus desafíos</string>
     <string name="descubrir_mensaje_barra_busqueda">Descubre desafíos</string>
-    <string name="arte_descubrir">Arte</string>
-    <string name="ocio_descubrir">Ocio</string>
-    <string name="desafio_mensaje_no_desafios">No se han encontrado desafíos</string>
-    <string name="inicio_mensaje_barra_busqueda">Busca tus desafíos</string>
-    <string name="descubrir_mensaje_barra_busqueda">Descubre desafíos</string>
     <string name="preguntas_frecuentes">Preguntas Frecuentes</string>
     <string name="consulta_las_preguntas_m_s_frecuentes_sobre_101">Consulta las preguntas más frecuentes sobre 101.</string>
     <string name="ponerse_en_contacto">Ponerse en contacto</string>
@@ -216,4 +211,8 @@
     <string name="en_la_secci_n_de_ajustes_selecciona_reportar_un_problema_y_elige_el_tipo_de_incidencia">En la sección de ajustes, selecciona \'Reportar un problema\' y elige el tipo de incidencia.</string>
     <string name="c_mo_personalizo_mi_perfil">¿Cómo personalizo mi perfil?</string>
     <string name="desde_tu_perfil_puedes_cambiar_tu_nombre_de_usuario_y_foto_de_perfil_f_cilmente">Desde tu perfil, puedes cambiar tu nombre de usuario y foto de perfil fácilmente.</string>
+    <string name="social_mensaje_sin_grupos">Ahora mismo no tienes grupos. ¡Únete a uno o crea el tuyo! 🎉</string>
+    <string name="social_mensaje_sin_amigos">Ahora mismo no tienes amigos. ¡Anímate y suma gente a tu diversión! 😄</string>
+    <string name="social_buscador_sin_grupos">No se han encontrado grupos</string>
+    <string name="social_buscador_sin_amigos">No se han encontrado amigos</string>
 </resources>

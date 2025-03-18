@@ -26,6 +26,8 @@ public class DescubrirFragment extends Fragment {
     private DescubrirAdapter adapterFiltro1, adapterFiltro2, adapterFiltro3, adapterFiltro4, adapterTodos;
     private DescubrirViewModel descubrirViewModel;
 
+    private String [] etiquetas = {"Arte","Gastronomía","Cultura","Ocio"};
+
     private List<Desafio> listaTodosDesafios, listaDesafios1, listaDesafios2, listaDesafios3, listaDesafios4;
 
     @Nullable
@@ -128,19 +130,19 @@ public class DescubrirFragment extends Fragment {
         if(!desafios.isEmpty()){
             for(Desafio desafio : desafios){
                 listaTodosDesafios.add(desafio);
-                if(desafio.getEtiquetas().contains(binding.tvFiltro1Descubrir.getText().toString())){
+                if(desafio.getEtiquetas().contains(etiquetas[0])){
                     listaDesafios1.add(desafio);
                 }
 
-                 if(desafio.getEtiquetas().contains(binding.tvFiltro2Descubrir.getText().toString())){
+                 if(desafio.getEtiquetas().contains(etiquetas[1])){
                     listaDesafios2.add(desafio);
                 }
 
-                 if(desafio.getEtiquetas().contains(binding.tvFiltro3Descubrir.getText().toString())){
+                 if(desafio.getEtiquetas().contains(etiquetas[2])){
                     listaDesafios3.add(desafio);
                 }
 
-                 if(desafio.getEtiquetas().contains(binding.tvFiltro4Descubrir.getText().toString())){
+                 if(desafio.getEtiquetas().contains(etiquetas[3])){
                     listaDesafios4.add(desafio);
                 }
             }

@@ -104,8 +104,21 @@ public class SocialFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                buscar(newText);
-                if(newText.isEmpty()){
+                buscar(newText.trim());
+
+                if(amigosList.isEmpty()){
+                    binding.tvNoAmigos.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvNoAmigos.setVisibility(View.GONE);
+                }
+
+                if(gruposList.isEmpty()){
+                    binding.tvNoGrupos.setVisibility(View.VISIBLE);
+                } else {
+                    binding.tvNoGrupos.setVisibility(View.GONE);
+                }
+
+                if(newText.trim().isEmpty()){
                     binding.rvAmigosBuscador.setVisibility(View.GONE);
                     binding.rvGruposBuscador.setVisibility(View.GONE);
                     binding.tvAmigosBuscador.setVisibility(View.GONE);
@@ -134,6 +147,19 @@ public class SocialFragment extends Fragment {
                     binding.tvAmigos.setVisibility(View.GONE);
                     binding.tvGrupos.setVisibility(View.GONE);
                 }
+//                TODO: Hacer que al estar vacios aparezca un mensaje
+//                if(todosAmigos.isEmpty()){
+//                    binding.tvSinAmigos.setVisibility(View.VISIBLE);
+//                } else {
+//                    binding.tvSinAmigos.setVisibility(View.GONE);
+//                }
+//
+//                if(todosGrupos.isEmpty()){
+//                    binding.tvSinGrupos.setVisibility(View.VISIBLE);
+//                } else {
+//                    binding.tvSinGrupos.setVisibility(View.GONE);
+//                }
+
                 return true;
             }
         });
@@ -182,14 +208,17 @@ public class SocialFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 amigosList.clear();
 
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    if(amigosUser.contains(data.child("id").getValue().toString())){
-                        String username = data.child("username").getValue(String.class);
-                        String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                        amigosList.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
+                if(amigosUser != null) {
+                    if(!amigosUser.isEmpty()){
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            if(amigosUser.contains(data.child("id").getValue().toString())){
+                                String username = data.child("username").getValue(String.class);
+                                String fotoPerfil = data.child("foto_perfil").getValue(String.class);
+                                amigosList.add(new Amigos(username, fotoPerfil != null ? fotoPerfil : ""));
+                            }
+                        }
                     }
                 }
-
 
                 // CONTROLAR VISIBILIDAD
                 if (amigosList.isEmpty()) {
@@ -215,12 +244,16 @@ public class SocialFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 gruposList.clear();
 
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    if(gruposUser.contains(data.child("id").getValue().toString())){
-                        String idGrupo = data.getKey();
-                        String nombreGrupo = data.child("titulo").getValue(String.class);
-                        String fotoGrupo = data.child("foto_grupo").getValue(String.class);
-                        gruposList.add(new Grupo(idGrupo, nombreGrupo, fotoGrupo));
+                if(gruposUser != null){
+                    if(!gruposUser.isEmpty()){
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            if(gruposUser.contains(data.child("id").getValue().toString())){
+                                String idGrupo = data.getKey();
+                                String nombreGrupo = data.child("titulo").getValue(String.class);
+                                String fotoGrupo = data.child("foto_grupo").getValue(String.class);
+                                gruposList.add(new Grupo(idGrupo, nombreGrupo, fotoGrupo));
+                            }
+                        }
                     }
                 }
 

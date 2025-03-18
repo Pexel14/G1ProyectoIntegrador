@@ -73,7 +73,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/akaya_telivigala"
-        android:text="Ahora mismo no tienes amigos. ¡Anímate y suma gente a tu diversión! 😄"
+        android:text="@string/social_mensaje_sin_amigos"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,6 @@
         app:layout_constraintStart_toEndOf="@id/tv_grupos"
         app:layout_constraintTop_toTopOf="@id/tv_grupos"/>
 
-
     <!-- RecyclerView Grupos -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_grupos"
@@ -128,15 +127,13 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/akaya_telivigala"
-        android:text="Ahora mismo no tienes grupos. ¡Únete a uno o crea el tuyo! 🎉"
+        android:text="@string/social_mensaje_sin_grupos"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_grupos"
         android:visibility="gone"/>
-
-
 
 
     <LinearLayout
@@ -163,6 +160,19 @@
             app:layout_constraintBottom_toTopOf="@+id/rv_amigos_buscador"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="20dp"/>
+
+        <TextView
+            android:id="@+id/tvSinAmigos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:elevation="20dp"
+            android:text="@string/social_buscador_sin_amigos"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_amigos_buscador"
@@ -195,6 +205,19 @@
             app:layout_constraintBottom_toTopOf="@+id/rv_grupos_buscador"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_amigos_buscador" />
+
+        <TextView
+            android:id="@+id/tvSinGrupos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textAlignment="center"
+            android:elevation="20dp"
+            android:text="@string/social_buscador_sin_grupos"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_grupos_buscador"
