@@ -15,6 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Desafio;
@@ -23,6 +25,8 @@ public class InicioViewModel extends ViewModel {
 
     private final MutableLiveData<List<Desafio>> desafiosLiveData = new MutableLiveData<>();
     private ValueEventListener listenerUsuario, listenerDesafios;
+
+    private String [] desafiosID;
 
     public LiveData<List<Desafio>> getDesafiosLiveData() {
         return desafiosLiveData;
@@ -37,8 +41,40 @@ public class InicioViewModel extends ViewModel {
                     return;
                 }
 
-                String[] desafiosID = snapshot.getValue().toString().split(",");
-                cargarDesafiosPorId(refDesafios, desafiosID);
+                refDesafiosUsuario.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<String> aux = new ArrayList<>();
+
+                        Object valor = snapshot.getValue();
+
+                        Log.d("INICIO", valor.getClass().getSimpleName() + " - " + snapshot.getChildrenCount());
+
+                        if(valor instanceof Map){
+                            Map<String, Object> map = (Map<String, Object>) valor;
+
+                            if(map != null){
+                                Set<String> claves = map.keySet();
+
+                                aux = new ArrayList<>(claves);
+
+                            }
+                        }
+
+                        if(!aux.isEmpty()){
+                            desafiosID = aux.toArray(new String[0]);
+                        } else {
+                            desafiosID = new String [0];
+                        }
+
+                        cargarDesafiosPorId(refDesafios, desafiosID);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -57,7 +93,7 @@ public class InicioViewModel extends ViewModel {
                 List<Desafio> fragmentos = new ArrayList<>();
 
                 for (DataSnapshot desafio : snapshot.getChildren()) {
-                    String desafioId = desafio.child("id").getValue().toString();
+                    String desafioId = desafio.child("titulo").getValue().toString();
 
                     if (Arrays.asList(desafiosId).contains(desafioId)) {
                         String titulo = desafio.child("titulo").getValue(String.class);

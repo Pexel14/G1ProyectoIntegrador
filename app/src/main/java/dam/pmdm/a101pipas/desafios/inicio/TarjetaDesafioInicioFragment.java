@@ -89,7 +89,7 @@ public class TarjetaDesafioInicioFragment extends Fragment {
                 = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
 
         view.setOnClickListener(v -> {
-            listadoExperienciasViewModel.setIdDesafio(key, titulo);
+            listadoExperienciasViewModel.setIdDesafio(titulo);
             Navigation.findNavController(view).navigate(R.id.navigation_listado_experiencias);
         });
     }

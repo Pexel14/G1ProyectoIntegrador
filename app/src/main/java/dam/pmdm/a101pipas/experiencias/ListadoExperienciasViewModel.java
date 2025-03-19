@@ -45,8 +45,7 @@ public class ListadoExperienciasViewModel extends ViewModel {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    public void setIdDesafio(String id, String titulo) {
-        idReal = Long.parseLong(id);
+    public void setIdDesafio(String titulo) {
         cargarExperiencias(titulo);
         tituloDesafio = titulo;
     }
@@ -108,10 +107,10 @@ public class ListadoExperienciasViewModel extends ViewModel {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         boolean empezado = snapshot.exists();
 
-                        if (empezado) {
-                            String estado = snapshot.child("estado").getValue(String.class);
-                            empezado = !"completado".equals(estado);
-                        }
+//                        if (empezado) {
+//                            String estado = snapshot.child("estado").getValue(String.class);
+//                            empezado = !"completado".equals(estado);
+//                        }
 
                         listener.onResult(empezado);
                     }

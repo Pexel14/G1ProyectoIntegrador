@@ -78,6 +78,12 @@ public class GrupoViewModel extends ViewModel {
                     grupos = data.child("grupos").getValue().toString();
                     if(grupos != null && !grupos.isEmpty()){
                         if(grupos.contains(String.valueOf(idGrupo))){
+                            int experiencias = 0;
+
+                            if(data.hasChild("experiencias_completadas")){
+                                experiencias = Integer.parseInt(data.child("experiencias_completadas").getValue().toString());
+                            }
+
                             listaUsuarios.add(new User(
                                     data.child("id").getValue().toString(),
                                     data.child("username").getValue(String.class),
@@ -86,7 +92,7 @@ public class GrupoViewModel extends ViewModel {
                                     data.child("foto_perfil").getValue(String.class),
                                     data.child("grupos").getValue().toString(),
                                     "",
-                                    data.child("experiencias_completadas").getValue(Integer.class)
+                                    experiencias
 
                             ));
                         }
