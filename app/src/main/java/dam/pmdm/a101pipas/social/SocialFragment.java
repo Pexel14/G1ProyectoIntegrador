@@ -218,8 +218,9 @@ public class SocialFragment extends Fragment {
                             if(amigosUser.contains(data.child("id").getValue().toString())){
                                 String id = data.getKey();
                                 String username = data.child("username").getValue(String.class);
+                                String email = data.child("email").getValue(String.class);
                                 String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                                amigosList.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : ""));
+                                amigosList.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : "", email));
                             }
                         }
                     }
@@ -289,8 +290,9 @@ public class SocialFragment extends Fragment {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String id = data.getKey();
                     String username = data.child("username").getValue(String.class);
+                    String email = data.child("email").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                    todosAmigos.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : ""));
+                    todosAmigos.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : "", email));
                 }
             }
 

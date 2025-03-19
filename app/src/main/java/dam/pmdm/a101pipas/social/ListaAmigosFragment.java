@@ -56,7 +56,7 @@ public class ListaAmigosFragment extends Fragment {
         dbRef = FirebaseDatabase.getInstance().getReference("usuarios"); // Cambiamos Firestore por Realtime Database
 
         amigosList = new ArrayList<>();
-        amigosAdapter = new AmigosAdapter(amigosList);
+        amigosAdapter = new AmigosAdapter(amigosList, this);
         binding.rvListaAmigos.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvListaAmigos.setAdapter(amigosAdapter);
 
@@ -103,22 +103,27 @@ public class ListaAmigosFragment extends Fragment {
     }
 
     private void buscar(String newText) {
-        ArrayList<Amigos> auxAmigos = new ArrayList<>();
-        for (Amigos amigo : amigosList) {
-            if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
-                if(!amigos.contains(amigo.getId())){
-                    auxAmigos.add(amigo);
+        if(!newText.isEmpty()){
+            ArrayList<Amigos> auxAmigos = new ArrayList<>();
+            for (Amigos amigo : amigosList) {
+                if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
+                    if(!amigos.contains(amigo.getId())){
+                        auxAmigos.add(amigo);
+                    }
                 }
             }
-        }
+            if(auxAmigos.isEmpty()){
+                binding.tvMensajeAmigosVacio.setVisibility(View.VISIBLE);
+            } else {
+                binding.tvMensajeAmigosVacio.setVisibility(View.GONE);
+            }
 
-        if(auxAmigos.isEmpty()){
-            binding.tvMensajeAmigosVacio.setVisibility(View.VISIBLE);
+            binding.rvListaAmigos.setAdapter(new AmigosAdapter(auxAmigos, this));
         } else {
-            binding.tvMensajeAmigosVacio.setVisibility(View.GONE);
+            amigosAdapter.setAmigosList(amigosList);
+            binding.rvListaAmigos.setAdapter(amigosAdapter);
         }
 
-        binding.rvListaAmigos.setAdapter(new AmigosAdapter(auxAmigos));
     }
 
     private void cargarListaAmigosDesdeFirebase() {
@@ -129,13 +134,14 @@ public class ListaAmigosFragment extends Fragment {
 
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String username = data.child("username").getValue(String.class);
+                    String email = data.child("email").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
                     String codigo = data.child("id").getValue().toString();
                     String id = data.getKey();
                     if (username != null && fotoPerfil != null) {
                         if(amigos != null){
                             if(!amigos.contains(codigo)){
-                                amigosList.add(new Amigos(id, username, fotoPerfil));
+                                amigosList.add(new Amigos(id, username, fotoPerfil, email));
                             }
                         }
                     }

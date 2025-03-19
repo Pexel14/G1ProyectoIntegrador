@@ -115,20 +115,28 @@ public class ListaGruposFragment extends Fragment {
     }
 
     private void buscar(String newText) {
-        ArrayList<Grupo> auxGrupos = new ArrayList<>();
-        for (Grupo grupo : gruposList) {
-            if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
-                if(!grupos.contains(grupo.getIdGrupo())){
-                    auxGrupos.add(grupo);
+        if(!newText.isEmpty()){
+            ArrayList<Grupo> auxGrupos = new ArrayList<>();
+            for (Grupo grupo : gruposList) {
+                if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
+                    if(!grupos.contains(grupo.getIdGrupo())){
+                        auxGrupos.add(grupo);
+                    }
                 }
             }
+            if(auxGrupos.isEmpty()){
+                binding.tvMensajeGruposVacio.setVisibility(View.VISIBLE);
+            } else {
+                binding.tvMensajeGruposVacio.setVisibility(View.GONE);
+            }
+
+            binding.rvListaGrupos.setAdapter(new GruposAdapter(auxGrupos, this));
+        } else {
+            gruposAdapter.setGruposList(gruposList);
+            binding.rvListaGrupos.setAdapter(gruposAdapter);
         }
 
-        if(auxGrupos.isEmpty()){
-            binding.tvMensajeGruposVacio.setVisibility(View.VISIBLE);
-        }
 
-        binding.rvListaGrupos.setAdapter(new GruposAdapter(auxGrupos, this));
 
     }
 

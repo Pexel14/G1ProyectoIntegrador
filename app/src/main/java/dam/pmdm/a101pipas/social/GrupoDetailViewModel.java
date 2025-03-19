@@ -62,6 +62,12 @@ public class GrupoDetailViewModel extends ViewModel {
         dbUser.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int experiencias = 0;
+
+                if(snapshot.hasChild("experiencias_completadas")){
+                    experiencias = Integer.parseInt(snapshot.child("experiencias_completadas").getValue().toString());
+                }
+
                 User usuario = new User(
                         snapshot.child("id").getValue().toString(),
                         snapshot.child("username").getValue(String.class),
@@ -70,8 +76,7 @@ public class GrupoDetailViewModel extends ViewModel {
                         snapshot.child("foto_perfil").getValue(String.class),
                         snapshot.child("grupos").getValue().toString(),
                         snapshot.child("amigos").getValue().toString(),
-                        snapshot.child("desafios").getValue().toString(),
-                        snapshot.child("experiencias_completadas").getValue(Integer.class)
+                        experiencias
                 );
 
                 if(usuario.getGrupos().split(",").length > 0){

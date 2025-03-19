@@ -56,6 +56,14 @@ public class RecuperarContrasenia extends AppCompatActivity {
                 verificarUsuarioEnBBDD(email);
             }
         });
+
+        binding.btnAtrasRecuperarContrasenia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volverAtras(v);
+            }
+        });
+
     }
 
     private void verificarUsuarioEnBBDD(String email) {

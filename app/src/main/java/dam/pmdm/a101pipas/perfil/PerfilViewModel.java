@@ -51,7 +51,23 @@ public class PerfilViewModel extends ViewModel {
         refUsuarios.child(usuarioId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                User user = snapshot.getValue(User.class);
+                int experiencias = 0;
+
+                if(snapshot.hasChild("experiencias_completadas")){
+                    experiencias = Integer.parseInt(snapshot.child("experiencias_completadas").getValue().toString());
+                }
+
+                User user = new User(
+                        snapshot.child("id").getValue().toString(),
+                        snapshot.child("username").getValue(String.class),
+                        snapshot.child("email").getValue(String.class),
+                        "",
+                        snapshot.child("foto_perfil").getValue(String.class),
+                        snapshot.child("grupos").getValue().toString(),
+                        snapshot.child("amigos").getValue().toString(),
+                        experiencias
+                );
+
                 usuarioLiveData.setValue(user);
             }
             @Override public void onCancelled(@NonNull DatabaseError error) {}

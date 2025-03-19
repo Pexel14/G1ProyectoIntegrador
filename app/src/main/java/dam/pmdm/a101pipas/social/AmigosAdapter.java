@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,14 +18,17 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Amigos;
+import dam.pmdm.a101pipas.perfil.PerfilFragment;
+import dam.pmdm.a101pipas.perfil.PerfilViewModel;
 
 public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewHolder> {
 
     private List<Amigos> amigosList;
-
+    private Fragment fragment;
     // Constructor
-    public AmigosAdapter(List<Amigos> amigosList) {
+    public AmigosAdapter(List<Amigos> amigosList, Fragment fragment) {
         this.amigosList = amigosList;
+        this.fragment = fragment;
     }
 
     @NonNull
@@ -46,7 +51,11 @@ public class AmigosAdapter extends RecyclerView.Adapter<AmigosAdapter.AmigoViewH
         }
         holder.tvUsername.setText(amigo.getUsername());
 
+        PerfilViewModel perfilViewModel = new ViewModelProvider(fragment.requireActivity()).get(PerfilViewModel.class);
+
         holder.itemView.setOnClickListener(view -> {
+            PerfilAmigoFragment.setTipo(1);
+            perfilViewModel.setUsuarioId(amigo.getEmail().split("@")[0].replace(".",""));
             Navigation.findNavController(view).navigate(R.id.navigation_perfil_amigo);
         });
     }

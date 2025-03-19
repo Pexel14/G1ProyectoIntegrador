@@ -8,7 +8,7 @@
     android:padding="16dp">
 
     <ImageButton
-        android:id="@+id/btnAtrasCrearExperiencias"
+        android:id="@+id/btnAtrasAmigo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,41 +19,163 @@
         android:scaleType="fitCenter"/>
 
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/img_avatar"
         android:layout_width="125dp"
         android:layout_height="125dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_perfil"
+        app:shapeAppearanceOverlay="@style/CircularImageViewStyle"
         android:layout_marginTop="@dimen/separacion_mediana_quince"
-        app:layout_constraintTop_toBottomOf="@id/btnAtrasCrearExperiencias"
+        app:layout_constraintTop_toBottomOf="@id/btnAtrasAmigo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <!-- Nombre de usuario -->
+
+    <!-- Handle del usuario -->
     <TextView
-        android:id="@+id/txt_nombre"
+        android:id="@+id/txt_nick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/separacion_mediana_quince"
         android:textAlignment="center"
-        android:fontFamily="@font/yellowtail"
-        android:text="Nombre del Amigo"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="@string/perfil_nick"
         android:textColor="@color/black"
         android:textSize="@dimen/tam_titulo"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.56"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/img_avatar" />
+        app:layout_constraintTop_toBottomOf="@+id/img_avatar" />
 
+    <TextView
+        android:id="@+id/txt_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/separacion_pequenia_cinco"
+        android:fontFamily="@font/akaya_telivigala"
+        android:text="@string/perfil_nombre"
+        android:textColor="@color/texto_secundario"
+        android:textSize="@dimen/tam_texto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_nick" />
+
+    <!-- Separador -->
     <View
-        android:id="@+id/view_separator"
+        android:id="@+id/view_separator1"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="@color/texto_secundario"
         app:layout_constraintTop_toBottomOf="@+id/txt_nombre"
+        app:layout_constraintBottom_toTopOf="@+id/ibtnDesafiosEmpezados"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/separacion_grande_treinta" />
+
+    <!-- BOTÓN DESAFIOS EMPEZADOS -->
+    <ImageView
+        android:id="@+id/ibtnDesafiosEmpezados"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:padding="5dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_desafios1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ibtnDesafiosCompletados"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"
+        android:elevation="3dp"/>
+
+    <ToggleButton
+        android:id="@+id/tbtnDesafiosEmpezados"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintEnd_toEndOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintTop_toTopOf="@id/ibtnDesafiosEmpezados"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDesafiosEmpezados"
+        android:background="@color/white"
+        android:textOn=""
+        android:textOff=""
+        android:text=""/>
+
+    <!-- BOTÓN DESAFIOS COMPLETADOS -->
+    <ImageView
+        android:id="@+id/ibtnDesafiosCompletados"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:background="@color/white"
+        android:src="@drawable/ic_completados1"
+        app:layout_constraintStart_toEndOf="@+id/ibtnDesafiosEmpezados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator1"
+        android:elevation="3dp"/>
+
+    <ToggleButton
+        android:id="@+id/tbtnDesafiosCompletados"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintEnd_toEndOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintTop_toTopOf="@id/ibtnDesafiosCompletados"
+        app:layout_constraintBottom_toBottomOf="@id/ibtnDesafiosCompletados"
+        android:background="@color/white"
+        android:textOn=""
+        android:textOff=""
+        android:text=""/>
+
+    <View
+        android:id="@+id/view_separator2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/texto_secundario"
+        app:layout_constraintTop_toBottomOf="@+id/ibtnDesafiosEmpezados"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- RecyclerView para la lista dinámica -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_desafios"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/view_separator2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/separacion_pequenia_cinco"/>
+
+    <!-- Textos si no hay desafíos comenzados o terminados -->
+    <TextView
+        android:id="@+id/tvNoDesafiosComenzados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_separator2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/no_hay_desafios_comenzados_perfil"
+        android:textSize="@dimen/tam_texto"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/tvNoDesafiosTerminados"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_separator2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/no_has_terminado_desafio_perfil"
+        android:textSize="@dimen/tam_texto"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:visibility="gone"/>
 
 
 

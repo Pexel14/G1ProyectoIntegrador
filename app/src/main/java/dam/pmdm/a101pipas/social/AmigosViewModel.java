@@ -35,10 +35,11 @@ public class AmigosViewModel extends ViewModel {
                 for (DataSnapshot data : snapshot.getChildren()) {
                     String userId = data.getKey();
                     String username = data.child("username").getValue(String.class);
+                    String email = data.child("email").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
 
                     if (username != null && userId != null) {
-                        lista.add(new Amigos(userId, username, fotoPerfil));
+                        lista.add(new Amigos(userId, username, fotoPerfil, email));
                     }
                 }
                 amigosList.setValue(lista);

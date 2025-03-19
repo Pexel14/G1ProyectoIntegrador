@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,12 +42,18 @@ public class PerfilFragment extends Fragment {
         binding.rvDesafios.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvDesafios.setAdapter(adapter);
 
-        String usuarioId = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");;
-        viewModel.setUsuarioId(usuarioId);
-
         viewModel.getUsuarioLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
                 binding.txtNick.setText(user.getUsername());
+
+                if(!user.getFoto_perfil().isEmpty()){
+                    Picasso.get()
+                            .load(user.getFoto_perfil())
+                            .placeholder(R.drawable.perfil_por_defecto)
+                            .fit().centerCrop()
+                        .into(binding.imgAvatar);
+                }
+
                 binding.txtNombre.setText("@" + user.getEmail().split("@")[0].replace(".", ""));
             }
         });

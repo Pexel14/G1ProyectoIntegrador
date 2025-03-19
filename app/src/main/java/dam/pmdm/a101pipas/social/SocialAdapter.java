@@ -19,6 +19,8 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Amigos;
+import dam.pmdm.a101pipas.perfil.PerfilFragment;
+import dam.pmdm.a101pipas.perfil.PerfilViewModel;
 import dam.pmdm.a101pipas.ranking.GrupoViewModel;
 
 public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialViewHolder> {
@@ -56,7 +58,11 @@ public class SocialAdapter extends RecyclerView.Adapter<SocialAdapter.SocialView
                         .into(holder.imgPerfil);
             }
 
+            PerfilViewModel perfilViewModel = new ViewModelProvider(fragment.requireActivity()).get(PerfilViewModel.class);
+
             holder.itemView.setOnClickListener(v -> {
+                PerfilAmigoFragment.setTipo(0);
+                perfilViewModel.setUsuarioId(amigo.getEmail().split("@")[0].replace(".",""));
                 Navigation.findNavController(v).navigate(R.id.navigation_perfil_amigo);
             });
 
