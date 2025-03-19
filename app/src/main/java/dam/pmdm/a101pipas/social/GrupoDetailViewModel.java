@@ -14,6 +14,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Map;
+
+import dam.pmdm.a101pipas.models.DesafioUsuario;
 import dam.pmdm.a101pipas.models.Grupo;
 import dam.pmdm.a101pipas.models.User;
 
@@ -63,9 +66,14 @@ public class GrupoDetailViewModel extends ViewModel {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int experiencias = 0;
+                Map<String, DesafioUsuario> desafios = null;
 
                 if(snapshot.hasChild("experiencias_completadas")){
                     experiencias = Integer.parseInt(snapshot.child("experiencias_completadas").getValue().toString());
+                }
+                Object valor = snapshot.child("desafios").getValue();
+                if(snapshot.hasChild("desafios")){
+                    desafios = (Map<String, DesafioUsuario>) valor;
                 }
 
                 User usuario = new User(
@@ -76,7 +84,8 @@ public class GrupoDetailViewModel extends ViewModel {
                         snapshot.child("foto_perfil").getValue(String.class),
                         snapshot.child("grupos").getValue().toString(),
                         snapshot.child("amigos").getValue().toString(),
-                        experiencias
+                        experiencias,
+                        desafios
                 );
 
                 if(usuario.getGrupos() == null || usuario.getGrupos().trim().isEmpty()){

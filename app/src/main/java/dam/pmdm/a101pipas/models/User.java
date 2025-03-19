@@ -24,6 +24,18 @@ public class User {
         this.experiencias_completadas = experiencias_completadas;
     }
 
+    public User(String id, String username, String email, String contrasenia, String foto_perfil, String grupos, String amigos, int experiencias_completadas, Map<String, DesafioUsuario> desafios) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.contrasenia = contrasenia;
+        this.foto_perfil = foto_perfil;
+        this.grupos = grupos;
+        this.amigos = amigos;
+        this.experiencias_completadas = experiencias_completadas;
+        this.desafios = desafios;
+    }
+
     public User(String id, String username, String email, int experiencias_completadas, String foto_perfil, String amigos, String grupos) {
         this.id = id;
         this.username = username;
