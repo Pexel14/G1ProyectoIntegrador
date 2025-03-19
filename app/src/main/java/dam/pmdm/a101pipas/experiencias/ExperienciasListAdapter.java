@@ -34,6 +34,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
     private String tituloDesafio; // Almacena el título del desafío
 
     // Interfaz para manejar clics en las experiencias
+
     public interface OnExperienciaClickListener {
         void onExperienciaClick(Experiencia experiencia);
     }
@@ -41,9 +42,9 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
     public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener, String tituloDesafio) {
         this.experienciaList = experienciaList;
         this.listener = listener;
-        this.tituloDesafio = tituloDesafio; // Asignar el título del desafío
-        this.experienciasCompletadas = new HashSet<>(); // Inicializar el conjunto
-        cargarExperienciasCompletadas(); // Cargar los IDs de experiencias completadas
+        this.experienciasCompletadas = new HashSet<>();
+        this.tituloDesafio = tituloDesafio;
+        cargarExperienciasCompletadas();
     }
 
     // Carga las experiencias completadas desde la base de datos

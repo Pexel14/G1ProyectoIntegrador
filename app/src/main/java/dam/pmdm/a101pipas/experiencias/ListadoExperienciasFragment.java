@@ -1,6 +1,7 @@
 package dam.pmdm.a101pipas.experiencias;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +27,20 @@ public class ListadoExperienciasFragment extends Fragment {
 
     private GeolocalizacionViewModel geolocalizacionViewModel;
     private ListadoExperienciasViewModel viewModel;
+    String tituloDesafio;
+
     private static int volverAtras;
+
+    public static void setVolverAtras(int volverAtras) {
+        ListadoExperienciasFragment.volverAtras = volverAtras;
+    }
 
     private ExperienciasListAdapter adapter;
     private List<Experiencia> experienciaList;
+
     private FragmentListadoExperienciasBinding binding;
+
+    private boolean[] desafioEmpezado = {false};
 
     @Nullable
     @Override
@@ -41,35 +53,22 @@ public class ListadoExperienciasFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeViewModels();
-        setupRecyclerView();
-
-        binding.imgVolverAtras.setOnClickListener(v -> navigateToPreviousScreen());
-
-        // Manejo del botón para unirse al desafío
-        binding.btnMeterseADesafio.setOnClickListener(v -> {
-            viewModel.aniadirDesafioAUsuario(this::onDesafioAdded);
-        });
-
-        // Verifica si el desafío ha comenzado
-        verificarDesafioEmpezado();
-    }
-
-    private void initializeViewModels() {
         viewModel = new ViewModelProvider(requireActivity()).get(ListadoExperienciasViewModel.class);
         geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
-    }
 
-    private void setupRecyclerView() {
+        binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        tituloDesafio = viewModel.getTituloDesafio();
+
+        // Inicializar lista y adaptador
         experienciaList = new ArrayList<>();
         adapter = new ExperienciasListAdapter(experienciaList, experiencia, tituloDesafio -> {
             if (experiencia.getLatLng() != null) {
                 geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
-                Navigation.findNavController(getView()).navigate(R.id.navigation_geolocalizacion);
+
+                Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
         });
 
-        binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.rvExperiencias.setAdapter(adapter);
 
         viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {
@@ -80,25 +79,61 @@ public class ListadoExperienciasFragment extends Fragment {
 
         viewModel.getProgreso().observe(getViewLifecycleOwner(), this::actualizarProgreso);
         actualizarTitulo(viewModel.getTituloDesafio());
-    }
 
-    private void navigateToPreviousScreen() {
-        int destinationId = volverAtras == 0 ? R.id.navigation_inicio : R.id.navigation_descubrir;
-        Navigation.findNavController(binding.imgVolverAtras).navigate(destinationId);
-    }
 
-    private void onDesafioAdded(boolean resultado) {
-        if (resultado) {
-            verificarDesafioEmpezado(); // Actualiza la UI si el desafío fue agregado correctamente
-        }
-    }
+        binding.imgVolverAtras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-    private void verificarDesafioEmpezado() {
-        viewModel.desafioEmpezado(resultado -> {
-            // Actualiza la visibilidad del progreso y el botón para unirse
-            binding.tvProgress.setVisibility(resultado ? View.VISIBLE : View.GONE);
-            binding.btnMeterseADesafio.setVisibility(resultado ? View.GONE : View.VISIBLE);
+                if(volverAtras == 0){
+                    Navigation.findNavController(view).navigate(R.id.navigation_inicio);
+                } else if(volverAtras == 1){
+                    Navigation.findNavController(view).navigate(R.id.navigation_descubrir);
+                }
+
+            }
         });
+
+        desafioEmpezado();
+
+//        binding.btnMeterseADesafio.setOnClickListener(v -> {
+//            viewModel.aniadirDesafioAUsuario();
+//            desafioEmpezado(); // Vuelve a comprobar si el desafio está empezado para mostrar el progreso
+//        });
+
+        binding.btnMeterseADesafio.setOnClickListener(v -> {
+            viewModel.aniadirDesafioAUsuario(resultado -> {
+                if (resultado) {
+                    // Actualiza la UI si el desafío fue agregado correctamente
+                    desafioEmpezado();
+                }
+            });
+        });
+
+
+    }
+
+    private void desafioEmpezado() {
+        viewModel.desafioEmpezado(new ListadoExperienciasViewModel.OnResultListener() {
+            @Override
+            public void onResult(boolean resultado) {
+                // Asignamos el resultado al objeto Boolean
+                desafioEmpezado[0] = resultado;
+
+                // Si el desafío está empezado, muestra el progreso, y sino, muestra el botón para unirse
+                if (desafioEmpezado[0]) {
+                    binding.tvProgress.setVisibility(View.VISIBLE);
+                    binding.btnMeterseADesafio.setVisibility(View.GONE);
+                } else {
+                    binding.btnMeterseADesafio.setVisibility(View.VISIBLE);
+                    binding.tvProgress.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private boolean[] getDesafioEmpezado() {
+        return desafioEmpezado;
     }
 
     private void actualizarProgreso(Integer progreso) {
@@ -114,9 +149,5 @@ public class ListadoExperienciasFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    public static void setVolverAtras(int volverAtras) {
-        ListadoExperienciasFragment.volverAtras = volverAtras;
     }
 }
