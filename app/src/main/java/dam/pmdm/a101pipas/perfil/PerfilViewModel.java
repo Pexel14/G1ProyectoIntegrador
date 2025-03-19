@@ -1,5 +1,8 @@
 package dam.pmdm.a101pipas.perfil;
 
+import android.provider.ContactsContract;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,7 +14,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import dam.pmdm.a101pipas.models.Desafio;
 import dam.pmdm.a101pipas.models.DesafioPerfil;
 import dam.pmdm.a101pipas.models.DesafioUsuario;
@@ -129,4 +135,159 @@ public class PerfilViewModel extends ViewModel {
 
     public LiveData<User> getUsuarioLiveData() { return usuarioLiveData; }
     public LiveData<List<DesafioPerfil>> getDesafiosLiveData() { return desafiosLiveData; }
+
+    private MutableLiveData<Boolean> agregadoLiveData = new MutableLiveData<>();
+
+    public MutableLiveData<Boolean> getAgregadoLiveData() {
+        return agregadoLiveData;
+    }
+
+    public void agregarAmigo(String usuario, String amigo) {
+        final String[] idUsuario = new String[1];
+        final String[] idAmigo = new String[1];
+
+        refUsuarios.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dsUsuario : snapshot.getChildren()) {
+                    if (dsUsuario.getKey().equals(usuario)) {
+                        idUsuario[0] = dsUsuario.child("id").getValue().toString();
+                    } else if (dsUsuario.getKey().equals(amigo)) {
+                        idAmigo[0] = dsUsuario.child("id").getValue().toString();
+                    }
+                }
+
+//                for (DataSnapshot dsUsuario : snapshot.getChildren()) {
+//                    if (dsUsuario.getKey().equals(usuario)) {
+//                        String a = "";
+//                        if (dsUsuario.child("amigos").hasChildren()) {
+//                            a += ",";
+//                        }
+//
+//                        a += idAmigo[0];
+//
+//                        refUsuarios
+//                                .child(usuario)
+//                                .child("amigos")
+//                                .setValue(dsUsuario.child("amigos").toString() + a);
+//                    } else if (dsUsuario.getKey().equals(amigo)) {
+//                        String b = "";
+//
+//                        if (dsUsuario.child("amigos").hasChildren()) {
+//                            b += ",";
+//                        }
+//
+//                        b += idUsuario[0];
+//
+//                        refUsuarios
+//                                .child(amigo)
+//                                .child("amigos")
+//                                .setValue(dsUsuario.child("amigos").toString() + b);
+//                    }
+//                }
+
+                for (DataSnapshot dsUsuario : snapshot.getChildren()) {
+                    String usuarioKey = dsUsuario.getKey();
+
+                    if (usuarioKey.equals(usuario)) {
+                        // Obtener el valor actual de "amigos" como String
+                        String amigosActuales = dsUsuario.child("amigos").getValue(String.class);
+                        String nuevosAmigos = "";
+
+                        if (amigosActuales != null && !amigosActuales.isEmpty()) {
+                            nuevosAmigos = amigosActuales + "," + idAmigo[0];
+                        } else {
+                            nuevosAmigos = idAmigo[0];
+                        }
+
+                        // Actualizar el nodo "amigos" del usuario
+                        refUsuarios
+                                .child(usuario)
+                                .child("amigos")
+                                .setValue(nuevosAmigos);
+
+                    } else if (usuarioKey.equals(amigo)) {
+                        // Obtener el valor actual de "amigos" del amigo
+                        String amigosAmigo = dsUsuario.child("amigos").getValue(String.class);
+                        String nuevosAmigosAmigo = "";
+
+                        if (amigosAmigo != null && !amigosAmigo.isEmpty()) {
+                            nuevosAmigosAmigo = amigosAmigo + "," + idUsuario[0];
+                        } else {
+                            nuevosAmigosAmigo = idUsuario[0];
+                        }
+
+                        // Actualizar el nodo "amigos" del amigo
+                        refUsuarios
+                                .child(amigo)
+                                .child("amigos")
+                                .setValue(nuevosAmigosAmigo);
+                    }
+                }
+
+                agregadoLiveData.postValue(true);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+    private MutableLiveData<Boolean> esAmigoLiveData = new MutableLiveData<>();
+
+    public LiveData<Boolean> getEsAmigoLiveData() {return esAmigoLiveData;}
+
+    public void esAmigo(String usuario, String amigo) {
+        final boolean[] esAmigo = {false};
+        final String[] idAmigo = {""};
+
+        refUsuarios.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dsUsuario : snapshot.getChildren()) {
+                    if (dsUsuario.getKey().toString().equals(amigo)) {
+                        idAmigo[0] = dsUsuario.child("id").getValue().toString();
+                    }
+                }
+
+                refUsuarios.child(usuario).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child("amigos").getValue().toString() != null) {
+                            String[] amigos = snapshot.child("amigos").getValue().toString().split(",");
+
+
+                            for (int i=0; i<amigos.length; i++) {
+                                if (amigos[i].equals(idAmigo[0])) {
+                                    Log.d("PerfilViewModel", "Es amigo");
+                                    esAmigo[0] = true;
+                                }
+                            }
+
+                        }
+
+                        esAmigoLiveData.postValue(esAmigo[0]);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
 }
