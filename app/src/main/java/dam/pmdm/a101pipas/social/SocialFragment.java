@@ -88,8 +88,28 @@ public class SocialFragment extends Fragment {
         // Botón para ver más grupos
         binding.btnMasGrupos.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_lista_grupos));
 
-        binding.btnCrearGrupo.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo));
+        binding.btnCrearGrupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Antes de acceder a crear un grupo, comprobar si el usuario tiene desafíos empezados
+                usuarioRef.child("desafios").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo);
+                        } else {
+                            Toast.makeText(getContext(), "Necesitas haber empezado al menos un desafío", Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
+        
         binding.btnGrupoDetalles.setOnClickListener(v -> {
             Intent intent = new Intent(view.getContext(), GroupDetail.class);
             intent.putExtra("groupId", "1");

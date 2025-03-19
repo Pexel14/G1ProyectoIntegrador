@@ -59,5 +59,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.android.maps.utils)
     implementation(libs.picasso)
+    implementation(libs.firebase.storage)
 
 }

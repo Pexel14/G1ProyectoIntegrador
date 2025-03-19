@@ -137,10 +137,11 @@
             <!-- SELECCIONAR IMAGEN -->
             <ImageView
                 android:id="@+id/ivImagenIconoCrearGrupo"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="200dp"
+                android:layout_height="0dp"
+                android:maxHeight="200dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btnSeleccionarImagen"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etContraseniaCrearGrupo"
                 android:layout_marginTop="15dp"
                 android:scaleType="fitCenter"/>
@@ -155,10 +156,9 @@
                 android:text="Seleccionar imagen"
                 android:textColor="@color/white"
                 android:textSize="@dimen/tam_texto"
-                app:layout_constraintBottom_toBottomOf="@id/ivImagenIconoCrearGrupo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivImagenIconoCrearGrupo"
-                app:layout_constraintTop_toTopOf="@id/ivImagenIconoCrearGrupo" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivImagenIconoCrearGrupo"/>
 
             <!-- AÑADIR AMIGOS -->
             <ScrollView
@@ -191,7 +191,7 @@
                 android:textSize="@dimen/tam_texto"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivImagenIconoCrearGrupo" />
+                app:layout_constraintTop_toBottomOf="@id/btnSeleccionarImagen" />
 
             <EditText
                 android:id="@+id/etAmigoCrearGrupo"

@@ -67,12 +67,14 @@ public class CrearGrupoFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(CrearGrupoViewModel.class);
 
         viewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), desafios -> {
-                for (TarjetaDesafioDescubrirFragment desafio : desafios) {
-                    getChildFragmentManager()
-                            .beginTransaction()
-                            .add(R.id.contenedorFragmentsCrearGrupo, desafio)
-                            .commit();
-                }
+            Log.d("CrearGrupoFragment", "Se han obtenido los desafíos del usuario");
+            for (TarjetaDesafioDescubrirFragment desafio : desafios) {
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.contenedorFragmentsCrearGrupo, desafio)
+                        .commit();
+            }
+            Log.d("CrearGrupoFragment", "Desafíos añadios al contenedor");
         });
 
         viewModel.cargarFragments();
@@ -166,7 +168,7 @@ public class CrearGrupoFragment extends Fragment {
                                             Log.d("CrearGrupoFragment", "Titulo: " + grupo.getTitulo());
                                             Log.d("CrearGrupoFragment", "Miembros: " + grupo.getMiembros());
 
-                                            viewModel.crearGrupo(key[0], grupo);
+                                            viewModel.crearGrupo(key[0], grupo, imageUri);
                                         }
 
                                     }
@@ -333,22 +335,35 @@ public class CrearGrupoFragment extends Fragment {
 
         if (usuario.isEmpty()) {
             usuario = mAuth.getCurrentUser().getEmail();
+            Log.d("CrearGrupoFragment", "Valor 1 de 'usuario': " + usuario);
             if (usuario != null) {
                 usuario = usuario.split("@")[0].replace(".", "");
+                Log.d("CrearGrupoFragment", "Valor 2 de 'usuario': " + usuario);
             }
         }
 
-        viewModel.getIdUsuarioLiveData().observe(getViewLifecycleOwner(), id -> {
-            if (!miembrosId.isEmpty()) {
-                miembrosId += ",";
-            }
+        if (!miembrosId.isEmpty()) {
+            miembrosId += ",";
+        }
 
-            miembrosId += id;
+        miembrosId += usuario;
 
-            viewModel.limpiarIdUsuarioLiveData();
-        });
+        Log.d("CrearGrupoFragment", "Valor de 'miembrosId': " + miembrosId);
 
-        viewModel.getIdUsuario(usuario);
+//        viewModel.getIdUsuarioLiveData().observe(getViewLifecycleOwner(), id -> {
+//            if (!miembrosId.isEmpty()) {
+//                miembrosId += ",";
+//            }
+//
+//            miembrosId += id;
+//            Log.d("CrearGrupoFragment", "Valor de miembros: " + miembrosId);
+//
+//        });
+//
+//        viewModel.limpiarIdUsuarioLiveData();
+//
+//        viewModel.getIdUsuario(usuario);
+
     }
 
     private String aniadirUsuarioActual(String miembros) {

@@ -99,18 +99,18 @@ public class Login extends AppCompatActivity {
     });
 
     private void guardarCorreo(String id, String correo) {
-        if (mAuth.getCurrentUser() != null) {
-            if (id != null) {
-                usuarioExiste(id);
-                if(!encontrado){
-                    String nombre = mAuth.getCurrentUser().getDisplayName();
-                    ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
-                        Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }
-
-        }
+//        if (mAuth.getCurrentUser() != null) {
+//            if (id != null) {
+//                usuarioExiste(id);
+//                if(!encontrado){
+//                    String nombre = mAuth.getCurrentUser().getDisplayName();
+//                    ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
+//                        Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
+//                    });
+//                }
+//            }
+//
+//        }
     }
 
     private void buscarID() {

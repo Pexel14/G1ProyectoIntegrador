@@ -1,5 +1,6 @@
 package dam.pmdm.a101pipas.social;
 
+import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -8,16 +9,23 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
 import dam.pmdm.a101pipas.models.Grupo;
@@ -66,17 +74,103 @@ public class CrearGrupoViewModel extends ViewModel {
 
     public LiveData<Boolean> getCrearGrupoLiveData() {return grupoCreadoLiveData;}
 
-    public void crearGrupo(String key, Grupo grupo) {
-        refGrupos.child(key).setValue(grupo).addOnCompleteListener(new OnCompleteListener<Void>() {
+    public void crearGrupo(String key, Grupo grupo, Uri imageUri) {
+
+        String id = grupo.getTitulo() + String.valueOf(grupo.getId());
+        StorageReference storageReference = FirebaseStorage.getInstance().getReference("grupos_images");
+        StorageReference imageRef = storageReference.child(id + ".jpg");
+
+        // Subimos la imagen a Storage
+        imageRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    grupoCreadoLiveData.setValue(true);
-                } else {
-                    grupoCreadoLiveData.setValue(false);
-                }
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                // Obtenemos la URL
+                imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        // Se la asignamos al grupo
+                        grupo.setFoto_grupo(uri.toString());
+
+                        // Creamos el grupo
+                        refGrupos.child(key).setValue(grupo).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    grupoCreadoLiveData.setValue(true);
+                                    refUsuarios.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            for (DataSnapshot dsUsuario : snapshot.getChildren()) {
+//                                                User user = dsUsuario.getValue(User.class);
+
+                                                int experiencias = 0;
+                                                if(snapshot.hasChild("experiencias_completadas")){
+                                                    experiencias = Integer.parseInt(dsUsuario.child("experiencias_completadas").getValue().toString());
+                                                }
+
+                                                HashMap<String, Object> desafios = new HashMap<>();
+                                                Object valor = snapshot.child("desafios").getValue();
+                                                if(snapshot.hasChild("desafios")){
+                                                    desafios = (HashMap<String, Object>) valor;
+                                                }
+
+//    String grupos, String amigos, HashMap<String, Object> desafios, int experiencias_completadas) {
+                                                User user = new User(
+                                                        dsUsuario.child("id").getValue().toString(),
+                                                        dsUsuario.child("username").getValue().toString(),
+                                                        dsUsuario.child("email").getValue().toString(),
+                                                        dsUsuario.child("foto_perfil").getValue().toString(),
+                                                        dsUsuario.child("grupos").getValue().toString(),
+                                                        dsUsuario.child("amigos").getValue().toString(),
+                                                        desafios,
+                                                        experiencias
+                                                );
+
+                                                String pwd = "";
+                                                if (snapshot.hasChild("contrasenia")) {
+                                                    pwd = snapshot.child("contrasenia").getValue().toString();
+                                                    user.setContrasenia(pwd);
+                                                }
+
+                                                String userName = user.getEmail().split("@")[0].replace(".", "");
+                                                if (grupo.getMiembros().contains(userName)) {
+                                                    refUsuarios.child(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            String grupos = snapshot.child("grupos").getValue().toString();
+                                                            grupos += "," + grupo.getId();
+                                                            Map<String, Object> mapGrupos = new HashMap<>();
+                                                            mapGrupos.put("grupos", grupos);
+                                                            refUsuarios.child(userName).updateChildren(mapGrupos);
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                } else {
+                                    grupoCreadoLiveData.setValue(false);
+                                }
+                            }
+                        });
+
+                    }
+                });
             }
         });
+
     }
 
     // Obtener los desafíos
@@ -88,40 +182,64 @@ public class CrearGrupoViewModel extends ViewModel {
 
     public void cargarFragments() {
 
+        Log.d("CrearGrupoViewModel", "Empieza 'cargarFragments'");
+
         refUsuarios.child(
                 mAuth.getCurrentUser().getEmail()
                 .split("@")[0].replace(".", "")
         ).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String[] desafios = snapshot.child("desafios").getValue().toString().split(",");
 
-                refDesafios.addValueEventListener(new ValueEventListener() {
+                GenericTypeIndicator<HashMap<String, Object>> typeIndicator = new GenericTypeIndicator<HashMap<String, Object>>() {};
+                HashMap<String, Object> desafios = snapshot.child("desafios").getValue(typeIndicator);
+
+                Log.d("CrearGrupoViewModel", "Se obtienen los desafíos del usuario: ");
+
+                for (String key : desafios.keySet()) {
+                    Log.d("CrearGrupoViewModel", "- " + key);
+                }
+
+                Log.d("CrearGrupoViewModel", "Fin de los desafíos");
+
+                refDesafios.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        Log.d("CrearGrupoViewModel", "Empieza a buscar los desafios (todos)");
+
                         List<TarjetaDesafioDescubrirFragment> fragments = new ArrayList<>();
 
                         if (snapshot.exists()) {
                             for (DataSnapshot desafio : snapshot.getChildren()) {
 
-                                String id = desafio.child("id").getValue().toString();
+                                String id = desafio.getKey();
 
-                                for (int i=0; i<desafios.length; i++) {
-                                    if (desafios[i].equals(id)) {
-                                        String key = desafio.getKey();
-                                        String titulo = desafio.child("titulo").getValue(String.class);
-                                        String ciudad = desafio.child("ciudad").getValue(String.class);
+                                if (desafios.containsKey(id)) {
+                                    Log.d("CrearGrupoViewModel", "'desafios' contiene " + id);
 
-                                        Log.d("FirebaseData", "Key: " + key + ", Titulo: " + titulo + ", Ciudad: " + ciudad);
+                                    String key = desafio.getKey();
+                                    String titulo = desafio.child("titulo").getValue(String.class);
+                                    String ciudad = desafio.child("ciudad").getValue(String.class);
 
-                                        TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, key);
-                                        fragments.add(fragment);
-                                    }
+                                    Log.d("FirebaseData", "Key: " + key + ", Titulo: " + titulo + ", Ciudad: " + ciudad);
+
+                                    TarjetaDesafioDescubrirFragment fragment = TarjetaDesafioDescubrirFragment.newInstance(titulo, ciudad, key);
+                                    fragments.add(fragment);
+                                    Log.d("CrearGrupoViewModel", "Tarjeta (fragmento) añadida");
                                 }
                             }
+
+                            desafiosLiveData.setValue(fragments);
+
+                            if (desafiosLiveData == null) {
+                                Log.d("CrearGrupoViewModel", "El live data está vacío");
+                            } else {
+                                Log.d("CrearGrupoViewModel", "El live data está lleno");
+                            }
+
                         }
 
-                        desafiosLiveData.postValue(fragments);
                     }
 
                     @Override

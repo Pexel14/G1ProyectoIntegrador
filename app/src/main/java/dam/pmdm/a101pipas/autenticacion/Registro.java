@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class Registro extends AppCompatActivity {
 
     private ActivityRegistroBinding binding;
@@ -84,7 +86,8 @@ public class Registro extends AppCompatActivity {
     private void guardarUsuarioEnDatabase(String username, String email, String contrasenia) {
 
         String id = email.split("@")[0].replace(".", "");
-        User user = new User(idUltimo, username, email, contrasenia, "", "", "", "", 0);
+        HashMap<String, Object> mapaEjemplo = new HashMap<>();
+        User user = new User(idUltimo, username, email, contrasenia, "", "", "", mapaEjemplo, 0);
 
         // Guardar en Firebase Realtime Database
         databaseReference.child(id).setValue(user).addOnCompleteListener(task -> {

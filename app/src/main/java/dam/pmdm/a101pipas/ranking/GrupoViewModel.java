@@ -12,6 +12,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Grupo;
@@ -78,6 +79,7 @@ public class GrupoViewModel extends ViewModel {
                     grupos = data.child("grupos").getValue().toString();
                     if(grupos != null && !grupos.isEmpty()){
                         if(grupos.contains(String.valueOf(idGrupo))){
+                            HashMap<String, Object> mapaEjemplo = new HashMap<>();
                             listaUsuarios.add(new User(
                                     data.child("id").getValue().toString(),
                                     data.child("username").getValue(String.class),
@@ -86,7 +88,7 @@ public class GrupoViewModel extends ViewModel {
                                     data.child("foto_perfil").getValue(String.class),
                                     data.child("grupos").getValue().toString(),
                                     "",
-                                    data.child("desafios").getValue().toString(),
+                                    mapaEjemplo,
                                     data.child("experiencias_completadas").getValue(Integer.class)
 
                             ));
