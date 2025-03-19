@@ -21,11 +21,12 @@
         android:scaleType="fitCenter"/>
 
     <!-- Imagen del grupo -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgGrupo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:src="@drawable/perfil_por_defecto"
+        app:shapeAppearanceOverlay="@style/CircularImageViewStyle"
         android:scaleType="centerCrop"
         android:background="@drawable/circulo"
         app:layout_constraintTop_toBottomOf="@id/btnBack"

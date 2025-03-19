@@ -170,8 +170,7 @@
             android:elevation="20dp"
             android:text="@string/social_buscador_sin_amigos"
             android:visibility="gone"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -215,8 +214,7 @@
             android:elevation="20dp"
             android:text="@string/social_buscador_sin_grupos"
             android:visibility="gone"
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="14sp"
             android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -247,17 +245,5 @@
         android:textSize="20sp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corner_button"/>
-    <Button
-        android:id="@+id/btnGrupoDetalles"
-        android:layout_width="250dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_corner_button"
-        android:text="Detalles"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCrearGrupo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

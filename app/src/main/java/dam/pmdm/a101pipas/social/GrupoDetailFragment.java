@@ -113,6 +113,8 @@ public class GrupoDetailFragment extends Fragment {
 
         });
 
+        binding.btnBack.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.navigation_lista_grupos));
+
     }
 
     @Override

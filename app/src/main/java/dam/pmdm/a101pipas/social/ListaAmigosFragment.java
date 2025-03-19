@@ -122,6 +122,7 @@ public class ListaAmigosFragment extends Fragment {
         } else {
             amigosAdapter.setAmigosList(amigosList);
             binding.rvListaAmigos.setAdapter(amigosAdapter);
+            binding.tvMensajeAmigosVacio.setVisibility(View.GONE);
         }
 
     }
@@ -163,9 +164,9 @@ public class ListaAmigosFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
 }

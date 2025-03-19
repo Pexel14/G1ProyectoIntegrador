@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/yellowtail"
         android:gravity="center"
-        android:text="Amigos"
+        android:text="@string/amigos"
         android:textColor="@color/black"
         android:textSize="@dimen/tam_titulo"
         android:textStyle="bold"

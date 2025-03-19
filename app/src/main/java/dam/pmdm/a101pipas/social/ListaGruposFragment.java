@@ -134,10 +134,8 @@ public class ListaGruposFragment extends Fragment {
         } else {
             gruposAdapter.setGruposList(gruposList);
             binding.rvListaGrupos.setAdapter(gruposAdapter);
+            binding.tvMensajeGruposVacio.setVisibility(View.GONE);
         }
-
-
-
     }
 
     private void cargarListaGruposDesdeFirebase() {
@@ -182,9 +180,9 @@ public class ListaGruposFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+//    @Override
+//    public void onDestroyView() {
+//        super.onDestroyView();
+//        binding = null;
+//    }
 }

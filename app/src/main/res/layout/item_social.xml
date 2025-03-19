@@ -9,12 +9,13 @@
     android:padding="8dp">
 
     <!-- Imagen circular -->
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgPerfilSocial"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:src="@drawable/perfil_por_defecto"
+        app:shapeAppearanceOverlay="@style/CircularImageViewStyle"
         app:circleCrop="true"
         android:background="@drawable/circulo" />
 

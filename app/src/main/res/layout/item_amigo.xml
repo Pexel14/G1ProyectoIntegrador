@@ -18,12 +18,13 @@
         android:background="@drawable/borde_verde">
 
         <!-- Imagen de perfil -->
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imgPerfil"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:scaleType="centerCrop"
             android:src="@drawable/perfil_por_defecto"
+            app:shapeAppearanceOverlay="@style/CircularImageViewStyle"
             android:background="@drawable/circulo"
             android:clipToOutline="true" />
 

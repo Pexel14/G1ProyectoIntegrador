@@ -90,12 +90,6 @@ public class SocialFragment extends Fragment {
 
         binding.btnCrearGrupo.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo));
 
-        binding.btnGrupoDetalles.setOnClickListener(v -> {
-            Intent intent = new Intent(view.getContext(), GroupDetail.class);
-            intent.putExtra("groupId", "1");
-            startActivity(intent);
-        });
-
         binding.barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -127,7 +121,6 @@ public class SocialFragment extends Fragment {
                     binding.rvAmigos.setVisibility(View.VISIBLE);
                     binding.btnMasAmigos.setVisibility(View.VISIBLE);
                     binding.btnMasGrupos.setVisibility(View.VISIBLE);
-                    binding.btnGrupoDetalles.setVisibility(View.VISIBLE);
                     binding.btnCrearGrupo.setVisibility(View.VISIBLE);
                     binding.tvAmigos.setVisibility(View.VISIBLE);
                     binding.tvGrupos.setVisibility(View.VISIBLE);
@@ -142,7 +135,6 @@ public class SocialFragment extends Fragment {
                     binding.rvAmigos.setVisibility(View.GONE);
                     binding.btnMasAmigos.setVisibility(View.GONE);
                     binding.btnMasGrupos.setVisibility(View.GONE);
-                    binding.btnGrupoDetalles.setVisibility(View.GONE);
                     binding.btnCrearGrupo.setVisibility(View.GONE);
                     binding.tvAmigos.setVisibility(View.GONE);
                     binding.tvGrupos.setVisibility(View.GONE);

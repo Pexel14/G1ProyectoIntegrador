@@ -109,22 +109,25 @@ public class DescubrirFragment extends Fragment {
     }
 
     private void buscar(String newText) {
-        ArrayList<Desafio> auxDesafios = new ArrayList<>();
+        if (!newText.isEmpty()) {
+            ArrayList<Desafio> auxDesafios = new ArrayList<>();
 
-        for (Desafio desafio : listaTodosDesafios){
-            if(desafio.getTitulo().toLowerCase().contains(newText.toLowerCase())){
-                auxDesafios.add(desafio);
+            for (Desafio desafio : listaTodosDesafios){
+                if(desafio.getTitulo().toLowerCase().contains(newText.toLowerCase())){
+                    auxDesafios.add(desafio);
+                }
             }
-        }
 
-        if(auxDesafios.isEmpty()){
-            binding.tvSinDesafios.setVisibility(View.VISIBLE);
+            if(auxDesafios.isEmpty()){
+                binding.tvSinDesafios.setVisibility(View.VISIBLE);
+            } else {
+                binding.tvSinDesafios.setVisibility(View.GONE);
+            }
+
+            binding.rvDescubrirTodos.setAdapter(new DescubrirAdapter(auxDesafios, this));
         } else {
             binding.tvSinDesafios.setVisibility(View.GONE);
         }
-
-        binding.rvDescubrirTodos.setAdapter(new DescubrirAdapter(auxDesafios, this));
-
     }
 
     private void cargarDesafios(List<Desafio> desafios) {

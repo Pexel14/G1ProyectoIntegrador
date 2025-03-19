@@ -53,7 +53,7 @@ public class GrupoViewModel extends ViewModel {
 
                 if (dataSnapshot.exists()) {
                     String titulo = dataSnapshot.child("titulo").getValue(String.class);
-                    String contrasena = dataSnapshot.child("contraseña").getValue(String.class);
+                    String contrasena = dataSnapshot.child("contrasena").getValue(String.class);
                     Grupo grupo = new Grupo(titulo, contrasena);
                     grupoLiveData.setValue(grupo);
                 }

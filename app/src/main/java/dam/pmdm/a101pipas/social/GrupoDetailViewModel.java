@@ -79,10 +79,10 @@ public class GrupoDetailViewModel extends ViewModel {
                         experiencias
                 );
 
-                if(usuario.getGrupos().split(",").length > 0){
-                    usuario.setGrupos(usuario.getGrupos() + "," + grupoID);
-                } else {
+                if(usuario.getGrupos() == null || usuario.getGrupos().trim().isEmpty()){
                     usuario.setGrupos(grupoID);
+                } else {
+                    usuario.setGrupos(usuario.getGrupos() + "," + grupoID);
                 }
 
                 grupo.setMiembros(grupo.getMiembros() + "," + userID);
