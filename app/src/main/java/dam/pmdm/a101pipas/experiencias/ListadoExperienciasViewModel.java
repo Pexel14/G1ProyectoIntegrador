@@ -17,7 +17,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
@@ -43,8 +45,7 @@ public class ListadoExperienciasViewModel extends ViewModel {
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-    public void setIdDesafio(String id, String titulo) {
-        idReal = Long.parseLong(id);
+    public void setIdDesafio(String titulo) {
         cargarExperiencias(titulo);
         tituloDesafio = titulo;
     }
@@ -100,83 +101,65 @@ public class ListadoExperienciasViewModel extends ViewModel {
     public void desafioEmpezado(final OnResultListener listener) {
         String user = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".", "");
 
-        database.child("usuarios").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean empezado = false;
-                if (snapshot.exists()) {
-                    String desafios = snapshot.child("desafios").getValue(String.class);
+        database.child("usuarios").child(user).child("desafios").child(tituloDesafio)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean empezado = snapshot.exists();
 
-                    if (desafios.contains(String.valueOf(idReal))) {
-                        empezado = true;
+//                        if (empezado) {
+//                            String estado = snapshot.child("estado").getValue(String.class);
+//                            empezado = !"completado".equals(estado);
+//                        }
+
+                        listener.onResult(empezado);
                     }
-                }
-                listener.onResult(empezado); // Pasar el resultado al listener
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("Firebase", "Error al cargar los desafíos del usuario");
-                listener.onResult(false); // Si hay un error, devolvemos false
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.e("Firebase", "Error al verificar desafío: " + error.getMessage());
+                        listener.onResult(false);
+                    }
+                });
     }
 
-    private void obtenerIdReal() {
-//        database.child("desafios").child(String.valueOf(desafioId.getValue())).addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.exists()) {
-//                    idReal = (Long) snapshot.child("id").getValue();
-//                    Log.d("VIEW_MODEL", "ID DEL DESAFIO : " + idReal);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-    }
-
-    public void aniadirDesafioAUsuario(OnResultListener listener) {
+    public void comenzarDesafioEnUsuario(OnResultListener listener) {
         String user = mAuth.getCurrentUser().getEmail().split("@")[0].replace(".", "");
 
-        database.child("usuarios").child(user).addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference userRef = database.child("usuarios").child(user);
+
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String desafios = snapshot.child("desafios").getValue(String.class);
-                    if (desafios == null) desafios = "";
+                    Map<String, Object> desafioData = new HashMap<>();
+                    desafioData.put("estado", "comenzado");
+                    desafioData.put("experiencias_completadas", "");
 
-                    if (!desafios.isEmpty()) desafios += ",";
-
-                    desafios += idReal;
-
-                    database.child("usuarios").child(user).child("desafios").setValue(desafios)
+                    userRef.child("desafios").child(tituloDesafio)
+                            .setValue(desafioData)
                             .addOnCompleteListener(task -> {
                                 if (task.isSuccessful()) {
-                                    // Llamar a desafioEmpezado SOLO después de que Firebase haya guardado el dato
                                     desafioEmpezado(listener);
                                 } else {
-                                    Log.e("Firebase", "Error al añadir el desafío al usuario");
-                                    listener.onResult(false); // Si falla, enviamos false
+                                    listener.onResult(false);
+                                    Log.e("Firebase", "Error al guardar desafío: " + task.getException());
                                 }
                             });
+
                 } else {
-                    listener.onResult(false); // Si el usuario no existe, enviamos false
+                    listener.onResult(false);
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error en la base de datos: " + error.getMessage());
                 listener.onResult(false);
+                Log.e("Firebase", "Error en BD: " + error.getMessage());
             }
         });
     }
 
-    // Interfaz para el callback
     public interface OnResultListener {
         void onResult(boolean resultado);
     }

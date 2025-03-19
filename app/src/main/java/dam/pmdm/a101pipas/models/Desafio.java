@@ -1,12 +1,14 @@
 package dam.pmdm.a101pipas.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class Desafio implements Serializable {
-    private String titulo, ciudad, descripcion, etiquetas, id;
+    private String titulo, ciudad, descripcion, etiquetas, id, experiencias;
     private int porcentajeProgreso;
-    private Map<String, Experiencia> experiencias;
 
     // Constructor para el Perfil
     public Desafio(String titulo, int porcentajeProgreso) {
@@ -38,22 +40,22 @@ public class Desafio implements Serializable {
         this.id = id;
     }
 
-    // Constructor para Crear Experiencias
-    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> experiencias) {
+    public Desafio(String titulo, String experiencias) {
         this.titulo = titulo;
-        this.ciudad = ciudad;
-        this.descripcion = descripcion;
-        this.etiquetas = etiquetas;
         this.experiencias = experiencias;
     }
 
-    public Map<String, Experiencia> getExperiencias() {
-        return experiencias;
-    }
+    public Desafio() {}
 
-    public void setExperiencias(Map<String, Experiencia> experiencias) {
-        this.experiencias = experiencias;
-    }
+    // Constructor para Crear Experiencias
+//    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> experiencias) {
+//        this.titulo = titulo;
+//        this.ciudad = ciudad;
+//        this.descripcion = descripcion;
+//        this.etiquetas = etiquetas;
+//        this.experiencias = experiencias;
+//    }
+
 
     public String getCiudad() {
         return ciudad;
@@ -71,11 +73,24 @@ public class Desafio implements Serializable {
         return titulo;
     }
 
+    public String getExperiencias() {return experiencias;}
+
     public int getPorcentajeProgreso() {
         return porcentajeProgreso;
     }
 
     public String getId() {
         return id;
+    }
+
+    public List<String> getExperienciasRequeridas() {
+        if (experiencias == null || experiencias.isEmpty()) {
+            return new ArrayList<>();
+        }
+        return Arrays.asList(experiencias.split(","));
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

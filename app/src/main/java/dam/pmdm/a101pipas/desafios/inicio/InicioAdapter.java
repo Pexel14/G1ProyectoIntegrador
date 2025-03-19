@@ -56,7 +56,7 @@ public class InicioAdapter extends RecyclerView.Adapter<InicioAdapter.InicioView
         ListadoExperienciasViewModel listadoExperienciasViewModel = new ViewModelProvider(fragment.requireActivity()).get(ListadoExperienciasViewModel.class);
 
         holder.itemView.setOnClickListener(v -> {
-            listadoExperienciasViewModel.setIdDesafio(desafio.getId(), desafio.getTitulo());
+            listadoExperienciasViewModel.setIdDesafio(desafio.getTitulo());
             ListadoExperienciasFragment.setVolverAtras(0);
             Navigation.findNavController(v).navigate(R.id.navigation_listado_experiencias);
         });

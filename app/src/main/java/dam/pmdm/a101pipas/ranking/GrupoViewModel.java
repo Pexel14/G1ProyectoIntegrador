@@ -79,10 +79,9 @@ public class GrupoViewModel extends ViewModel {
                     if(grupos != null && !grupos.isEmpty()){
                         if(grupos.contains(String.valueOf(idGrupo))){
                             int experiencias = 0;
-                            String exp = data.child("experiencias_completadas").getValue().toString();
 
-                            if(!exp.isEmpty()){
-                                experiencias = Integer.parseInt(exp);
+                            if(data.hasChild("experiencias_completadas")){
+                                experiencias = Integer.parseInt(data.child("experiencias_completadas").getValue().toString());
                             }
 
                             listaUsuarios.add(new User(

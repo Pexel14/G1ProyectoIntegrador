@@ -113,7 +113,7 @@ public class Login extends AppCompatActivity {
             if (id != null) {
                 idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
                 String nombre = mAuth.getCurrentUser().getDisplayName();
-                ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "", "")).addOnCompleteListener(command -> {
+                ref.child(id).setValue(new User(idUltimo, nombre, correo, 0, "", "", "")).addOnCompleteListener(command -> {
                     Toast.makeText(this, R.string.login_bienvenido_app, Toast.LENGTH_SHORT).show();
                 });
             }

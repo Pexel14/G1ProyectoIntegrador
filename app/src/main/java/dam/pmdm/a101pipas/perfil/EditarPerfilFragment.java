@@ -35,6 +35,7 @@ public class EditarPerfilFragment extends BottomSheetDialogFragment {
     private StorageReference storageReference;
     private String claveUser, avatar, username;
     private Uri imageUri;
+    private OnProfileUpdatedListener listener;
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -72,6 +73,14 @@ public class EditarPerfilFragment extends BottomSheetDialogFragment {
 
     }
 
+    public interface OnProfileUpdatedListener {
+        void onProfileUpdated();
+    }
+
+    public void setOnProfileUpdatedListener(OnProfileUpdatedListener listener) {
+        this.listener = listener;
+    }
+
     private void openGallery() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -86,7 +95,6 @@ public class EditarPerfilFragment extends BottomSheetDialogFragment {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             Picasso.get().load(imageUri).fit().centerCrop().into(binding.imgAvatar);
-            //viewModel.uploadImage(imageUri);
         }
     }
 
@@ -110,7 +118,12 @@ public class EditarPerfilFragment extends BottomSheetDialogFragment {
         actualizaciones.put("foto_perfil", avatarUrl);
 
         reference.updateChildren(actualizaciones)
-                .addOnSuccessListener(aVoid -> dismiss())
+                .addOnSuccessListener(aVoid -> {
+                    if (listener != null) {
+                        listener.onProfileUpdated();
+                    }
+                    dismiss();
+                })
                 .addOnFailureListener( e -> Toast.makeText(getContext(), R.string.ha_ocurrido_un_error_al_actualizar_el_perfil, Toast.LENGTH_SHORT).show());
     }
 
