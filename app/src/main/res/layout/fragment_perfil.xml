@@ -37,9 +37,21 @@
 
     <!-- Nombre de usuario -->
 
-    <!-- Handle del usuario -->
+    <ImageView
+        android:id="@+id/ivPrimeraInsignea"
+        android:layout_width="48dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="84dp"
+        android:src="@drawable/carafeliz"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_avatar">
+
+    </ImageView>
+
     <TextView
-        android:id="@+id/txt_nick"
+        android:id="@+id/tvNick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
@@ -54,20 +66,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_avatar" />
 
+    <!-- Separador -->
+
     <TextView
         android:id="@+id/txt_nombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/separacion_pequenia_cinco"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/akaya_telivigala"
         android:text="@string/perfil_nombre"
         android:textColor="@color/texto_secundario"
         android:textSize="@dimen/tam_texto"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_nick" />
+        app:layout_constraintTop_toBottomOf="@+id/tvNick" />
 
-    <!-- Separador -->
     <View
         android:id="@+id/view_separator1"
         android:layout_width="0dp"

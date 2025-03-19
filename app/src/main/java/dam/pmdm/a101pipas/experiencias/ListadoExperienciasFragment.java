@@ -27,6 +27,7 @@ public class ListadoExperienciasFragment extends Fragment {
 
     private GeolocalizacionViewModel geolocalizacionViewModel;
     private ListadoExperienciasViewModel viewModel;
+    String tituloDesafio;
 
     private static int volverAtras;
 
@@ -56,16 +57,17 @@ public class ListadoExperienciasFragment extends Fragment {
         geolocalizacionViewModel = new ViewModelProvider(requireActivity()).get(GeolocalizacionViewModel.class);
 
         binding.rvExperiencias.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        tituloDesafio = viewModel.getTituloDesafio();
 
         // Inicializar lista y adaptador
         experienciaList = new ArrayList<>();
-        adapter = new ExperienciasListAdapter(experienciaList, experiencia -> {
+        adapter = new ExperienciasListAdapter(experienciaList, (experiencia) -> {
             if (experiencia.getLatLng() != null) {
                 geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
 
                 Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
-        });
+        }, tituloDesafio);
 
         binding.rvExperiencias.setAdapter(adapter);
 
@@ -77,6 +79,7 @@ public class ListadoExperienciasFragment extends Fragment {
 
         viewModel.getProgreso().observe(getViewLifecycleOwner(), this::actualizarProgreso);
         actualizarTitulo(viewModel.getTituloDesafio());
+
 
         binding.imgVolverAtras.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -11,30 +11,69 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasListAdapter.ExperienciaViewHolder> {
 
+    // Lista de experiencias y variables necesarias
     private List<Experiencia> experienciaList;
     private OnExperienciaClickListener listener;
+    private Set<String> experienciasCompletadas; // Para almacenar los IDs de las experiencias completadas
+    private String tituloDesafio; // Almacena el título del desafío
+
+    // Interfaz para manejar clics en las experiencias
 
     public interface OnExperienciaClickListener {
         void onExperienciaClick(Experiencia experiencia);
     }
 
-    public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener) {
+    public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener, String tituloDesafio) {
         this.experienciaList = experienciaList;
         this.listener = listener;
+        this.experienciasCompletadas = new HashSet<>();
+        this.tituloDesafio = tituloDesafio;
+        cargarExperienciasCompletadas();
+    }
+
+    // Carga las experiencias completadas desde la base de datos
+    private void cargarExperienciasCompletadas() {
+        String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
+        DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
+                .child(user)
+                .child("experiencias_completadas");
+
+        completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String existingIds = dataSnapshot.getValue(String.class);
+                    if (existingIds != null) {
+                        String[] ids = existingIds.split(", ");
+                        for (String id : ids) {
+                            experienciasCompletadas.add(id.trim()); // Agregar cada ID al conjunto
+                        }
+                    }
+                }
+                notifyDataSetChanged(); // Notificar cambios en los datos
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Firebase", "Error al leer la base de datos", databaseError.toException());
+            }
+        });
     }
 
     @NonNull
@@ -58,74 +97,135 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         holder.tvTitulo.setText(experiencia.getTitulo());
         holder.tvDescripcion.setText(experiencia.getDescripcion());
 
-        // Configurar enlace del mapa
+        // Cambiar el ícono basado en el estado de completada
+        holder.tvCheck.setImageResource(experienciasCompletadas.contains(experiencia.getId()) ? R.drawable.checkcompleto : R.drawable.circulo);
+
+        holder.tvCheck.setOnClickListener(v -> {
+            // Cambiar el estado de completada
+            boolean nuevoEstado = !experienciasCompletadas.contains(experiencia.getId());
+            if (nuevoEstado) {
+                experienciasCompletadas.add(experiencia.getId());
+            } else {
+                experienciasCompletadas.remove(experiencia.getId());
+            }
+
+            // Cambiar la imagen del ícono
+            holder.tvCheck.setImageResource(nuevoEstado ? R.drawable.checkcompleto : R.drawable.circulo);
+
+            // Actualizar el estado en Firebase
+            actualizarEstadoEnBaseDeDatos(experiencia.getId(), nuevoEstado);
+        });
+
+        // Configurar el enlace del mapa
         holder.tvMapLink.setOnClickListener(view -> {
             if (listener != null) {
                 listener.onExperienciaClick(experiencia);
             }
         });
+    }
 
-        // 🔹 Obtener usuario actual
-        String userId = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
+    private void actualizarEstadoEnBaseDeDatos(String experienciaId, boolean completada) {
+        String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("usuarios")
+                .child(user)
+                .child("desafios")
+                .child(tituloDesafio)
+                .child("experiencias_completadas");
 
-        // 🔹 Referencia a desafíos en curso del usuario
-        DatabaseReference userRef = FirebaseDatabase.getInstance()
-                .getReference("usuarios").child(userId).child("desafios_en_curso");
+        userRef.setValue(completada).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d("Firebase", "Estado de experiencia actualizado correctamente");
+                if (completada) {
+                    agregarExperienciaACompletadas(experienciaId, user);
+                } else {
+                    eliminarExperienciaDeCompletadas(experienciaId, user); // Llamar al método para eliminar
+                }
+            } else {
+                Log.e("Firebase", "Error al actualizar el estado de la experiencia");
+            }
+        });
+    }
 
-        // 🔹 Convertir ID de experiencia a String para evitar problemas de conversión
-        String experienciaIdString = String.valueOf(experiencia.getId());
+    private void agregarExperienciaACompletadas(String experienciaId, String user) {
+        DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
+                .child(user)
+                .child("desafios")
+                .child(tituloDesafio)
+                .child("experiencias_completadas");
 
-        // 🔹 Verificar si la experiencia está en "exp_completadas"
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean experienciaCompletada = false;
-                String desafioKey = null;
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String existingIds = dataSnapshot.exists() ? dataSnapshot.getValue(String.class) : "";
 
-                for (DataSnapshot desafioSnapshot : snapshot.getChildren()) {
-                    String desafioId = desafioSnapshot.getKey();
-
-                    // 🔹 Verificamos si en este desafío la experiencia está completada
-                    if (desafioSnapshot.child("exp_completadas").hasChild(experienciaIdString)) {
-                        experienciaCompletada = true;
-                        desafioKey = desafioId;
-                        break;
-                    }
+                // Comprobar y agregar el ID de experiencia
+                if (!existingIds.contains(experienciaId)) {
+                    existingIds = existingIds.isEmpty() ? experienciaId : existingIds + ", " + experienciaId;
                 }
 
-                // 🔹 Mostrar el check si la experiencia está completada
-                holder.tvCheck.setVisibility(experienciaCompletada ? View.VISIBLE : View.GONE);
-
-                // 🔹 Manejar el evento de clic en el icono de completado
-                String finalDesafioKey = desafioKey;
-                boolean finalExperienciaCompletada = experienciaCompletada;
-                holder.ivCompletado.setOnClickListener(v -> {
-                    if (finalDesafioKey != null) {
-                        DatabaseReference experienciaRef = userRef.child(finalDesafioKey)
-                                .child("exp_completadas").child(experienciaIdString);
-
-                        if (finalExperienciaCompletada) {
-                            // 🔹 Si estaba completada, la eliminamos
-                            experienciaRef.removeValue()
-                                    .addOnSuccessListener(aVoid -> holder.tvCheck.setVisibility(View.GONE))
-                                    .addOnFailureListener(e -> Log.e("Firebase", "Error al eliminar experiencia", e));
-                        } else {
-                            // 🔹 Si no estaba completada, la agregamos
-                            experienciaRef.setValue(true)
-                                    .addOnSuccessListener(aVoid -> holder.tvCheck.setVisibility(View.VISIBLE))
-                                    .addOnFailureListener(e -> Log.e("Firebase", "Error al marcar experiencia", e));
-                        }
+                // Guardar la nueva cadena de IDs
+                completadasRef.setValue(existingIds).addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d("Firebase", "Experiencia añadida a experiencias_completadas correctamente");
                     } else {
-                        Log.e("Firebase", "No se encontró un desafío para la experiencia con ID: " + experiencia.getId());
+                        Log.e("Firebase", "Error al añadir experiencia a experiencias_completadas");
                     }
                 });
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("Firebase", "Error al obtener las experiencias completadas", error.toException());
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Firebase", "Error al leer la base de datos", databaseError.toException());
             }
         });
+    }
+
+    private void eliminarExperienciaDeCompletadas(String experienciaId, String user) {
+        DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
+                .child(user)
+                .child("desafios")
+                .child(tituloDesafio)
+                .child("experiencias_completadas");
+
+        completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String existingIds = dataSnapshot.getValue(String.class);
+                    if (existingIds != null) {
+                        String newIds = removerIdDeCadena(existingIds, experienciaId);
+                        completadasRef.setValue(newIds).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("Firebase", "Experiencia eliminada de experiencias_completadas correctamente");
+                            } else {
+                                Log.e("Firebase", "Error al eliminar experiencia de experiencias_completadas");
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("Firebase", "Error al leer la base de datos", databaseError.toException());
+            }
+        });
+    }
+
+    // Método para remover un ID de la cadena
+    private String removerIdDeCadena(String existingIds, String experienciaId) {
+        String[] idsArray = existingIds.split(", ");
+        StringBuilder newIds = new StringBuilder();
+
+        for (String id : idsArray) {
+            if (!id.trim().equals(experienciaId)) {
+                if (newIds.length() > 0) {
+                    newIds.append(", "); // Añadir coma entre IDs
+                }
+                newIds.append(id.trim());
+            }
+        }
+        return newIds.toString();
     }
 
     public void setExperiencias(List<Experiencia> experiencias) {
@@ -139,19 +239,16 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
     }
 
     static class ExperienciaViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView imgExperiencia, tvMapLink, ivCompletado;
-        TextView tvTitulo, tvDescripcion, tvCheck;
+        ImageView imgExperiencia, tvMapLink, tvCheck; // Modificado para incluir tvCheck
+        TextView tvTitulo, tvDescripcion;
 
         public ExperienciaViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imgExperiencia = itemView.findViewById(R.id.imgExperiencia);
             tvTitulo = itemView.findViewById(R.id.tvTitle);
             tvDescripcion = itemView.findViewById(R.id.tvDescription);
             tvMapLink = itemView.findViewById(R.id.tvMapLink);
-            tvCheck = itemView.findViewById(R.id.tvCheck);
-            ivCompletado = itemView.findViewById(R.id.ivCompletado);
+            tvCheck = itemView.findViewById(R.id.tvCheck); // Asegúrate de que el ID en el XML sea correcto
         }
     }
 }
