@@ -61,13 +61,13 @@ public class ListadoExperienciasFragment extends Fragment {
 
         // Inicializar lista y adaptador
         experienciaList = new ArrayList<>();
-        adapter = new ExperienciasListAdapter(experienciaList, experiencia, tituloDesafio -> {
+        adapter = new ExperienciasListAdapter(experienciaList, (experiencia) -> {
             if (experiencia.getLatLng() != null) {
                 geolocalizacionViewModel.setDestinoExperiencia(experiencia.getLatLng());
 
                 Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
-        });
+        }, tituloDesafio);
 
         binding.rvExperiencias.setAdapter(adapter);
 
