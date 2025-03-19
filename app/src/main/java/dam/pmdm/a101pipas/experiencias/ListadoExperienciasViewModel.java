@@ -66,7 +66,7 @@ public class ListadoExperienciasViewModel extends ViewModel {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot2) {
                                             Experiencia experiencia = new Experiencia(
-                                                    snapshot2.child("id").getValue().toString(),
+                                                    snapshot2.child("id").getValue(Long.class),
                                                     snapshot2.child("titulo").getValue(String.class),
                                                     snapshot2.child("descripcion").getValue(String.class),
                                                     snapshot2.child("imagen").getValue(String.class),

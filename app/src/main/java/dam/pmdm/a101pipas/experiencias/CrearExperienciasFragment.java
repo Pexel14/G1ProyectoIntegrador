@@ -124,14 +124,22 @@ public class CrearExperienciasFragment extends Fragment {
                 Long minId = 0L;
 
                 for (DataSnapshot dsDesafio : snapshot.getChildren()) {
-                    Desafio des = dsDesafio.getValue(Desafio.class);
-                    if (des.getId() > minId) {
-                        minId = des.getId();
+                    Desafio des = new Desafio(
+                            dsDesafio.child("titulo").getValue(String.class),
+                            dsDesafio.child("ciudad").getValue(String.class),
+                            dsDesafio.child("descripcion").getValue(String.class),
+                            dsDesafio.child("etiquetas").getValue(String.class),
+                            dsDesafio.child("id").getValue().toString(),
+                            ""
+
+                    );
+                    if (Long.parseLong(des.getId()) > minId) {
+                        minId = Long.parseLong(des.getId());
                     }
                 }
 
                 minId += 1;
-                desafio.setId(minId);
+                desafio.setId(String.valueOf(minId));
 
                 guardarDesafioEnFirebase(view);
             }
@@ -199,60 +207,51 @@ public class CrearExperienciasFragment extends Fragment {
             StorageReference storageReference = FirebaseStorage.getInstance().getReference("experiencias_images");
             StorageReference imageRef = storageReference.child(id + ".jpg");
 
-            imageRef.putFile(imagen).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
+            if(imagen != null){
 
-                            String imagenURL = uri.toString();
+                imageRef.putFile(imagen).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
 
-                            Experiencia ex = new Experiencia(ultimoIdExp, fragment.getTitulo(), fragment.getDescripcion(), imagenURL);
+                                String imagenURL = uri.toString();
 
-                            listaExperiencias.add(ex);
+                                Experiencia ex = new Experiencia(ultimoIdExp, fragment.getTitulo(), fragment.getDescripcion(), imagenURL);
 
-                            if (!experiencias[0].isEmpty()) {
-                                experiencias[0] += ",";
+                                listaExperiencias.add(ex);
+
+                                if (!experiencias[0].isEmpty()) {
+                                    experiencias[0] += ",";
+                                }
+
+                                experiencias[0] += String.valueOf(ultimoIdExp);
+
+                                ultimoIdExp += 1;
+
+                                desafio.setExperiencias(experiencias[0]);
+
+                                String keyDesafio = desafio.getTitulo();
+
+                                refDesafios.child(keyDesafio).setValue(desafio)
+                                        .addOnCompleteListener(task -> {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
+                                                crearExperiencias(view, listaExperiencias);
+                                            } else {
+                                                Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                             }
-
-                            experiencias[0] += String.valueOf(ultimoIdExp);
-
-                            ultimoIdExp += 1;
-
-                            desafio.setExperiencias(experiencias[0]);
-
-                            String keyDesafio = desafio.getTitulo();
-
-                            refDesafios.child(keyDesafio).setValue(desafio)
-                                    .addOnCompleteListener(task -> {
-                                        if (task.isSuccessful()) {
-                                            Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
-                                            crearExperiencias(view, listaExperiencias);
-                                        } else {
-                                            Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                        }
-                    });
-                }
-            });
+                        });
+                    }
+                });
+            } else {
+                Toast.makeText(getContext(), R.string.crear_experiencias_fragment_no_imagen, Toast.LENGTH_SHORT).show();
+            }
 
         }
-
-//        desafio.setExperiencias(experiencias[0]);
-//
-//        String keyDesafio = desafio.getTitulo();
-//
-//        refDesafios.child(keyDesafio).setValue(desafio)
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
-//                        crearExperiencias(view, listaExperiencias);
-//                    } else {
-//                        Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
     }
 
     private void crearExperiencias(View view, List<Experiencia> listaExp) {
@@ -261,6 +260,6 @@ public class CrearExperienciasFragment extends Fragment {
             refExperiencias.child(String.valueOf(exp.getId())).setValue(exp);
         }
 
-        Navigation.findNavController(view).navigate(R.id.navigation_inicio);
+        Navigation.findNavController(getView()).navigate(R.id.navigation_inicio);
     }
 }

@@ -29,17 +29,17 @@ public class Desafio implements Serializable {
     }
 
     //Constructor para cargar los desafios en INICIO
-    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String id) {
+    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String id, String si) {
         this.titulo = titulo;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
         this.etiquetas = etiquetas;
-        this.experiencias = experiencias;
+        this.id = id;
     }
 
 
     // Constructor para Crear Experiencias
-    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String experiencias, 0) {
+    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String experiencias) {
         this.titulo = titulo;
         this.ciudad = ciudad;
         this.descripcion = descripcion;
@@ -112,6 +112,7 @@ public class Desafio implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
     public Long getId2() {
         return id2;
     }

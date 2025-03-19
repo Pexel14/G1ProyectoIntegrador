@@ -279,7 +279,15 @@ public class CrearGrupoFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String idDesafioAux = "";
                 for (DataSnapshot dsDesafios : snapshot.getChildren()) {
-                    Desafio desafio = dsDesafios.getValue(Desafio.class);
+                    Desafio desafio = new Desafio(
+                            dsDesafios.child("titulo").getValue(String.class),
+                            dsDesafios.child("ciudad").getValue(String.class),
+                            dsDesafios.child("descripcion").getValue(String.class),
+                            dsDesafios.child("etiquetas").getValue(String.class),
+                            dsDesafios.child("id").getValue().toString(),
+                            ""
+
+                    );
                     if (desafio.getTitulo().equals(finalNomDesafio)) {
                         idDesafioAux = String.valueOf(desafio.getId());
                         idDesafio = idDesafioAux;

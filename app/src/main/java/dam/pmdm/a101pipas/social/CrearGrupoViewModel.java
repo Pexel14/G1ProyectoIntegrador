@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import dam.pmdm.a101pipas.desafios.descubrir.TarjetaDesafioDescubrirFragment;
+import dam.pmdm.a101pipas.models.Desafio;
+import dam.pmdm.a101pipas.models.DesafioUsuario;
 import dam.pmdm.a101pipas.models.Grupo;
 import dam.pmdm.a101pipas.models.User;
 
@@ -104,28 +106,27 @@ public class CrearGrupoViewModel extends ViewModel {
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             for (DataSnapshot dsUsuario : snapshot.getChildren()) {
 //                                                User user = dsUsuario.getValue(User.class);
-
+                                                Map<String, DesafioUsuario> desafios = null;
                                                 int experiencias = 0;
                                                 if(snapshot.hasChild("experiencias_completadas")){
                                                     experiencias = Integer.parseInt(dsUsuario.child("experiencias_completadas").getValue().toString());
                                                 }
 
-                                                HashMap<String, Object> desafios = new HashMap<>();
                                                 Object valor = snapshot.child("desafios").getValue();
                                                 if(snapshot.hasChild("desafios")){
-                                                    desafios = (HashMap<String, Object>) valor;
+                                                    desafios = (Map<String, DesafioUsuario>) valor;
                                                 }
 
-//    String grupos, String amigos, HashMap<String, Object> desafios, int experiencias_completadas) {
                                                 User user = new User(
                                                         dsUsuario.child("id").getValue().toString(),
                                                         dsUsuario.child("username").getValue().toString(),
                                                         dsUsuario.child("email").getValue().toString(),
+                                                        "",
                                                         dsUsuario.child("foto_perfil").getValue().toString(),
                                                         dsUsuario.child("grupos").getValue().toString(),
                                                         dsUsuario.child("amigos").getValue().toString(),
-                                                        desafios,
-                                                        experiencias
+                                                        experiencias,
+                                                        desafios
                                                 );
 
                                                 String pwd = "";

@@ -85,7 +85,7 @@ public class GeolocalizacionViewModel extends ViewModel {
 
 //                                            String id, String titulo, String descripcion, String imagen, String coordenadas
                                             Experiencia exp = new Experiencia(
-                                                    snapshot2.child("id").getValue().toString(),
+                                                    snapshot2.child("id").getValue(Long.class),
                                                     snapshot2.child("titulo").getValue().toString(),
                                                     snapshot2.child("descripcion").getValue().toString(),
                                                     snapshot2.child("imagen").getValue().toString(),

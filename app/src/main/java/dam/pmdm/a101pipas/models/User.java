@@ -32,6 +32,7 @@ public class User {
         this.foto_perfil = foto_perfil;
         this.grupos = grupos;
         this.amigos = amigos;
+        this.experiencias_completadas = experiencias_completadas;
         this.desafios = desafios;
     }
 
@@ -51,6 +52,9 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(String id, String username, String email, String fotoPerfil, String grupos, String amigos, int experiencias, Map<String, DesafioUsuario> desafios) {
     }
 
     public String getid() {

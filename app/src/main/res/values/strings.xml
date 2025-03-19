@@ -224,4 +224,5 @@
     <string name="rellenar_contrasenia_fragment_contrasenia_incorrecta">Contraseña incorrecta, prueba de nuevo</string>
     <string name="fragment_lista_grupos_mensaje_vacio">No se han encontrado grupos</string>
     <string name="fragment_lista_amigos_mensaje_vacio">No se han encontrado usuarios</string>
+    <string name="crear_experiencias_fragment_no_imagen">Debes introducir una imagen</string>
 </resources>
