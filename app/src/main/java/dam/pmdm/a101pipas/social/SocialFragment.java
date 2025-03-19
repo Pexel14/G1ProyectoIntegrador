@@ -88,7 +88,27 @@ public class SocialFragment extends Fragment {
         // Botón para ver más grupos
         binding.btnMasGrupos.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_lista_grupos));
 
-        binding.btnCrearGrupo.setOnClickListener(v -> Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo));
+        binding.btnCrearGrupo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Antes de acceder a crear un grupo, comprobar si el usuario tiene desafíos empezados
+                usuarioRef.child("desafios").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            Navigation.findNavController(view).navigate(R.id.navigation_crear_grupo);
+                        } else {
+                            Toast.makeText(getContext(), "Necesitas haber empezado al menos un desafío", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
 
         binding.barraBusqueda.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -98,21 +118,8 @@ public class SocialFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                buscar(newText.trim());
-
-                if(amigosList.isEmpty()){
-                    binding.tvNoAmigos.setVisibility(View.VISIBLE);
-                } else {
-                    binding.tvNoAmigos.setVisibility(View.GONE);
-                }
-
-                if(gruposList.isEmpty()){
-                    binding.tvNoGrupos.setVisibility(View.VISIBLE);
-                } else {
-                    binding.tvNoGrupos.setVisibility(View.GONE);
-                }
-
-                if(newText.trim().isEmpty()){
+                buscar(newText);
+                if(newText.isEmpty()){
                     binding.rvAmigosBuscador.setVisibility(View.GONE);
                     binding.rvGruposBuscador.setVisibility(View.GONE);
                     binding.tvAmigosBuscador.setVisibility(View.GONE);

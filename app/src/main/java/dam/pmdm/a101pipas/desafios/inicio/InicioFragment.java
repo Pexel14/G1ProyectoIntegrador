@@ -27,7 +27,7 @@ import java.util.List;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.databinding.FragmentInicioBinding;
-import dam.pmdm.a101pipas.desafios.CrearDesafioActivity;
+import dam.pmdm.a101pipas.desafios.CrearDesafioFragment;
 import dam.pmdm.a101pipas.models.Desafio;
 
 public class InicioFragment extends Fragment {
@@ -73,13 +73,13 @@ public class InicioFragment extends Fragment {
         binding.rvDesafiosInicio.setAdapter(adapter);
 
         inicioViewModel.getDesafiosLiveData().observe(getViewLifecycleOwner(), this::cargarDesafios);
+
         inicioViewModel.cargarFragmentosDesafiosDesdeFirebase(refDesafiosUsuario, refDesafios);
 
         binding.btnAniadirDesafioInicio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getContext(), CrearDesafioActivity.class);
-                startActivity(i);
+                Navigation.findNavController(view).navigate(R.id.crear_desafio);
             }
         });
 
@@ -95,7 +95,6 @@ public class InicioFragment extends Fragment {
                 return true;
             }
         });
-
     }
 
     private void buscar(String newText) {
@@ -120,7 +119,6 @@ public class InicioFragment extends Fragment {
             binding.rvDesafiosInicio.setAdapter(adapter);
         }
     }
-
     private void cargarDesafios(List<Desafio> fragmentos) {
         if(!fragmentos.isEmpty()){
             listaDesafios = fragmentos;

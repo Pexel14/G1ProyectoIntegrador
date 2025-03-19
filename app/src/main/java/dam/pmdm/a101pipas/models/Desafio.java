@@ -9,6 +9,10 @@ import java.util.Map;
 public class Desafio implements Serializable {
     private String titulo, ciudad, descripcion, etiquetas, id, experiencias;
     private int porcentajeProgreso;
+//    private Map<String, Experiencia> experiencias;
+    private Long id2;
+
+    public Desafio() {}
 
     // Constructor para el Perfil
     public Desafio(String titulo, int porcentajeProgreso) {
@@ -30,9 +34,24 @@ public class Desafio implements Serializable {
         this.ciudad = ciudad;
         this.descripcion = descripcion;
         this.etiquetas = etiquetas;
-        this.id = id;
+        this.experiencias = experiencias;
     }
 
+
+    // Constructor para Crear Experiencias
+    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, String experiencias, 0) {
+        this.titulo = titulo;
+        this.ciudad = ciudad;
+        this.descripcion = descripcion;
+        this.etiquetas = etiquetas;
+        this.experiencias = experiencias;
+    }
+
+
+
+    public String getExperiencias() {
+        return experiencias;
+    }
     //Constructor para cargar los desafios en DESCUBRIR
     public Desafio(String titulo, String ciudad, String id) {
         this.titulo = titulo;
@@ -40,12 +59,14 @@ public class Desafio implements Serializable {
         this.id = id;
     }
 
+    public void setExperiencias(String experiencias) {
+        this.experiencias = experiencias;
+    }
+
     public Desafio(String titulo, String experiencias) {
         this.titulo = titulo;
         this.experiencias = experiencias;
     }
-
-    public Desafio() {}
 
     // Constructor para Crear Experiencias
 //    public Desafio(String titulo, String ciudad, String descripcion, String etiquetas, Map<String, Experiencia> experiencias) {
@@ -73,8 +94,6 @@ public class Desafio implements Serializable {
         return titulo;
     }
 
-    public String getExperiencias() {return experiencias;}
-
     public int getPorcentajeProgreso() {
         return porcentajeProgreso;
     }
@@ -92,5 +111,12 @@ public class Desafio implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+    public Long getId2() {
+        return id2;
+    }
+
+    public void setId2(Long id) {
+        this.id2 = id;
     }
 }

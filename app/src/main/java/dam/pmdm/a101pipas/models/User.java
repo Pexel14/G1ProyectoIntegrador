@@ -32,7 +32,6 @@ public class User {
         this.foto_perfil = foto_perfil;
         this.grupos = grupos;
         this.amigos = amigos;
-        this.experiencias_completadas = experiencias_completadas;
         this.desafios = desafios;
     }
 
@@ -94,5 +93,9 @@ public class User {
 
     public int getExperiencias_completadas() {
         return experiencias_completadas;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
     }
 }

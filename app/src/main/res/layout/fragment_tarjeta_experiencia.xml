@@ -8,10 +8,9 @@
     android:layout_marginBottom="@dimen/separacion_mediana_quince"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/radio_por_defecto"
+    android:background="@color/white"
     tools:context=".experiencias.TarjetaExperienciaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -72,13 +71,25 @@
             app:layout_constraintTop_toBottomOf="@id/tvDescripcionCrearExperiencia"/>
 
         <!-- SUBIR IMAGEN -->
+
+        <ImageView
+            android:id="@+id/ivImagenExperiencia"
+            android:layout_width="200dp"
+            android:layout_height="0dp"
+            android:maxHeight="200dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/etDescripcionCrearExperiencia"
+            android:layout_marginTop="@dimen/separacion_mediana_quince"/>
+
         <Button
+            android:id="@+id/btnSubirFotoExperiencia"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:fontFamily="@font/akaya_telivigala"
             app:layout_constraintStart_toStartOf="@id/etDescripcionCrearExperiencia"
             app:layout_constraintEnd_toEndOf="@id/etDescripcionCrearExperiencia"
-            app:layout_constraintTop_toBottomOf="@id/etDescripcionCrearExperiencia"
+            app:layout_constraintTop_toBottomOf="@id/ivImagenExperiencia"
             android:layout_marginTop="@dimen/separacion_mediana_quince"
             android:background="@drawable/rounded_corner_button"
             android:text="@string/subir_foto_crear_experiencia"

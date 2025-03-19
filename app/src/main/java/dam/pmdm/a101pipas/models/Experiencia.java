@@ -3,18 +3,20 @@ package dam.pmdm.a101pipas.models;
 import com.google.android.gms.maps.model.LatLng;
 
 public class Experiencia {
-    private String id;
+    private Long id;
     private String titulo, descripcion, imagen, coordenadas;
 
     public Experiencia() {
     }
 
-    public Experiencia(String titulo, String descripcion) {
+    public Experiencia(Long id, String titulo, String descripcion, String imagen) {
+        this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
-    public Experiencia(String id, String titulo, String descripcion, String imagen, String coordenadas) {
+    public Experiencia(Long id, String titulo, String descripcion, String imagen, String coordenadas) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
@@ -22,15 +24,15 @@ public class Experiencia {
         this.coordenadas = coordenadas;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         if (id != null) {
             this.id = id;
         } else {
-            this.id = "0"; // Valor por defecto si es null
+            this.id = 0L; // Valor por defecto si es null
         }
     }
 

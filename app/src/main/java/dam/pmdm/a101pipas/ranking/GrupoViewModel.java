@@ -12,8 +12,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.models.DesafioUsuario;
 import dam.pmdm.a101pipas.models.Grupo;
 import dam.pmdm.a101pipas.models.User;
 

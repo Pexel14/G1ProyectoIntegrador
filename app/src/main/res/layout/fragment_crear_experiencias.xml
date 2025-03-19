@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/background"
     android:padding="@dimen/padding"
-    tools:context=".experiencias.CrearExperienciasActivity">
+    tools:context=".experiencias.CrearExperienciasFragment">
 
     <!-- DECORACIÓN SUPERIOR -->
     <ImageButton
@@ -35,7 +35,6 @@
         android:textSize="@dimen/tam_titulo"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +64,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/btnAniadirExperienciaCrearDesafio"
-                android:background="@drawable/background"/>
+                android:background="@color/transparent"/>
 
             <!-- AÑADIR EXPERIENCIA -->
             <Button

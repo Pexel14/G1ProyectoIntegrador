@@ -108,4 +108,24 @@
         android:label="fragment_rellenar_contrasenia"
         tools:layout="@layout/fragment_rellenar_contrasenia" />
 
+    <!-- CREAR DESAFIO -->
+    <fragment
+        android:id="@+id/crear_desafio"
+        android:name="dam.pmdm.a101pipas.desafios.CrearDesafioFragment"
+        android:label="CrearDesafio"
+        tools:layout="@layout/fragment_crear_desafio"/>
+
+    <!-- CREAR EXPERIENCIAS -->
+    <fragment
+        android:id="@+id/crear_experiencias"
+        android:name="dam.pmdm.a101pipas.experiencias.CrearExperienciasFragment"
+        android:label="CrearExperiencias"
+        tools:layout="@layout/fragment_crear_experiencias">
+
+        <argument
+            android:name="Desafio"
+            app:argType="dam.pmdm.a101pipas.models.Desafio"/>
+
+    </fragment>
+
 </navigation>

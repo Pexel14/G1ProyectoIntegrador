@@ -23,6 +23,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class Registro extends AppCompatActivity {
 
     private ActivityRegistroBinding binding;
@@ -122,6 +124,7 @@ public class Registro extends AppCompatActivity {
                         idUltimo = idAux;
                     }
                 }
+                idUltimo = String.valueOf(Integer.parseInt(idUltimo) + 1);
             }
 
             @Override

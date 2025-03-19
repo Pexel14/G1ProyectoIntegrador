@@ -87,4 +87,8 @@ public class Grupo {
     public String getFoto_grupo() {
         return foto_grupo;
     }
+
+    public void setFoto_grupo(String foto_grupo) {
+        this.foto_grupo = foto_grupo;
+    }
 }
