@@ -27,21 +27,26 @@ import dam.pmdm.a101pipas.models.Experiencia;
 
 public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasListAdapter.ExperienciaViewHolder> {
 
+    // Lista de experiencias y variables necesarias
     private List<Experiencia> experienciaList;
     private OnExperienciaClickListener listener;
     private Set<String> experienciasCompletadas; // Para almacenar los IDs de las experiencias completadas
+    private String tituloDesafio; // Almacena el título del desafío
 
+    // Interfaz para manejar clics en las experiencias
     public interface OnExperienciaClickListener {
         void onExperienciaClick(Experiencia experiencia);
     }
 
-    public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener) {
+    public ExperienciasListAdapter(List<Experiencia> experienciaList, OnExperienciaClickListener listener, String tituloDesafio) {
         this.experienciaList = experienciaList;
         this.listener = listener;
+        this.tituloDesafio = tituloDesafio; // Asignar el título del desafío
         this.experienciasCompletadas = new HashSet<>(); // Inicializar el conjunto
         cargarExperienciasCompletadas(); // Cargar los IDs de experiencias completadas
     }
 
+    // Carga las experiencias completadas desde la base de datos
     private void cargarExperienciasCompletadas() {
         String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
         DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
@@ -60,7 +65,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                         }
                     }
                 }
-                notifyDataSetChanged(); // Notificar que los datos han cambiado para actualizar la vista
+                notifyDataSetChanged(); // Notificar cambios en los datos
             }
 
             @Override
@@ -120,16 +125,19 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
     private void actualizarEstadoEnBaseDeDatos(String experienciaId, boolean completada) {
         String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
-        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("usuarios").child(user).child("experiencias").child(experienciaId).child("completada");
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("usuarios")
+                .child(user)
+                .child("experiencias")
+                .child(experienciaId)
+                .child("completada");
 
         userRef.setValue(completada).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d("Firebase", "Estado de experiencia actualizado correctamente");
-
                 if (completada) {
                     agregarExperienciaACompletadas(experienciaId, user);
                 } else {
-                    eliminarExperienciaDeCompletadas(experienciaId, user); // Llamar al método eliminar
+                    eliminarExperienciaDeCompletadas(experienciaId, user); // Llamar al método para eliminar
                 }
             } else {
                 Log.e("Firebase", "Error al actualizar el estado de la experiencia");
@@ -145,25 +153,11 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String existingIds = null;
+                String existingIds = dataSnapshot.exists() ? dataSnapshot.getValue(String.class) : "";
 
-                if (dataSnapshot.exists()) {
-                    Object value = dataSnapshot.getValue();
-                    if (value instanceof String) {
-                        existingIds = (String) value; // Obtener IDs existentes como String
-                    } else if (value instanceof Long) {
-                        existingIds = String.valueOf(value); // Convertir Long a String
-                    }
-                }
-
-                if (existingIds != null && !existingIds.isEmpty()) {
-                    // Comprobar si el ID ya existe para evitar duplicados
-                    if (!existingIds.contains(experienciaId)) {
-                        existingIds += ", " + experienciaId; // Concatenamos con coma
-                    }
-                } else {
-                    // Si no hay IDs, inicializar con el nuevo ID
-                    existingIds = experienciaId;
+                // Comprobar y agregar el ID de experiencia
+                if (!existingIds.contains(experienciaId)) {
+                    existingIds = existingIds.isEmpty() ? experienciaId : existingIds + ", " + experienciaId;
                 }
 
                 // Guardar la nueva cadena de IDs
@@ -191,33 +185,18 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String existingIds = null;
-
                 if (dataSnapshot.exists()) {
-                    existingIds = dataSnapshot.getValue(String.class);
-                }
-
-                if (existingIds != null) {
-                    String[] idsArray = existingIds.split(", ");
-                    StringBuilder newIds = new StringBuilder();
-
-                    for (String id : idsArray) {
-                        if (!id.trim().equals(experienciaId)) {
-                            if (newIds.length() > 0) {
-                                newIds.append(", "); // Añadir coma entre IDs
+                    String existingIds = dataSnapshot.getValue(String.class);
+                    if (existingIds != null) {
+                        String newIds = removerIdDeCadena(existingIds, experienciaId);
+                        completadasRef.setValue(newIds).addOnCompleteListener(task -> {
+                            if (task.isSuccessful()) {
+                                Log.d("Firebase", "Experiencia eliminada de experiencias_completadas correctamente");
+                            } else {
+                                Log.e("Firebase", "Error al eliminar experiencia de experiencias_completadas");
                             }
-                            newIds.append(id.trim());
-                        }
+                        });
                     }
-
-                    // Guardar la nueva cadena de IDs sin la experiencia eliminada
-                    completadasRef.setValue(newIds.toString()).addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            Log.d("Firebase", "Experiencia eliminada de experiencias_completadas correctamente");
-                        } else {
-                            Log.e("Firebase", "Error al eliminar experiencia de experiencias_completadas");
-                        }
-                    });
                 }
             }
 
@@ -226,6 +205,22 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                 Log.e("Firebase", "Error al leer la base de datos", databaseError.toException());
             }
         });
+    }
+
+    // Método para remover un ID de la cadena
+    private String removerIdDeCadena(String existingIds, String experienciaId) {
+        String[] idsArray = existingIds.split(", ");
+        StringBuilder newIds = new StringBuilder();
+
+        for (String id : idsArray) {
+            if (!id.trim().equals(experienciaId)) {
+                if (newIds.length() > 0) {
+                    newIds.append(", "); // Añadir coma entre IDs
+                }
+                newIds.append(id.trim());
+            }
+        }
+        return newIds.toString();
     }
 
     public void setExperiencias(List<Experiencia> experiencias) {
