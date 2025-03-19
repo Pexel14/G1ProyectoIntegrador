@@ -128,9 +128,9 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
         DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("usuarios")
                 .child(user)
-                .child("experiencias")
-                .child(experienciaId)
-                .child("completada");
+                .child("desafios")
+                .child(tituloDesafio)
+                .child("experiencias_completadas");
 
         userRef.setValue(completada).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
@@ -146,9 +146,11 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         });
     }
 
-    private void agregarExperienciaACompletadas(String experienciaId, String userId) {
+    private void agregarExperienciaACompletadas(String experienciaId, String user) {
         DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
-                .child(userId)
+                .child(user)
+                .child("desafios")
+                .child(tituloDesafio)
                 .child("experiencias_completadas");
 
         completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -178,9 +180,11 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         });
     }
 
-    private void eliminarExperienciaDeCompletadas(String experienciaId, String userId) {
+    private void eliminarExperienciaDeCompletadas(String experienciaId, String user) {
         DatabaseReference completadasRef = FirebaseDatabase.getInstance().getReference("usuarios")
-                .child(userId)
+                .child(user)
+                .child("desafios")
+                .child(tituloDesafio)
                 .child("experiencias_completadas");
 
         completadasRef.addListenerForSingleValueEvent(new ValueEventListener() {
