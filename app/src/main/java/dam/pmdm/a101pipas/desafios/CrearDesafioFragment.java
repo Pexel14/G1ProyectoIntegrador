@@ -23,6 +23,7 @@ public class CrearDesafioFragment extends Fragment {
 
     private DatabaseReference databaseReference;
     private FragmentCrearDesafioBinding binding;
+    private final String[] etiquetas = {"Cultura", "Arte", "Gastronomía", "Naturaleza"};
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -47,17 +48,18 @@ public class CrearDesafioFragment extends Fragment {
                     descripcion = binding.etDescripcionCrearDesafio.getText().toString();
 
                     // Agrega a "experiencias" las experiencias activas (checkboxes)
-                    for (int i = 0; i < binding.clCheckboxesCrearDesafio.getChildCount(); i++) {
-                        View v = binding.clCheckboxesCrearDesafio.getChildAt(i);
 
-                        if (v instanceof CheckBox) {
-                            CheckBox checkBox = (CheckBox) v;
-
-                            // Si el checkbox está seleccionado, añades su texto al StringBuilder
-                            if (checkBox.isChecked()) {
-                                experiencias += checkBox.getText().toString() + ",";
-                            }
-                        }
+                    if (binding.cbCulturaCrearDesafio.isChecked()) {
+                        experiencias += etiquetas[0] + ",";
+                    }
+                    if (binding.cbArteCrearDesafio.isChecked()) {
+                        experiencias += etiquetas[1] + ",";
+                    }
+                    if (binding.cbGastronomiaCrearDesafio.isChecked()) {
+                        experiencias += etiquetas[2] + ",";
+                    }
+                    if (binding.cbNaturalezaCrearDesafio.isChecked()) {
+                        experiencias += etiquetas[3] + ",";
                     }
 
                     // Elimina la última coma
