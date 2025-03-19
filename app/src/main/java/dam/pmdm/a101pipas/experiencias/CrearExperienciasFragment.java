@@ -1,9 +1,14 @@
 package dam.pmdm.a101pipas.experiencias;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,11 +20,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,38 +186,73 @@ public class CrearExperienciasFragment extends Fragment {
 
         List<Experiencia> listaExperiencias = new ArrayList<>();
 
-        String experiencias = "";
+        final String[] experiencias = {""};
         for (TarjetaExperienciaFragment fragment : listaDeFragments) {
             if (fragment.isEmpty()) {
                 Toast.makeText(getContext(), "Hay experiencias sin completar.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            Experiencia ex = new Experiencia(ultimoIdExp, fragment.getTitulo(), fragment.getDescripcion());
 
-            listaExperiencias.add(ex);
+            Uri imagen = fragment.getImageUri();
 
-            if (!experiencias.isEmpty()) {
-                experiencias += ",";
-            }
+            String id = fragment.getTitulo() + fragment.getId();
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("experiencias_images");
+            StorageReference imageRef = storageReference.child(id + ".jpg");
 
-            experiencias += String.valueOf(ultimoIdExp);
+            imageRef.putFile(imagen).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    imageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
 
-            ultimoIdExp += 1;
+                            String imagenURL = uri.toString();
+
+                            Experiencia ex = new Experiencia(ultimoIdExp, fragment.getTitulo(), fragment.getDescripcion(), imagenURL);
+
+                            listaExperiencias.add(ex);
+
+                            if (!experiencias[0].isEmpty()) {
+                                experiencias[0] += ",";
+                            }
+
+                            experiencias[0] += String.valueOf(ultimoIdExp);
+
+                            ultimoIdExp += 1;
+
+                            desafio.setExperiencias(experiencias[0]);
+
+                            String keyDesafio = desafio.getTitulo();
+
+                            refDesafios.child(keyDesafio).setValue(desafio)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
+                                            crearExperiencias(view, listaExperiencias);
+                                        } else {
+                                            Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    });
+                }
+            });
+
         }
 
-        desafio.setExperiencias(experiencias);
-
-        String keyDesafio = desafio.getTitulo();
-
-        refDesafios.child(keyDesafio).setValue(desafio)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
-                        crearExperiencias(view, listaExperiencias);
-                    } else {
-                        Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
-                    }
-                });
+//        desafio.setExperiencias(experiencias[0]);
+//
+//        String keyDesafio = desafio.getTitulo();
+//
+//        refDesafios.child(keyDesafio).setValue(desafio)
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Toast.makeText(getContext(), R.string.crear_experiencias_desafio_creado, Toast.LENGTH_SHORT).show();
+//                        crearExperiencias(view, listaExperiencias);
+//                    } else {
+//                        Toast.makeText(getContext(), R.string.crear_experiencias_error_al_crear_desafio, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
     }
 
     private void crearExperiencias(View view, List<Experiencia> listaExp) {

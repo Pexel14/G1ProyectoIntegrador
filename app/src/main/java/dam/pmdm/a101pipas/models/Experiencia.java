@@ -9,10 +9,11 @@ public class Experiencia {
     public Experiencia() {
     }
 
-    public Experiencia(Long id, String titulo, String descripcion) {
+    public Experiencia(Long id, String titulo, String descripcion, String imagen) {
         this.id = id;
         this.titulo = titulo;
         this.descripcion = descripcion;
+        this.imagen = imagen;
     }
 
     public Experiencia(Long id, String titulo, String descripcion, String imagen, String coordenadas) {

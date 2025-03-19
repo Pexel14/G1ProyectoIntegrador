@@ -83,6 +83,7 @@
             android:layout_marginTop="@dimen/separacion_mediana_quince"/>
 
         <Button
+            android:id="@+id/btnSubirFotoExperiencia"
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:fontFamily="@font/akaya_telivigala"
