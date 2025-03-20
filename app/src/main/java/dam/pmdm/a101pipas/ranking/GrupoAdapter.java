@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,27 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
 
         if(desafio != null){
             Map<String, DesafioUsuario> desafioUsuario = usuario.getDesafios();
+
+//            if (desafiosMap != null) {
+//                Object desafioData = desafiosMap.get(desafio);
+//                DesafioUsuario desafioUsuario = null;
+//
+//                if (desafioData instanceof HashMap) {
+//                    // Convierte manualmente el HashMap a DesafioUsuario
+//                    HashMap<String, String> map = (HashMap<String, String>) desafioData;
+//                    String estado = map.get("estado");
+//                    String experiencias = map.get("experiencias_completadas");
+//                    desafioUsuario = new DesafioUsuario();
+//                    desafioUsuario.setEstado(estado);
+//                    desafioUsuario.setExperiencias_completadas(experiencias);
+//                } else if (desafioData != null) {
+//                    desafioUsuario = (DesafioUsuario) desafioData;
+//                }
+//
+//                if (desafioUsuario != null) {
+//                    // Actualiza la UI con desafioUsuario
+//                }
+//            }
 
             if(desafioUsuario != null){
                 DesafioUsuario desafioUsuario1 = new DesafioUsuario(

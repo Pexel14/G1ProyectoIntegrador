@@ -214,12 +214,14 @@ public class SocialFragment extends Fragment {
                 if(amigosUser != null) {
                     if(!amigosUser.isEmpty()){
                         for (DataSnapshot data : snapshot.getChildren()) {
-                            if(amigosUser.contains(data.child("id").getValue().toString())){
-                                String id = data.getKey();
-                                String username = data.child("username").getValue(String.class);
-                                String email = data.child("email").getValue(String.class);
-                                String fotoPerfil = data.child("foto_perfil").getValue(String.class);
-                                amigosList.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : "", email));
+                            for (String a : amigosUser.split(",")) {
+                                if(a.equals(data.child("id").getValue().toString())){
+                                    String id = data.getKey();
+                                    String username = data.child("username").getValue(String.class);
+                                    String email = data.child("email").getValue(String.class);
+                                    String fotoPerfil = data.child("foto_perfil").getValue(String.class);
+                                    amigosList.add(new Amigos(id, username, fotoPerfil != null ? fotoPerfil : "", email));
+                                }
                             }
                         }
                     }

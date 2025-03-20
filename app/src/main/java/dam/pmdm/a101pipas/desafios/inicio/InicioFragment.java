@@ -58,7 +58,6 @@ public class InicioFragment extends Fragment {
 
         inicioViewModel = new ViewModelProvider(this).get(InicioViewModel.class);
 
-        // TODO: INTENTAR SACARLO DE UN VIEWMODEL NO DE UN SHAREDPREFERENCES
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MiAppPrefs", Context.MODE_PRIVATE);
         usuario = sharedPreferences.getString("usuario", "usuario");
 
@@ -67,7 +66,7 @@ public class InicioFragment extends Fragment {
         refDesafios = firebase.getReference("desafios");
 
         listaDesafios = new ArrayList<>();
-        adapter = new InicioAdapter(listaDesafios, this);
+        adapter = new InicioAdapter(new ArrayList<>(), this);
 
         binding.rvDesafiosInicio.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         binding.rvDesafiosInicio.setAdapter(adapter);
