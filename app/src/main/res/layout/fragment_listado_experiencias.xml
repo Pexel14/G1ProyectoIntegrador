@@ -27,7 +27,7 @@
 
     <LinearLayout
         android:id="@+id/header"
-        android:layout_width="419dp"
+        android:layout_width="match_parent"
         android:layout_height="107dp"
         android:background="@color/color_principal"
         android:orientation="horizontal"
@@ -37,19 +37,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+
+
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="239dp"
-            android:layout_height="81dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/separacion_grande_treinta"
+            android:layout_weight="1"
             android:fontFamily="@font/yellowtail"
-            android:layout_marginStart="95dp"
             android:gravity="center"
-            android:scaleType="fitCenter"
             android:text="@string/listado_experiencias_titulo_ejemplo"
             android:textColor="@color/white"
             android:textSize="@dimen/tam_titulo"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivInsignias"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/feliz" />
     </LinearLayout>
 
     <LinearLayout

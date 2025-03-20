@@ -79,7 +79,14 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                         }
                     }
                 }
-                notifyDataSetChanged(); // Notificar cambios en los datos
+
+                int totalExperiencias = experienciaList.size();
+                int porcentajeCompletado = calcularPorcentajeCompletado(totalExperiencias);
+
+                // Llamar a actualizarInsignia para cambiar el src de ivInsignias
+                actualizarInsignia(porcentajeCompletado);
+
+                notifyDataSetChanged();
             }
 
             @Override
@@ -175,6 +182,26 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                     }
                 }
             }); // Llamar al método para eliminar
+        }
+    }
+
+    private int calcularPorcentajeCompletado(int totalExperiencias) {
+        if (totalExperiencias <= 0) {
+            return 0;
+        }
+        int completadas = experienciasCompletadas.size();
+        return (int) ((completadas / (float) totalExperiencias) * 100);
+    }
+
+    private void actualizarInsignia(int porcentaje) {
+        ImageView ivInsignias = fragment.getView().findViewById(R.id.ivInsignias);
+
+        if (porcentaje >= 0 && porcentaje <= 10) {
+            ivInsignias.setImageResource(R.drawable.feliz);
+        } else if (porcentaje > 10 && porcentaje <= 20) {
+            ivInsignias.setImageResource(R.drawable.piruleta);
+        } else if (porcentaje > 20) {
+            ivInsignias.setImageResource(R.drawable.estrella);
         }
     }
 

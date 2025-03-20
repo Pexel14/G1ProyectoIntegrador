@@ -78,9 +78,17 @@
         android:textColor="@color/texto_secundario"
         android:textSize="@dimen/tam_texto"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvNick" />
+
+    <ImageView
+        android:id="@+id/ivInsignias"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/feliz"
+        app:layout_constraintStart_toEndOf="@+id/txt_nombre"
+        app:layout_constraintTop_toTopOf="@+id/txt_nombre" />
 
     <View
         android:id="@+id/view_separator1"

@@ -30,6 +30,7 @@ public class PerfilViewModel extends ViewModel {
     private final DatabaseReference refUsuarios;
     private final DatabaseReference refDesafios;
     private String usuarioId;
+    private int desafiosCompletos;
 
     public PerfilViewModel() {
         refUsuarios = FirebaseDatabase.getInstance().getReference("usuarios");
@@ -129,6 +130,7 @@ public class PerfilViewModel extends ViewModel {
         for (DesafioPerfil d : todosDesafios) {
             if (mostrarCompletados != null && mostrarCompletados && "completado".equals(d.getEstado())) {
                 filtrados.add(d);
+                desafiosCompletos ++;
             } else if (mostrarCompletados != null && !mostrarCompletados && "comenzado".equals(d.getEstado())) {
                 filtrados.add(d);
             }
@@ -160,34 +162,6 @@ public class PerfilViewModel extends ViewModel {
                     }
                 }
 
-//                for (DataSnapshot dsUsuario : snapshot.getChildren()) {
-//                    if (dsUsuario.getKey().equals(usuario)) {
-//                        String a = "";
-//                        if (dsUsuario.child("amigos").hasChildren()) {
-//                            a += ",";
-//                        }
-//
-//                        a += idAmigo[0];
-//
-//                        refUsuarios
-//                                .child(usuario)
-//                                .child("amigos")
-//                                .setValue(dsUsuario.child("amigos").toString() + a);
-//                    } else if (dsUsuario.getKey().equals(amigo)) {
-//                        String b = "";
-//
-//                        if (dsUsuario.child("amigos").hasChildren()) {
-//                            b += ",";
-//                        }
-//
-//                        b += idUsuario[0];
-//
-//                        refUsuarios
-//                                .child(amigo)
-//                                .child("amigos")
-//                                .setValue(dsUsuario.child("amigos").toString() + b);
-//                    }
-//                }
 
                 for (DataSnapshot dsUsuario : snapshot.getChildren()) {
                     String usuarioKey = dsUsuario.getKey();
