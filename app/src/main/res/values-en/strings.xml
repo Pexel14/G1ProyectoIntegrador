@@ -208,7 +208,7 @@
     <string name="no_puedo_unirme_a_un_grupo_qu_hago">I can\'t join a group, what should I do?</string>
     <string name="verifica_que_el_grupo_sea_p_blico_y_en_caso_de_que_sea_privado_que_sepas_la_contrase_a_si_el_problema_persiste_intenta_reiniciar_la_app">Check that the group is public and, if it\'s private, make sure you know the password. If the problem persists, try restarting the app.</string>
     <string name="c_mo_puedo_reportar_un_problema_en_la_app">How can I report a problem in the app?</string>
-    <string name="en_la_secci_n_de_ajustes_selecciona_reportar_un_problema_y_elige_el_tipo_de_incidencia">In the settings section, select \'Report a problem' and choose the type of issue.</string>
+    <string name="en_la_secci_n_de_ajustes_selecciona_reportar_un_problema_y_elige_el_tipo_de_incidencia">In the settings section, select \'Report a problem\' and choose the type of issue.</string>
     <string name="c_mo_personalizo_mi_perfil">How can I customize my profile?</string>
     <string name="desde_tu_perfil_puedes_cambiar_tu_nombre_de_usuario_y_foto_de_perfil_f_cilmente">From your profile, you can easily change your username and profile picture.</string>
     <string name="social_mensaje_sin_grupos">Right now, you have no groups. Join one or create your own! 🎉</string>

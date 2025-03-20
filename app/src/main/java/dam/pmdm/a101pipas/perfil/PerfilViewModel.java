@@ -60,7 +60,9 @@ public class PerfilViewModel extends ViewModel {
                 int experiencias = 0;
 
                 if(snapshot.hasChild("experiencias_completadas")){
-                    experiencias = Integer.parseInt(snapshot.child("experiencias_completadas").getValue().toString());
+                    if(!snapshot.child("experiencias_completadas").getValue().toString().isEmpty()){
+                        experiencias = Integer.parseInt(snapshot.child("experiencias_completadas").getValue().toString());
+                    }
                 }
 
                 User user = new User(

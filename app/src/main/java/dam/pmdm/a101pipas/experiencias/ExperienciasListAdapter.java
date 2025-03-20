@@ -97,6 +97,9 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
     public void onBindViewHolder(@NonNull ExperienciaViewHolder holder, int position) {
         Experiencia experiencia = experienciaList.get(position);
 
+        String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
+        actualizarProgreso(user);
+
         // Cargar imagen usando Picasso
         Picasso.get()
                 .load(experiencia.getImagen())
@@ -123,9 +126,6 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         //TODO: Ver porque no se inicia con los botones pulsados al estar completada la experiencia
         //TODO: Ver porque las experiencias no se eliminan
         //TODO: Arreglar Ranking
-
-        String user = FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".", "");
-        actualizarProgreso(user);
 
         holder.tvCheck.setOnClickListener(v -> {
             // Cambiar el estado de completada
