@@ -5,6 +5,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -12,10 +16,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.models.Desafio;
 import dam.pmdm.a101pipas.models.DesafioUsuario;
 import dam.pmdm.a101pipas.models.Grupo;
 import dam.pmdm.a101pipas.models.User;
@@ -26,6 +29,8 @@ public class GrupoViewModel extends ViewModel {
     private MutableLiveData<ArrayList<User>> miembrosLiveData;
 
     private int idGrupo;
+    private String experiencias;
+    private static Desafio desafio;
 
     public GrupoViewModel() {
         grupoLiveData = new MutableLiveData<>();
@@ -67,6 +72,59 @@ public class GrupoViewModel extends ViewModel {
                 System.out.println(R.string.error_al_leer_el_grupo + error.getMessage());
             }
         });
+    }
+
+    public void conseguirExperiencias(int idDesafio){
+
+        conseguirTitulo(idDesafio).addOnCompleteListener(new OnCompleteListener<Boolean>() {
+            @Override
+            public void onComplete(@NonNull Task<Boolean> task) {
+                if(task.isSuccessful()){
+                    DatabaseReference refUsuarios = FirebaseDatabase.getInstance().getReference("usuarios");
+                    refUsuarios.child(FirebaseAuth.getInstance().getCurrentUser().getEmail().split("@")[0].replace(".",""))
+                        .child("desafios").child(desafio.getTitulo()).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                DesafioUsuario desafioUsuario = new DesafioUsuario(
+                                        snapshot.child("estado").getValue().toString(),
+                                        snapshot.child("experiencias_completadas").getValue().toString()
+                                );
+
+                                experiencias = desafioUsuario.getExperiencias_completadas();
+                            }
+                            @Override public void onCancelled(@NonNull DatabaseError error) {}
+                        });
+                }
+            }
+        });
+    }
+
+    private Task<Boolean> conseguirTitulo(int idDesafio) {
+        TaskCompletionSource<Boolean> taskCompletionSource = new TaskCompletionSource<>();
+        DatabaseReference refDesafios = FirebaseDatabase.getInstance().getReference("desafios");
+
+        refDesafios.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot data : snapshot.getChildren()){
+                    if(data.child("id").getValue().toString().equals(String.valueOf(idDesafio))){
+                        desafio = new Desafio(
+                                data.child("titulo").getValue(String.class),
+                                data.child("experiencias").getValue().toString()
+                        );
+                        taskCompletionSource.setResult(true);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                taskCompletionSource.setResult(false);
+            }
+        });
+
+
+        return taskCompletionSource.getTask();
     }
 
     private void cargarMiembros(){
@@ -112,4 +170,7 @@ public class GrupoViewModel extends ViewModel {
 
     }
 
+    public String getExperiencias() {
+        return experiencias;
+    }
 }

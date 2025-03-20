@@ -49,6 +49,9 @@ public class GrupoFragment extends Fragment {
         viewModel.getGrupo().observe(getViewLifecycleOwner(), grupo -> {
             Log.d("Compartir","TOY AQUI 2");
             if (grupo != null) {
+
+                viewModel.conseguirExperiencias(grupo.getDesafio());
+
                 binding.imgCompartir.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -84,6 +87,9 @@ public class GrupoFragment extends Fragment {
             }
 
             adapter = new GrupoAdapter(new ArrayList<>());
+
+            adapter.setExperiencias_completadas(viewModel.getExperiencias().split(",").length);
+
             binding.rvRanking.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             binding.rvRanking.setAdapter(adapter);
             binding.tvRankingTitulo.setText(String.format(getString(R.string.ranking_privado_titulo), grupo.getTitulo()));

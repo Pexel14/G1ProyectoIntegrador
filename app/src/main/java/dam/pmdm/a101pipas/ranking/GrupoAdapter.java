@@ -19,6 +19,8 @@ import dam.pmdm.a101pipas.models.User;
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPrivadoViewHolder>{
     private ArrayList<User> listaUsuarios;
 
+    private int experiencias_completadas;
+
     public GrupoAdapter(ArrayList<User> listaUsuarios){
         this.listaUsuarios = listaUsuarios;
     }
@@ -33,6 +35,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
     @Override
     public void onBindViewHolder(@NonNull RankingPrivadoViewHolder holder, int position) {
         User usuario = listaUsuarios.get(position);
+
         Log.d("Compartir", "HA ENTRADO EN EL BINDVIEWHOLDER");
         int backgroundColor;
         if (position == 0 || position == 2) {
@@ -53,7 +56,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
 
         holder.tvRankingTop.setText(String.valueOf((position+1)));
         holder.tvRankingUsuario.setText(usuario.getUsername());
-        holder.tvRankingCompletados.setText(String.valueOf(usuario.getExpCompletadas() * -1));
+        holder.tvRankingCompletados.setText(String.valueOf(experiencias_completadas));
     }
 
     @Override
@@ -77,5 +80,9 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
             tvRankingUsuario = itemView.findViewById(R.id.tvRankingUsuario);
             tvRankingCompletados = itemView.findViewById(R.id.tvRankingCompletados);
         }
+    }
+
+    public void setExperiencias_completadas(int experiencias_completadas) {
+        this.experiencias_completadas = experiencias_completadas;
     }
 }
