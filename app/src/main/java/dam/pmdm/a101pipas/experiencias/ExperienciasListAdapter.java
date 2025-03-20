@@ -80,11 +80,6 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                     }
                 }
 
-                int totalExperiencias = experienciaList.size();
-                int porcentajeCompletado = calcularPorcentajeCompletado(totalExperiencias);
-
-                // Llamar a actualizarInsignia para cambiar el src de ivInsignias
-                actualizarInsignia(porcentajeCompletado);
 
                 notifyDataSetChanged();
             }
@@ -185,23 +180,47 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         }
     }
 
-    private int calcularPorcentajeCompletado(int totalExperiencias) {
+    /*private int calcularPorcentajeCompletado(int totalExperiencias) {
         if (totalExperiencias <= 0) {
             return 0;
         }
         int completadas = experienciasCompletadas.size();
         return (int) ((completadas / (float) totalExperiencias) * 100);
-    }
+    }*/
 
     private void actualizarInsignia(int porcentaje) {
         ImageView ivInsignias = fragment.getView().findViewById(R.id.ivInsignias);
 
         if (porcentaje >= 0 && porcentaje <= 10) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "cara feliz");
             ivInsignias.setImageResource(R.drawable.feliz);
         } else if (porcentaje > 10 && porcentaje <= 20) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "piruleta");
             ivInsignias.setImageResource(R.drawable.piruleta);
-        } else if (porcentaje > 20) {
+        } else if (porcentaje > 20 && porcentaje <= 30) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "estrella");
             ivInsignias.setImageResource(R.drawable.estrella);
+        } else if (porcentaje > 30 && porcentaje <= 40) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "cobre");
+            ivInsignias.setImageResource(R.drawable.cobre);
+        }  else if (porcentaje > 40 && porcentaje <= 50) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "plata");
+            ivInsignias.setImageResource(R.drawable.plata);
+        } else if (porcentaje > 50 && porcentaje <= 60) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "oro");
+            ivInsignias.setImageResource(R.drawable.oro);
+        } else if (porcentaje > 60 && porcentaje <= 70) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "laurel");
+            ivInsignias.setImageResource(R.drawable.laurel);
+        } else if (porcentaje > 70 && porcentaje <= 80) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "diamante");
+            ivInsignias.setImageResource(R.drawable.diamante);
+        } else if (porcentaje > 80 && porcentaje <= 90) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "corona");
+            ivInsignias.setImageResource(R.drawable.corona);
+        } else if (porcentaje > 90 && porcentaje <= 100) {
+            Log.d("LISTADO", "INSIGNIAS: " + porcentaje + "trofeo");
+            ivInsignias.setImageResource(R.drawable.trofeo);
         }
     }
 
@@ -235,6 +254,9 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
 
                                 tvProgreso.setText(String.format(fragment.getContext().getString(R.string.listado_experiencias_progreso), completadas, totalExperiencias));
                                 progressBar.setProgress(porcentaje);
+
+                                actualizarInsignia(porcentaje);
+                                Log.d("LISTADO", "PROGRESO: " + porcentaje);
 
                                 if(porcentaje == 100){
                                     desafioUsuario.setEstado(1);
