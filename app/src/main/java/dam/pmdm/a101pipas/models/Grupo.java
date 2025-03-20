@@ -34,6 +34,13 @@ public class Grupo {
         this.desafio = desafio;
     }
 
+    public Grupo(String titulo, String contrasena, int desafio, String miembros) {
+        this.titulo = titulo;
+        this.contrasena = contrasena;
+        this.desafio = desafio;
+        this.miembros = miembros;
+    }
+
     public int getId() {
         return id;
     }

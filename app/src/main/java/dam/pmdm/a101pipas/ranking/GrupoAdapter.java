@@ -22,7 +22,8 @@ import dam.pmdm.a101pipas.models.User;
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPrivadoViewHolder>{
     private ArrayList<User> listaUsuarios;
 
-    private String desafio;
+    private DesafioUsuario experiencias;
+
     public GrupoAdapter(ArrayList<User> listaUsuarios){
         this.listaUsuarios = listaUsuarios;
     }
@@ -59,45 +60,11 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
         holder.tvRankingTop.setText(String.valueOf((position+1)));
         holder.tvRankingUsuario.setText(usuario.getUsername());
 
-        if(desafio != null){
-            Map<String, DesafioUsuario> desafioUsuario = usuario.getDesafios();
-
-//            if (desafiosMap != null) {
-//                Object desafioData = desafiosMap.get(desafio);
-//                DesafioUsuario desafioUsuario = null;
-//
-//                if (desafioData instanceof HashMap) {
-//                    // Convierte manualmente el HashMap a DesafioUsuario
-//                    HashMap<String, String> map = (HashMap<String, String>) desafioData;
-//                    String estado = map.get("estado");
-//                    String experiencias = map.get("experiencias_completadas");
-//                    desafioUsuario = new DesafioUsuario();
-//                    desafioUsuario.setEstado(estado);
-//                    desafioUsuario.setExperiencias_completadas(experiencias);
-//                } else if (desafioData != null) {
-//                    desafioUsuario = (DesafioUsuario) desafioData;
-//                }
-//
-//                if (desafioUsuario != null) {
-//                    // Actualiza la UI con desafioUsuario
-//                }
-//            }
-
-            if(desafioUsuario != null){
-                DesafioUsuario desafioUsuario1 = new DesafioUsuario(
-                        desafioUsuario.get(desafio).getEstado(),
-                        desafioUsuario.get(desafio).getExperiencias_completadas()
-                );
-
-                if(desafioUsuario1 != null){
-                    if(desafioUsuario1.getExperiencias_completadas() != null){
-                        if(!desafioUsuario1.getExperiencias_completadas().isEmpty()){
-                            holder.tvRankingCompletados.setText(String.valueOf(desafioUsuario1.getExperiencias_completadas().split(",").length));
-                        }
-                    }else {
-                        holder.tvRankingCompletados.setText("0");
-                    }
-                }
+        if(experiencias != null){
+            if(usuario.getUsername().equals(experiencias.getUsuario())){
+                holder.tvRankingCompletados.setText(experiencias.getExperiencias_completadas().length() + "");
+            } else {
+                holder.tvRankingCompletados.setText("0");
             }
         } else {
             holder.tvRankingCompletados.setText("0");
@@ -128,7 +95,13 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
         }
     }
 
-    public void setDesafio(String desafio) {
-        this.desafio = desafio;
+
+    public void setExperiencias(DesafioUsuario experiencias) {
+        this.experiencias = experiencias;
+        notifyDataSetChanged();
     }
+
+//    public void setDesafio(String desafio) {
+//        this.desafio = desafio;
+//    }
 }

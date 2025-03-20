@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class DesafioUsuario {
+    private String usuario;
     private String estado;
     private String experiencias_completadas;
 
@@ -15,11 +16,21 @@ public class DesafioUsuario {
         this.experiencias_completadas = experiencias_completadas;
     }
 
+    public DesafioUsuario(String estado, String experiencias_completadas, String usuario) {
+        this.estado = estado;
+        this.experiencias_completadas = experiencias_completadas;
+        this.usuario = usuario;
+    }
+
     public DesafioUsuario() {
     }
 
     public String getEstado() {
         return estado;
+    }
+
+    public String getUsuario() {
+        return usuario;
     }
 
     public String getExperiencias_completadas() {
@@ -45,6 +56,10 @@ public class DesafioUsuario {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public void setExperiencias_completadas(String experiencias_completadas) {

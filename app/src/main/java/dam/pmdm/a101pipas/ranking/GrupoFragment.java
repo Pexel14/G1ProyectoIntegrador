@@ -38,7 +38,7 @@ public class GrupoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        adapter = new GrupoAdapter(new ArrayList<>());
         binding.btnBack.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.navigation_social);
         });
@@ -50,7 +50,7 @@ public class GrupoFragment extends Fragment {
             Log.d("Compartir","TOY AQUI 2");
             if (grupo != null) {
 
-                viewModel.conseguirExperiencias(grupo.getDesafio());
+                viewModel.conseguirExperiencias(grupo.getDesafio(), grupo.getMiembros());
 
                 binding.imgCompartir.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -86,25 +86,24 @@ public class GrupoFragment extends Fragment {
                 Log.d("Compartir", "GRUPO: " + grupo);
             }
 
-            adapter = new GrupoAdapter(new ArrayList<>());
-
-
             binding.rvRanking.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             binding.rvRanking.setAdapter(adapter);
             binding.tvRankingTitulo.setText(String.format(getString(R.string.ranking_privado_titulo), grupo.getTitulo()));
+
             viewModel.getMiembrosLiveData().observe(getViewLifecycleOwner(), listaMiembros ->{
                 Log.d("Compartir", "ENTRA A LOS GRUPOS: " + listaMiembros.toString());
                 adapter.actualizarRanking(listaMiembros);
             });
         });
 
-        viewModel.getDesafioLiveData().observe(getViewLifecycleOwner(), desafio -> {
-            if(desafio != null){
-                adapter.setDesafio(desafio.getTitulo());
+        viewModel.getExperiencias().observe(getViewLifecycleOwner(), experiencias -> {
+            if(experiencias != null){
+                adapter.setExperiencias(experiencias);
             }
         });
 
     }
+
 
     @Override
     public void onDestroyView() {

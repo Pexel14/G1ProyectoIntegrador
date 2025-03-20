@@ -181,28 +181,29 @@ public class SocialFragment extends Fragment {
     }
 
     private void buscar(String newText) {
-        ArrayList<Grupo> auxGrupo = new ArrayList<>();
-        ArrayList<Amigos> auxAmigos = new ArrayList<>();
+        if(!newText.isEmpty()){
+            ArrayList<Grupo> auxGrupo = new ArrayList<>();
+            ArrayList<Amigos> auxAmigos = new ArrayList<>();
 
-        for (Amigos amigo : todosAmigos) {
-            if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
-                if(amigosUser.contains(amigo.getUsername())){
-                    auxAmigos.add(amigo);
+            for (Amigos amigo : todosAmigos) {
+                if(amigo.getUsername().toLowerCase().startsWith(newText.toLowerCase())){
+                    if(amigosUser.contains(amigo.getId())){
+                        auxAmigos.add(amigo);
+                    }
                 }
             }
-        }
 
-        for (Grupo grupo : todosGrupos) {
-            if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
-                if(gruposUser.contains(grupo.getNombreGrupo())){
-                    auxGrupo.add(grupo);
+            for (Grupo grupo : todosGrupos) {
+                if(grupo.getNombreGrupo().toLowerCase().startsWith(newText.toLowerCase())){
+                    if(gruposUser.contains(grupo.getIdGrupo())){
+                        auxGrupo.add(grupo);
+                    }
                 }
             }
+
+            binding.rvAmigosBuscador.setAdapter(new SocialAdapter(auxAmigos, this));
+            binding.rvGruposBuscador.setAdapter(new SocialAdapter(auxGrupo, this));
         }
-
-        binding.rvAmigosBuscador.setAdapter(new SocialAdapter(auxAmigos, this));
-        binding.rvGruposBuscador.setAdapter(new SocialAdapter(auxGrupo, this));
-
     }
 
     private void cargarAmigos() {
@@ -216,7 +217,7 @@ public class SocialFragment extends Fragment {
                         for (DataSnapshot data : snapshot.getChildren()) {
                             for (String a : amigosUser.split(",")) {
                                 if(a.equals(data.child("id").getValue().toString())){
-                                    String id = data.getKey();
+                                    String id = data.child("id").getValue().toString();
                                     String username = data.child("username").getValue(String.class);
                                     String email = data.child("email").getValue(String.class);
                                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
@@ -289,7 +290,7 @@ public class SocialFragment extends Fragment {
                 todosAmigos.clear();
 
                 for (DataSnapshot data : snapshot.getChildren()) {
-                    String id = data.getKey();
+                    String id = data.child("id").getValue().toString();
                     String username = data.child("username").getValue(String.class);
                     String email = data.child("email").getValue(String.class);
                     String fotoPerfil = data.child("foto_perfil").getValue(String.class);
