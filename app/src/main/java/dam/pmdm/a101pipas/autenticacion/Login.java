@@ -148,12 +148,16 @@ public class Login extends AppCompatActivity {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                boolean encontrado = false;
                 for (DataSnapshot subNodos : snapshot.getChildren()) {
-                    if(id.equals(subNodos.child("username").getValue().toString())){
+                    if(id.equals(subNodos.getKey())){
+                        encontrado = true;
                         taskCompletionSource.setResult(true);
                     }
                 }
-                taskCompletionSource.setResult(false);
+                if(!encontrado){
+                    taskCompletionSource.setResult(false);
+                }
             }
 
             @Override
