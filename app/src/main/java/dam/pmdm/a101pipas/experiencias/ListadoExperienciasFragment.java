@@ -67,7 +67,7 @@ public class ListadoExperienciasFragment extends Fragment {
 
                 Navigation.findNavController(view).navigate(R.id.navigation_geolocalizacion);
             }
-        }, tituloDesafio);
+        }, tituloDesafio, this);
 
         binding.rvExperiencias.setAdapter(adapter);
 

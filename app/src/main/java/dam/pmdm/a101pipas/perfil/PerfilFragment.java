@@ -44,7 +44,7 @@ public class PerfilFragment extends Fragment {
 
         viewModel.getUsuarioLiveData().observe(getViewLifecycleOwner(), user -> {
             if (user != null) {
-                binding.txtNick.setText(user.getUsername());
+                binding.tvNick.setText(user.getUsername());
 
                 if(!user.getFoto_perfil().isEmpty()){
                     Picasso.get()

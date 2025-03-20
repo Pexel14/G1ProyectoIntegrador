@@ -20,6 +20,18 @@ public class DesafioUsuario {
         return estado;
     }
 
+    public String getExperiencias_completadas() {
+        return experiencias_completadas;
+    }
+
+    public void setEstado(int i) {
+        if(i == 1){
+            this.estado = "completado";
+        } else if (i == 0){
+            this.estado = "comenzado";
+        }
+    }
+
     public List<String> getExperienciasCompletadasList() {
         if (experiencias_completadas == null || experiencias_completadas.isEmpty()) {
             return new ArrayList<>();

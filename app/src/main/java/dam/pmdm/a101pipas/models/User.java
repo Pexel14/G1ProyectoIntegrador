@@ -102,4 +102,8 @@ public class User {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
+
+    public void setDesafios(Map<String, DesafioUsuario> desafios) {
+        this.desafios = desafios;
+    }
 }

@@ -87,7 +87,10 @@ public class PerfilViewModel extends ViewModel {
                 List<DesafioPerfil> desafiosCombinados = new ArrayList<>();
                 for (DataSnapshot desafioUserSnapshot : snapshot.getChildren()) {
                     String desafioId = desafioUserSnapshot.getKey();
-                    DesafioUsuario desafioUsuario = desafioUserSnapshot.getValue(DesafioUsuario.class);
+                    DesafioUsuario desafioUsuario = new DesafioUsuario(
+                            desafioUserSnapshot.child("estado").getValue().toString(),
+                            desafioUserSnapshot.child("experiencias_completadas").getValue().toString()
+                    );
 
                     refDesafios.child(desafioId).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
