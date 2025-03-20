@@ -12,15 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import dam.pmdm.a101pipas.R;
+import dam.pmdm.a101pipas.models.DesafioUsuario;
 import dam.pmdm.a101pipas.models.User;
 
 public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPrivadoViewHolder>{
     private ArrayList<User> listaUsuarios;
 
-    private int experiencias_completadas;
-
+    private String desafio;
     public GrupoAdapter(ArrayList<User> listaUsuarios){
         this.listaUsuarios = listaUsuarios;
     }
@@ -56,7 +57,30 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
 
         holder.tvRankingTop.setText(String.valueOf((position+1)));
         holder.tvRankingUsuario.setText(usuario.getUsername());
-        holder.tvRankingCompletados.setText(String.valueOf(experiencias_completadas));
+
+        if(desafio != null){
+            Map<String, DesafioUsuario> desafioUsuario = usuario.getDesafios();
+
+            if(desafioUsuario != null){
+                DesafioUsuario desafioUsuario1 = new DesafioUsuario(
+                        desafioUsuario.get(desafio).getEstado(),
+                        desafioUsuario.get(desafio).getExperiencias_completadas()
+                );
+
+                if(desafioUsuario1 != null){
+                    if(desafioUsuario1.getExperiencias_completadas() != null){
+                        if(!desafioUsuario1.getExperiencias_completadas().isEmpty()){
+                            holder.tvRankingCompletados.setText(String.valueOf(desafioUsuario1.getExperiencias_completadas().split(",").length));
+                        }
+                    }else {
+                        holder.tvRankingCompletados.setText("0");
+                    }
+                }
+            }
+        } else {
+            holder.tvRankingCompletados.setText("0");
+        }
+
     }
 
     @Override
@@ -82,7 +106,7 @@ public class GrupoAdapter extends RecyclerView.Adapter<GrupoAdapter.RankingPriva
         }
     }
 
-    public void setExperiencias_completadas(int experiencias_completadas) {
-        this.experiencias_completadas = experiencias_completadas;
+    public void setDesafio(String desafio) {
+        this.desafio = desafio;
     }
 }

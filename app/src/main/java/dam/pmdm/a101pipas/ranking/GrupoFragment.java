@@ -88,7 +88,6 @@ public class GrupoFragment extends Fragment {
 
             adapter = new GrupoAdapter(new ArrayList<>());
 
-            adapter.setExperiencias_completadas(viewModel.getExperiencias().split(",").length);
 
             binding.rvRanking.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
             binding.rvRanking.setAdapter(adapter);
@@ -97,6 +96,12 @@ public class GrupoFragment extends Fragment {
                 Log.d("Compartir", "ENTRA A LOS GRUPOS: " + listaMiembros.toString());
                 adapter.actualizarRanking(listaMiembros);
             });
+        });
+
+        viewModel.getDesafioLiveData().observe(getViewLifecycleOwner(), desafio -> {
+            if(desafio != null){
+                adapter.setDesafio(desafio.getTitulo());
+            }
         });
 
     }

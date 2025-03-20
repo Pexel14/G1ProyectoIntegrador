@@ -54,8 +54,6 @@ public class User {
     public User() {
     }
 
-    public User(String id, String username, String email, String fotoPerfil, String grupos, String amigos, int experiencias, Map<String, DesafioUsuario> desafios) {
-    }
 
     public String getid() {
         return id;

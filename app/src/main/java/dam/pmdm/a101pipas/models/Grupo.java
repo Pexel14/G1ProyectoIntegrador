@@ -28,6 +28,12 @@ public class Grupo {
         this.contrasena = contrasena;
     }
 
+    public Grupo(String titulo, String contrasena, int desafio) {
+        this.titulo = titulo;
+        this.contrasena = contrasena;
+        this.desafio = desafio;
+    }
+
     public int getId() {
         return id;
     }
