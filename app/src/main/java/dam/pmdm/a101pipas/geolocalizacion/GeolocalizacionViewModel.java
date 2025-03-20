@@ -82,22 +82,22 @@ public class GeolocalizacionViewModel extends ViewModel {
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot2) {
-
-//                                            String id, String titulo, String descripcion, String imagen, String coordenadas
-                                            Experiencia exp = new Experiencia(
-                                                    snapshot2.child("id").getValue(Long.class),
-                                                    snapshot2.child("titulo").getValue().toString(),
-                                                    snapshot2.child("descripcion").getValue().toString(),
-                                                    snapshot2.child("imagen").getValue().toString(),
-                                                    snapshot2.child("coordenadas").getValue().toString()
-                                            );
-                                            if (exp != null) {
+                                            if (snapshot2.exists()) {
+                                                Experiencia exp = new Experiencia(
+                                                        snapshot2.child("id").getValue(Long.class),
+                                                        snapshot2.child("titulo").getValue().toString(),
+                                                        snapshot2.child("descripcion").getValue().toString(),
+                                                        snapshot2.child("imagen").getValue() == null ? "" : snapshot2.child("imagen").getValue().toString(),
+                                                        snapshot2.child("coordenadas").getValue() == null ? "" : snapshot2.child("coordenadas").getValue().toString()
+                                                );
                                                 listaExperiencias.add(exp);
+
+                                                if (counter.decrementAndGet() == 0) {
+                                                    experiencias.setValue(new ArrayList<>(listaExperiencias));
+                                                }
+
                                             }
 
-                                            if (counter.decrementAndGet() == 0) {
-                                                experiencias.setValue(new ArrayList<>(listaExperiencias));
-                                            }
                                         }
 
                                         @Override

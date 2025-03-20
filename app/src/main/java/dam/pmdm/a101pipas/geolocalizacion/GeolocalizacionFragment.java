@@ -255,7 +255,7 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
                     titulo = exp.getTitulo();
                     coordenadas = exp.getCoordenadas();
 
-                    if (coordenadas != null) {
+                    if (coordenadas != null && !coordenadas.isEmpty()) {
                         aCoordenadas = coordenadas.split(",");
                         posicion = new LatLng(Double.parseDouble(aCoordenadas[0]), Double.parseDouble(aCoordenadas[1]));
                         areaMarcadores.include(posicion);
@@ -305,8 +305,14 @@ public class GeolocalizacionFragment extends Fragment implements OnMapReadyCallb
     }
 
     private void zoomCamaraGeneral() {
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(areaMarcadores.build(), 100));
-        isZoomedToExperience = false;
+        try {
+            LatLngBounds bounds = areaMarcadores.build();
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+            isZoomedToExperience = false;
+
+        } catch (IllegalStateException e) {
+        }
     }
 
     private double calcularDistancia(LatLng posUsuario, LatLng posExp) {

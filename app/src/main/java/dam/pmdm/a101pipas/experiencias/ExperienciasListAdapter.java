@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,10 +24,8 @@ import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import dam.pmdm.a101pipas.R;
 import dam.pmdm.a101pipas.models.Desafio;
@@ -183,6 +180,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
         FirebaseDatabase.getInstance().getReference("usuarios").child(user).child("desafios").child(tituloDesafio).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
                     DesafioUsuario desafioUsuario = new DesafioUsuario(
                             snapshot.child("estado").getValue(String.class),
                             snapshot.child("experiencias_completadas").getValue().toString()
@@ -210,9 +208,9 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                                 progressBar.setProgress(porcentaje);
 
                                 if(porcentaje == 100){
-                                    desafioUsuario.setEstado(1);
+                                    desafioUsuario.setEstadoDesafioUsuario(1);
                                 } else {
-                                    desafioUsuario.setEstado(0);
+                                    desafioUsuario.setEstadoDesafioUsuario(0);
                                 }
 
                                 DatabaseReference refUsers = FirebaseDatabase.getInstance().getReference("usuarios").child(user);
@@ -264,6 +262,7 @@ public class ExperienciasListAdapter extends RecyclerView.Adapter<ExperienciasLi
                         }
                         @Override public void onCancelled(@NonNull DatabaseError error) {}
                     });
+                }
 
                 }
             @Override public void onCancelled(@NonNull DatabaseError error) {}
