@@ -50,6 +50,14 @@
             android:textColor="@color/white"
             android:textSize="@dimen/tam_titulo"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivInsignias"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/feliz" />
     </LinearLayout>
 
     <LinearLayout
